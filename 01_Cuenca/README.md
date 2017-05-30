@@ -12,7 +12,6 @@ exsiten los siguientes archivos:
 interior de este se encuentra la estructura de la cuenca y la información necesaria de 
 variables para la ejecución de los modelos.
 - Archivos **.StoHdr**: contienen los binarios con las condiciones de estado de la cuenca.
-- 
 
 ___
 
