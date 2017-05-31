@@ -120,6 +120,7 @@ if args.old:
 		cuLow.rain_radar2basin_from_array(status='old',ruta_out= args.rutaRes + '_low')
 #Itera sobre las fechas para actualizar el binario de campos
 datesDt = datesDt.to_pydatetime()
+print ListRutas[PosDates[0][0]]
 for dates,pos in zip(datesDt[1:],PosDates):
 	rvec = np.zeros(cuAMVA.ncells)
 	if args.save_escenarios:
@@ -131,7 +132,6 @@ for dates,pos in zip(datesDt[1:],PosDates):
 		for c,p in enumerate(pos):
 			#Lee la imagen de radar para esa fecha
 			g = netCDF4.Dataset(ListRutas[p])
-			print ListRutas[p]
 			RadProp = [g.ncols, g.nrows, g.xll, g.yll, g.dx, g.dx]                        
 			#Agrega la lluvia en el intervalo 
 			rvec += cuAMVA.Transform_Map2Basin(g.variables['Rain'][:].T/ (12*1000), RadProp) 
