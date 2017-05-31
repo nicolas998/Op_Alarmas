@@ -61,8 +61,9 @@ def Rain_Cumulated(rutaCampo, cu, rutaAcum = None):
 		#Escribe el encabezado con fecha inicio y fecha fin del binario
 		f = open(rutahdr, 'w')
 		f.write('Fecha y hora de inicio y fin del binario acumulado:\n')
-		f.write('%s\n' % FechaI.to_pydatetime().strftime('%Y%m%d%H%M'))
-		f.write('%s\n' % FechaF.to_pydatetime().strftime('%Y%m%d%H%M'))
+		f.write('Fecha1: %s\n' % FechaI.to_pydatetime().strftime('%Y%m%d%H%M'))
+		f.write('Fecha2: %s\n' % FechaF.to_pydatetime().strftime('%Y%m%d%H%M'))
+		f.write('Lluvia Media: %.4f \n' % Vsum.mean())
 		f.close()
 	return Vsum, FechaI, FechaF
 	
@@ -71,13 +72,13 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 	f = open(rutaAcum, 'r')
 	L = f.readlines()
 	f.close()
-	f1 = L[1][:-1]
-	f2 = L[2][:-1]
-	Df = {'Fecha1': L[1][:-1], 'Fecha2': L[2][:-1]}
-	Df1 = {'Fecha1': {'atras': pd.to_datetime(f1)-pd.Timedelta('1 hours'),
-		'adelante':pd.to_datetime(f1)+pd.Timedelta('1 hours')},
-		'Fecha2': {'atras': pd.to_datetime(f2)-pd.Timedelta('1 hours'),
-		'adelante':pd.to_datetime(f2)+pd.Timedelta('1 hours')}}
+	f1 = L[1].split()[1]
+	f2 = L[2].split()[1]
+	Df = {'Fecha1': L[1].split()[1], 'Fecha2': L[2].split()[1]}
+	Df1 = {'Fecha1': {'atras': pd.to_datetime(f1)-pd.Timedelta('30 minutes'),
+		'adelante':pd.to_datetime(f1)+pd.Timedelta('30 minutes')},
+		'Fecha2': {'atras': pd.to_datetime(f2)-pd.Timedelta('30 minutes'),
+		'adelante':pd.to_datetime(f2)+pd.Timedelta('30 minutes')}}
 	Fechas = []
 	for k in ['Fecha1','Fecha2']:
 		#Obtuiene fechas atras y adelante
@@ -90,8 +91,12 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 		List = np.array([pd.to_datetime(i[43:55]) for i in List])
 		#Diferenciass de fecha
 		Diff = np.abs(List - pd.to_datetime(Df[k]))
-		Fechas.append(List[Diff.argmin()])
-	Fechas[1] = List[Diff.argmin()+1]
+		for i in range(4):
+			try:
+				Fechas.append(List[Diff.argmin()+i])
+			except:
+				Fechas.append(pd.to_datetime('200001010000'))
+	#Fechas[1] = List[Diff.argmin()+1]
 	return Fechas
 			
 		
