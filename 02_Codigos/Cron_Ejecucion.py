@@ -33,7 +33,7 @@ print '###################################### CONSULTA DE LA LLUVIA Y EXTRAPOLAC
 #-------------------------------------------------------------------
 # Obtiene el datetime 
 fecha_1 =  dt.datetime.now() + dt.timedelta(hours = 5) - dt.timedelta(minutes = 15)
-fecha_2 =  dt.datetime.now() + dt.timedelta(hours = 5) + dt.timedelta(minutes = 60) 
+fecha_2 =  dt.datetime.now() + dt.timedelta(hours = 5) + dt.timedelta(minutes = 30) 
 # Lo convierte en texto 
 fecha1 = fecha_1.strftime('%Y-%m-%d')
 fecha2 = fecha_2.strftime('%Y-%m-%d')
@@ -47,21 +47,17 @@ os.system(comando)
 #-------------------------------------------------------------------
 #GENERA GRAFICAS DE CAMPOS
 #-------------------------------------------------------------------
-RainData = pd.read_csv(lluvia_actual,skiprows=5,
-	index_col=2, 
-	parse_dates=True, 
-	infer_datetime_format=True, usecols = (1,2,3))
 
-# Grafica de la lluvia en la ultima hora 
+# Grafica de la lluvia en los ultimos 3 dias 
 
-# Grafica de la lluvia en los ultimos 15min
+# Grafica de la lluvia en los ultimas 24 horas
 
-# Grafica de la lluvia en la proxima hora
+# Grafica en la ultima hora.
+
+# Grafica en los proximos 30min
 
 
 
-#Grafica de la 
-NoCero = al.get_CamposNoCero(lluvia_actual+'.hdr')
 
 
 
