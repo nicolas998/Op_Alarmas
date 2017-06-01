@@ -32,6 +32,8 @@ parser.add_argument("-t","--dt",help="(Opcional) Delta de t en segundos",default
 parser.add_argument("-u","--umbral",help="(Opcional) Umbral de lluvia minima",default = 0.005,type=float)
 parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agregando", 
 	action = 'store_true')
+parser.add_argument("-n","--noextrapol",help="no incluir archivos de extrapolacion", 
+	action = 'store_true')
 parser.add_argument("-s","--super_verbose",help="Imprime para cada posicion las imagenes que encontro",
 	action = 'store_true')
 parser.add_argument("-o","--old",help="Si el archivo a generar es viejo, y se busca es actualizarlo y no borrarlo",
@@ -59,16 +61,19 @@ datesDias = [d.strftime('%Y%m%d') for d in datesDias.to_pydatetime()]
 ListDays = []
 ListRutas = []
 for d in datesDias:
-    try:
-        L = glob.glob(args.rutaNC + d + '*.nc')
-        ListRutas.extend(L)
-        for i in L:
-            if i[-11:].endswith('extrapol.nc'):
-                ListDays.append(i[-32:-20])
-            else:
-                ListDays.append(i[-23:-11])
-    except:
-        print 'mierda'
+	try:
+		if args.noextrapol:
+			L = glob.glob(args.rutaNC + d + '*120.nc')
+		else:
+			L = glob.glob(args.rutaNC + d + '*.nc')
+		ListRutas.extend(L)
+		for i in L:
+			if i[-11:].endswith('extrapol.nc'):
+				ListDays.append(i[-32:-20])
+			else:
+				ListDays.append(i[-23:-11])
+	except:
+		print 'mierda'
 #Organiza las listas de dias y de rutas
 ListDays.sort()
 ListRutas.sort()
@@ -112,10 +117,10 @@ cuLow = wmf.SimuBasin(rute = args.cuenca)
 #si el binario el viejo, establece las variables para actualizar
 if args.old:
     cuAMVA.rain_radar2basin_from_array(status='old',ruta_out= args.rutaRes)
-    if args.save_escenarios:
+    if args.save_class:
 		cuAMVA.rain_radar2basin_from_array(status='old',ruta_out= args.rutaRes + '_conv')
 		cuAMVA.rain_radar2basin_from_array(status='old',ruta_out= args.rutaRes + '_stra')
-    if args.save_class:
+    if args.save_escenarios:
 		cuHigh.rain_radar2basin_from_array(status='old',ruta_out= args.rutaRes + '_high')
 		cuLow.rain_radar2basin_from_array(status='old',ruta_out= args.rutaRes + '_low')
 #Itera sobre las fechas para actualizar el binario de campos
