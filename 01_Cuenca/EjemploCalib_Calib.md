@@ -1,3 +1,21 @@
+## Parametros Modelacion
+
+Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
+
+### Param modelación
+
+- **Dt[seg]**: 300
+- **Dx[mts]**: 12.6
+- **Almacenamiento medio**: True
+- **Seprar Flujos**: True
+
+### Param Deslizamientos
+
+- **slides**: True
+- **fs**: 0.5
+
+## Calibracion
+
 La calibración se compone de 10 parámetros escalares, los cuales son:
 
 - R[1] : Evaporación.
@@ -16,11 +34,8 @@ espacial de ejecución del modelo.  Cada uno de estos parámetros es
 multiplicado como un escalar por el mapa que componga una variable **X**
 del modelo.
 
-|Nombre | id | evp | ks_v | kp_v | Kpp_v | v_sup | v_sub | v_supt | v_cau | Hu | Hg |
-|------:|---:|:---:|:----:|:----:|:-----:|:-----:|:-----:|:------:|:-----:|:--:|:--:|
-
-
-StorageName	evp	ks_v	kp_v	Kpp_v	v_sup	v_sub	v_supt	v_cau	Hu	Hg
-cu01_Calib_01	1.0	0.01	1.0	0.0	0.8	0.8	0.01	1.0	0.4	0.8
-cu01_Calib_02	1.0	1.0	5.0	0.0	0.6	0.8	0.01	0.93	1.0	1.0
-cu01_Calib_03	1.0	1.0	5.0	0.0	0.2 	0.7 	0.01	0.97	1.0	1.0
+|*Nombre* | *id*| evp | ks_v | kp_v | Kpp_v | v_sup | v_sub | v_supt | v_cau | Hu | Hg |
+|--------:|----:|:---:|:----:|:----:|:-----:|:-----:|:-----:|:------:|:-----:|:--:|:--:|
+|--poca evp | 001 | 0.0002| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+|--media evp | 001 | 0.0015| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+|--alta evp | 001 | 0.0048| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
