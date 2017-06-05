@@ -16,8 +16,8 @@ espacial de ejecución del modelo.  Cada uno de estos parámetros es
 multiplicado como un escalar por el mapa que componga una variable **X**
 del modelo.
 
-|Nombre | id | evp | ks_v | kp_v | Kpp_v | v_sup | v_sub | v_supt | v_cau | Hu | Hg|
-|---|---|---|---|---|---|---|---|---|---|---|
+|Nombre | id | evp | ks_v | kp_v | Kpp_v | v_sup | v_sub | v_supt | v_cau | Hu | Hg |
+|------:|---:|:---:|:----:|:----:|:-----:|:-----:|:-----:|:------:|:-----:|:--:|:--:|
 
 
 StorageName	evp	ks_v	kp_v	Kpp_v	v_sup	v_sub	v_supt	v_cau	Hu	Hg
