@@ -19,6 +19,8 @@ RutasList = al.get_rutesList(ruta_de_rutas)
 ruta_cuenca = al.get_ruta(RutasList, 'ruta_cuenca')
 ruta_campos = al.get_ruta(RutasList, 'ruta_campos')
 ruta_codigos = al.get_ruta(RutasList, 'ruta_codigos')
+ruta_calibracion = al.get_ruta(RutasList, 'ruta_calibracion')
+ruta_almacenamiento = al.get_ruta(RutasList, 'ruta_almacenamiento')
 # Rutas de objetos de salida
 ruta_out_rain = al.get_ruta(RutasList, 'ruta_rain')
 
@@ -67,11 +69,11 @@ os.system(comando)
 print 'Aviso: Lluvia historica actualizada en: '
 print lluvia_historica+'\n'
 
-
 #-------------------------------------------------------------------
 #GENERA GRAFICAS DE CAMPOS
 #-------------------------------------------------------------------
 fecha2 = date.strftime('%Y-%m-%d-%H:%M')
+print fecha2
 
 # Grafica de la lluvia en los ultimos 3 dias 
 fecha1 = date - dt.timedelta(hours = 72)
@@ -85,7 +87,7 @@ print 'Aviso: Campo de lluvia acumulado de 3 dias generado.'
 fecha1 = date - dt.timedelta(hours = 24)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain + 'Acumulado_1dia.png'
-comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 10 -2 50'
+comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 5 -2 25'
 os.system(comando)
 print 'Aviso: Campo de lluvia acumulado de 1 dia generado.'
 
@@ -105,6 +107,11 @@ comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha2+' '+fecha1+' '+ruta_cuenca+
 os.system(comando)
 print 'Aviso: Campo de lluvia acumulado de la proxima hora'
 
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+print '############################## EJECUCION DEL MODELO ############################\n'
 
 
 
