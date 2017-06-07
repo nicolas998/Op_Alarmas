@@ -19,8 +19,40 @@ def get_ruta(RutesList, key):
     for i in RutesList:
         if i.startswith('- **'+key+'**'):
             return i.split(' ')[-1][:-1] 
-    return 'Aviso: no hay ruta especifica para la cuenca'	
+    return 'Aviso: no se ha podido leer el key especificado'	
 
+def get_modelConfig_lines(RutesList, key, Calib_Storage = None):
+	List = []
+	for i in RutesList:
+		if i.startswith('|'+key) or i.startswith('| '+key):
+			List.append(i)
+	if len(List)>0:
+		if Calib_Storage == 'Calib':
+			return get_modelCalib(List)
+		if Calib_Storage == 'Store':
+			return get_modelStore(List)
+		return List
+	else:
+		return 'Aviso: no se encuentran lineas con el key de inicio especificado'
+
+def get_modelCalib(RutesList):
+	DCalib = {}
+	for l in RutesList:
+		c = [float(i) for i in l.split('|')[3:-1]]
+		name = l.split('|')[2]
+		DCalib.update({name.rstrip().lstrip(): c})
+	return DCalib
+
+def get_modelStore(RutesList):
+	DStore = {}
+	for l in RutesList:
+		l = l.split('|')
+		DStore.update({l[2].rstrip().lstrip():
+			{'Nombre': l[3].rstrip().lstrip(),
+			'Actualizar': l[4].rstrip().lstrip(),
+			'Tiempo': l[5].rstrip().lstrip(),
+			'Condition': l[6].rstrip().lstrip()}})
+	return DStore
 
 ########################################################################
 # FUNCIONES PARA LIDIAR CON CAMPOS DE LLUVIA
@@ -100,4 +132,13 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 	return Fechas
 			
 		
-		
+########################################################################
+# FUNCIONES PARA SET DEL MODELO 
+
+def model_get_constStorage(RutesList, ncells):
+	Storage = np.zeros((5, ncells))
+	for i,c in enumerate(['Inicial Capilar','Inicial Escorrentia','Inicial Subsup','Inicial Subterraneo','Inicial Corriente']):
+		Cs = float(get_ruta(List, c))
+		Storage[i] = Cs
+	return Storage.astype(float)
+

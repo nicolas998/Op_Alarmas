@@ -43,7 +43,7 @@ hora_1 = fecha_1.strftime('%H:%M')
 hora_2 = fecha_2.strftime('%H:%M')
 # Ejecuta para obtener el campo de lluvia en la proxima hora 
 lluvia_actual = ruta_out_rain + 'Lluvia_actual'
-comando = ruta_codigos+'Rain_Rain2Basin.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+ruta_campos+' '+lluvia_actual+' -t 300 -j -u 0.01 -1 '+hora_1+' -2 '+hora_2
+comando = ruta_codigos+'Rain_Rain2Basin.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+ruta_campos+' '+lluvia_actual+' -t 300 -j -u 0.0005 -1 '+hora_1+' -2 '+hora_2
 os.system(comando)
 # Imprime mensaje de exito
 print 'Aviso: Lluvia actual + extrapolacion generados en: '
@@ -63,7 +63,7 @@ fecha2 = fecha_2.strftime('%Y-%m-%d')
 hora_1 = fecha_1.strftime('%H:%M')
 hora_2 = fecha_2.strftime('%H:%M')
 # Ejecuta para actualizar el campo de lluvia 
-comando = ruta_codigos+'Rain_Rain2Basin.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+ruta_campos+' '+lluvia_historica+' -t 300 -j -u 0.01 -o True -n -1 '+hora_1+' -2 '+hora_2
+comando = ruta_codigos+'Rain_Rain2Basin.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+ruta_campos+' '+lluvia_historica+' -t 300 -j -u 0.0005 -o True -n -1 '+hora_1+' -2 '+hora_2
 os.system(comando)
 #imprime aviso 
 print 'Aviso: Lluvia historica actualizada en: '
