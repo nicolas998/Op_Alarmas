@@ -7,11 +7,14 @@ Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
 - **Dt[seg]**: 300
 - **Dx[mts]**: 12.6
 - **Retorno**: 1
+- **Nodos Eval**: 1087
+- **Qsim Name**: Qsim_Rain
 - **Almacenamiento medio**: True
 - **Separar Flujos**: True
 - **ruta_almacenamiento**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/
-- **ruta_out_alm**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/03_TempSto/
+- **ruta_bkc_alm**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/03_BackSto/
 - **ruta_rainFile**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/01_Rain/Lluvia_actual.bin
+- **ruta_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
 
 ### Param Deslizamientos
 
@@ -47,27 +50,33 @@ del modelo.
 ___
 ## Almacenamiento 
 
-| Descripcion     | id | Nombre           | Si o No | Tiempo | Condicion  | Calib Actualiza |
-|--------------:|:---:|:-----------------|:-------:|:------:|:---------:|:-----:|
-|-s Cond humedas |001| Storage_wet_ope1.sto | True    | 4h     | Every Ejec| 001 |
-|-s Cond humedas |002| Storage_wet_ope2.sto | True    | 4h     | Every Ejec| 001 |
-|-s Cond humedas |003| Storage_wet_ope3.sto | True    | 4h     | Every Ejec| 002 |
-|-s Cond humedas |004| Storage_wet1.sto | False   | 4h     | No Rain, 2h| NaN |
-|-s Cond humedas |005| Storage_wet2.sto | False   | 4h     | No Rain, 2h| NaN |
-|-s Cond humedas |006| Storage_wet3.sto | False   | 4h     | No Rain, 2h| NaN |
+**Tabla**: almacenamientos de ejecuciones
 
+|id| Nombre                   | Si o No | Tiempo | Condicion  | Calib Actualiza | Back Sto        | Slides |
+|:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
+| -s 001| Sto_wet_c01_s01.StObin | True    | 4h     | No Rain, 2h| 001             | Sto_wet-s01.StoBin | True   |
+| -s 002| Sto_wet_c01_s02.StObin | False   | 4h     | No Rain, 2h| 001             | None            | False  |
+| -s 003| Sto_wet_c01_s03.StObin | False   | 4h     | No Rain, 2h| 001             | None            | False  |
+| -s 004| Sto_wet_c02_s01.StObin | True    | 4h     | No Rain, 2h| 002             | Sto_wet-s02.StoBin | True   |
+| -s 005| Sto_wet_c02_s02.StObin | False   | 4h     | No Rain, 2h| 002             | None            | False  |
+| -s 006| Sto_wet_c02_s03.StObin | False   | 4h     | No Rain, 2h| 002             | None            | False  |
+| -s 007| Sto_wet_c03_s01.StObin | True    | 4h     | No Rain, 2h| 003             | Sto_wet-s03.StoBin | True   |
+| -s 008| Sto_wet_c03_s02.StObin | False   | 4h     | No Rain, 2h| 003             | None            | False  |
+| -s 009| Sto_wet_c03_s03.StObin | False   | 4h     | No Rain, 2h| 003             | None            | False  |
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
 
-- Descripción de las condiciones de humedad.
-- Nombre del archivo con las condiciones.
-- Si este actualiza (True) o no (False).
-- Cada cuanto se actualiza: Combinaciones tipo pandas (ej, 1h, 2.5h, 15min, etc).
-- Si hay alguna condición para que se de la actualización (se listan a continuación):
+- **id**: del storage
+- **Nombre**: del archivo con las condiciones.
+- **Si o No**: este actualiza (True) o no (False) cada tanto, esto con la finalidad de corregir problemas producidos en el largo plazo.
+- **Tiempo**: Cada cuanto se actualiza: Combinaciones tipo pandas (ej, 1h, 2.5h, 15min, etc).
+- **Condicion**: Si hay alguna condición para que se de la actualización (se listan a continuación):
     - **No Rain, Xh**: Que no se registren lluvias **X** horas alrededor de la fecha actual.
     - **Every Xh**: Independiente de la lluvia actualiza cada **X** horas.
     - **Every Ejec**: En cada ejecución.
+- **Calib actualiza**: Calibracion a partrir de la cual se actualizan los estados del modelo.
+- **Back Sto**: Archivo de background a partir del cual se cambian los estados del modelo cada **Tiempo** y con la **Condicion**.
 
 Condiciones iniciales en caso de que no exista un binario establecido 
 para alguno de los casos presentados en la tabla:
@@ -77,3 +86,6 @@ para alguno de los casos presentados en la tabla:
 - **Inicial Subsup**: 7
 - **Inicial Subterraneo**: 50
 - **Inicial Corriente**: 0.1
+
+**Tabla**: Ultima actualizacion
+

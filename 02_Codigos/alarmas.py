@@ -47,11 +47,14 @@ def get_modelStore(RutesList):
 	DStore = {}
 	for l in RutesList:
 		l = l.split('|')
-		DStore.update({l[2].rstrip().lstrip():
-			{'Nombre': l[3].rstrip().lstrip(),
-			'Actualizar': l[4].rstrip().lstrip(),
-			'Tiempo': l[5].rstrip().lstrip(),
-			'Condition': l[6].rstrip().lstrip()}})
+		DStore.update({l[1].rstrip().lstrip():
+			{'Nombre': l[2].rstrip().lstrip(),
+			'Actualizar': l[3].rstrip().lstrip(),
+			'Tiempo': l[4].rstrip().lstrip(),
+			'Condition': l[5].rstrip().lstrip(),
+			'Calib': l[6].rstrip().lstrip(),
+            'BackSto': l[7].rstrip().lstrip(),
+            'Slides': l[8].rstrip().lstrip()}})
 	return DStore
 
 ########################################################################
@@ -141,4 +144,3 @@ def model_get_constStorage(RutesList, ncells):
 		Cs = float(get_ruta(List, c))
 		Storage[i] = Cs
 	return Storage.astype(float)
-
