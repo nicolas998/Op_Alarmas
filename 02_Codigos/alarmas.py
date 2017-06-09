@@ -144,3 +144,23 @@ def model_get_constStorage(RutesList, ncells):
 		Cs = float(get_ruta(List, c))
 		Storage[i] = Cs
 	return Storage.astype(float)
+
+def model_write_qsim(ruta,Qsim, index, pcont):
+	#se fija si ya esta
+	L = glob.glob(ruta)
+	if len(L)>0:
+		Existe = True
+		Nuevo = False
+	else:
+		Existe = False
+		Nuevo = True
+	#Obtiene el caudale n un Data Frame
+	D = {}
+	for c,i in enumerate(pcont):
+		D.update({i:Qsim[c]})
+	date = index.to_pydatetime().strftime('%Y-%m-%d-%H:%M')
+	Qsim = {date:D}
+	Qsim = pd.DataFrame(Qsim).T
+	#Escribe el Caudal
+	with open(ruta, 'a') as f:
+		Qsim.to_csv(f, header=Nuevo,float_format='%.3f')

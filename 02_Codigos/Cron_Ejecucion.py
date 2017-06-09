@@ -19,7 +19,7 @@ RutasList = al.get_rutesList(ruta_de_rutas)
 ruta_cuenca = al.get_ruta(RutasList, 'ruta_cuenca')
 ruta_campos = al.get_ruta(RutasList, 'ruta_campos')
 ruta_codigos = al.get_ruta(RutasList, 'ruta_codigos')
-ruta_calibracion = al.get_ruta(RutasList, 'ruta_calibracion')
+ruta_configuracion = al.get_ruta(RutasList, 'ruta_calibracion')
 ruta_almacenamiento = al.get_ruta(RutasList, 'ruta_almacenamiento')
 # Rutas de objetos de salida
 ruta_out_rain = al.get_ruta(RutasList, 'ruta_rain')
@@ -113,7 +113,13 @@ print 'Aviso: Campo de lluvia acumulado de la proxima hora'
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 print '############################## EJECUCION DEL MODELO ############################\n'
 
+#Explicacion: Se pueden configurar diferentes ejecuciones con diferentes productos 
+#	de lluvia, este caso es uno de ejemplo.
 
+#Ruta archivo Ejecucion
+EjecFile = ruta_configuracion + 'EjemploCalib_Calib.md'
+#Ejecucion del modelo en el ultimo intervalo de tiempo
+comando = ruta_codigos+'Ejec_Model.py '+ruta_cuenca+' '+EjecFile+' -v'
 
 
 

@@ -11,13 +11,17 @@ import pandas as pd
 def model_warper(L):
 	#Ejecucion del modelo
 	Res = cu.run_shia(L[1],L[2],L[3],L[4], 
-		StorageLoc = L[5], ruta_storage=L[6], kinematicN=4)
+		StorageLoc = L[5], ruta_storage=L[6], kinematicN=12)
 	#Escribe resultados 
 	ruta = ruta_Qsim + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'.msg'
 	Qsim = pd.DataFrame(Res['Qsim'][1:].T, 
 		index=Rain.index, 
 		columns=posControl)
 	Qsim.to_msgpack(ruta)
+	#Actualiza historico de caudales simulados
+	ruta = ruta_qsim_h + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'hist.csv'
+	al.model_write_qsim(ruta, Res['Qsim'][1:].T[0], Rain.index[0], posControl)
+	#imprime que ya ejecuto
 	if args.verbose:
 		print L[0]+' ejecutado.'
 	return Res
@@ -35,7 +39,6 @@ parser=argparse.ArgumentParser(
 #Parametros obligatorios
 parser.add_argument("cuenca",help="(Obligatorio) Ruta de la cuenca en formato .nc")
 parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion de la cuenca")
-parser.add_argument("rutaQsim", help = "Ruta donde se guardan los caudales simulados")
 parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agregando", 
 	action = 'store_true')
 
@@ -55,9 +58,11 @@ Rain = wmf.read_mean_rain(rain_hdr)
 cu = wmf.SimuBasin(rute=args.cuenca, SimSlides = True)
 ruta_sto = al.get_ruta(ListConfig, 'ruta_almacenamiento')
 ruta_out_sto = al.get_ruta(ListConfig, 'ruta_out_alm')
+ruta_out_slides = al.get_ruta(ListConfig, 'ruta_slides')
 #Nombre de las simulaciones de caudal 
 QsimName = al.get_ruta(ListConfig,'Qsim Name')
 ruta_Qsim = al.get_ruta(ListConfig, 'ruta_qsim')
+ruta_qsim_h = al.get_ruta(ListConfig, 'ruta_qsim_hist')
 
 #Set por defecto de la modelacion
 wmf.models.show_storage = 1
@@ -125,3 +130,11 @@ if Nprocess > 15:
 p = Pool(processes=Nprocess)
 R = p.map(model_warper, ListEjecs)
 p.close()
+
+############################ ESCRIBE EL BINARIO DE DESLIZAMIENTOS ##################
+
+rec = 0
+for c,i in enumerate(ListEjecs):
+	if DictStore[i[0]]['Slides'] == 'True':
+		rec = rec+1
+		wmf.models.write_int_basin(ruta_out_slides, R[c]['Slides_Map'],rec,cu.ncells,1)

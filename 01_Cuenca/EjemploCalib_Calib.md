@@ -15,11 +15,13 @@ Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
 - **ruta_bkc_alm**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/03_BackSto/
 - **ruta_rainFile**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/01_Rain/Lluvia_actual.bin
 - **ruta_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
+- **ruta_qsim_hist**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/03_CaudalHistorico/
+- **ruta_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/Slides_map.bin
 
 ### Param Deslizamientos
 
 - **Simular Deslizamientos**: True
-- **Factor de Seguridad FS**: 1.5
+- **Factor de Seguridad FS**: 0.5
 
 ___
 ## Calibracion
@@ -54,15 +56,15 @@ ___
 
 |id| Nombre                   | Si o No | Tiempo | Condicion  | Calib Actualiza | Back Sto        | Slides |
 |:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
-| -s 001| Sto_wet_c01_s01.StObin | True    | 4h     | No Rain, 2h| 001             | Sto_wet-s01.StoBin | True   |
-| -s 002| Sto_wet_c01_s02.StObin | False   | 4h     | No Rain, 2h| 001             | None            | False  |
-| -s 003| Sto_wet_c01_s03.StObin | False   | 4h     | No Rain, 2h| 001             | None            | False  |
-| -s 004| Sto_wet_c02_s01.StObin | True    | 4h     | No Rain, 2h| 002             | Sto_wet-s02.StoBin | True   |
-| -s 005| Sto_wet_c02_s02.StObin | False   | 4h     | No Rain, 2h| 002             | None            | False  |
-| -s 006| Sto_wet_c02_s03.StObin | False   | 4h     | No Rain, 2h| 002             | None            | False  |
-| -s 007| Sto_wet_c03_s01.StObin | True    | 4h     | No Rain, 2h| 003             | Sto_wet-s03.StoBin | True   |
-| -s 008| Sto_wet_c03_s02.StObin | False   | 4h     | No Rain, 2h| 003             | None            | False  |
-| -s 009| Sto_wet_c03_s03.StObin | False   | 4h     | No Rain, 2h| 003             | None            | False  |
+| -s 001| Sto_wet_c01_s01.StObin | True    | 4h     | No Rain, 2h| 001          | Sto_wet-s01.StoBin | True   |
+| -s 002| Sto_wet_c01_s02.StObin | False   | 4h     | No Rain, 2h| 001          | None            | False  |
+| -s 003| Sto_wet_c01_s03.StObin | False   | 4h     | No Rain, 2h| 001          | None            | False  |
+| -s 004| Sto_wet_c02_s01.StObin | True    | 4h     | No Rain, 2h| 002          | Sto_wet-s02.StoBin | True   |
+| -s 005| Sto_wet_c02_s02.StObin | False   | 4h     | No Rain, 2h| 002          | None            | False  |
+| -s 006| Sto_wet_c02_s03.StObin | False   | 4h     | No Rain, 2h| 002          | None            | False  |
+| -s 007| Sto_wet_c03_s01.StObin | True    | 4h     | No Rain, 2h| 003          | Sto_wet-s03.StoBin | True   |
+| -s 008| Sto_wet_c03_s02.StObin | False   | 4h     | No Rain, 2h| 003          | None            | False  |
+| -s 009| Sto_wet_c03_s03.StObin | False   | 4h     | No Rain, 2h| 003          | None            | False  |
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
