@@ -7,6 +7,11 @@ import numpy as np
 import glob 
 
 ########################################################################
+# VARIABLES GLOBALES 
+
+
+
+########################################################################
 # FUNCIONES PARA OBTENER RUTAS 
 
 def get_rutesList(rutas):
@@ -21,6 +26,15 @@ def get_ruta(RutesList, key):
             return i.split(' ')[-1][:-1] 
     return 'Aviso: no se ha podido leer el key especificado'	
 
+def get_rain_last_hours(ruta, rutaTemp, hours, DeltaT = 300):
+	#calcula los pasos 
+	Min = DeltaT/60.0
+	MinInHours = 60.0 / Min
+	Pasos = int(hours * MinInHours)
+	#Escribe la cola de informacion 
+	comando = 'tail '+ruta+' -n '+str(Pasos)+' > '+rutaTemp
+	os.system(comando)
+
 def get_modelConfig_lines(RutesList, key, Calib_Storage = None):
 	List = []
 	for i in RutesList:
@@ -31,6 +45,8 @@ def get_modelConfig_lines(RutesList, key, Calib_Storage = None):
 			return get_modelCalib(List)
 		if Calib_Storage == 'Store':
 			return get_modelStore(List)
+		if Calib_Storage == 'Update':
+			return get_modelStoreLastUpdate(List)
 		return List
 	else:
 		return 'Aviso: no se encuentran lineas con el key de inicio especificado'
@@ -50,7 +66,7 @@ def get_modelStore(RutesList):
 		DStore.update({l[1].rstrip().lstrip():
 			{'Nombre': l[2].rstrip().lstrip(),
 			'Actualizar': l[3].rstrip().lstrip(),
-			'Tiempo': l[4].rstrip().lstrip(),
+			'Tiempo': float(l[4].rstrip().lstrip()),
 			'Condition': l[5].rstrip().lstrip(),
 			'Calib': l[6].rstrip().lstrip(),
             'BackSto': l[7].rstrip().lstrip(),
@@ -63,7 +79,7 @@ def get_modelStoreLastUpdate(RutesList):
 		l = l.split('|')
 		DStoreUpdate.update({l[1].rstrip().lstrip():
 			{'Nombre': l[2].rstrip().lstrip(),
-			'Lastupdate': l[3].rstrip().lstrip()}})
+			'LastUpdate': l[3].rstrip().lstrip()}})
 	return DStoreUpdate
 
 ########################################################################
@@ -173,3 +189,14 @@ def model_write_qsim(ruta,Qsim, index, pcont):
 	#Escribe el Caudal
 	with open(ruta, 'a') as f:
 		Qsim.to_csv(f, header=Nuevo,float_format='%.3f')
+
+def model_update_norain():
+	print 'no rain'
+
+def model_update_norain_next():
+	print 'no next'
+
+def model_update_norain_last(RainRute, Hours):
+	# Lee el archivo de lluvia 
+	
+	print 'no last'

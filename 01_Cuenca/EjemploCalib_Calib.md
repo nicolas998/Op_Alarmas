@@ -72,17 +72,17 @@ ___
 
 **Tabla**: almacenamientos de ejecuciones.
 
-|id| Nombre                   | Si o No | Tiempo | Condicion  | Calib Actualiza | Back Sto        | Slides |
+|id| Nombre                   | Si o No | Tiempo[h] | Condicion  | Calib Actualiza | Back Sto        | Slides |
 |:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
-| -s 001| Sto_wet_c01_s01.StObin | True    | 4h     | No Rain, 2h| 001          | Sto_wet-s01.StoBin | True|
-| -s 002| Sto_wet_c01_s02.StObin | False   | 4h     | No Rain, 2h| 001          | None            | False  |
-| -s 003| Sto_wet_c01_s03.StObin | False   | 4h     | No Rain, 2h| 001          | None            | False  |
-| -s 004| Sto_wet_c02_s01.StObin | True    | 4h     | No Rain, 2h| 002          | Sto_wet-s02.StoBin | True|
-| -s 005| Sto_wet_c02_s02.StObin | False   | 4h     | No Rain, 2h| 002          | None            | False  |
-| -s 006| Sto_wet_c02_s03.StObin | False   | 4h     | No Rain, 2h| 002          | None            | False  |
-| -s 007| Sto_wet_c03_s01.StObin | True    | 4h     | No Rain, 2h| 003          | Sto_wet-s03.StoBin | True|
-| -s 008| Sto_wet_c03_s02.StObin | False   | 4h     | No Rain, 2h| 003          | None            | False  |
-| -s 009| Sto_wet_c03_s03.StObin | False   | 4h     | No Rain, 2h| 003          | None            | False  |
+| -s 001| Sto_wet_c01_s01.StObin | True    | 4     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
+| -s 002| Sto_wet_c01_s02.StObin | False   | 4     | NaN | 001          | None            | False  |
+| -s 003| Sto_wet_c01_s03.StObin | False   | 4     | NaN | 001          | None            | False  |
+| -s 004| Sto_wet_c02_s01.StObin | True    | 4     | No Rain Last 6h| 002          | Sto_wet-s02.StoBin | True|
+| -s 005| Sto_wet_c02_s02.StObin | False   | 4     | NaN | 002          | None            | False  |
+| -s 006| Sto_wet_c02_s03.StObin | False   | 4     | NaN | 002          | None            | False  |
+| -s 007| Sto_wet_c03_s01.StObin | True    | 4     | No Rain 4h| 003          | Sto_wet-s03.StoBin | True|
+| -s 008| Sto_wet_c03_s02.StObin | False   | 4     | NaN | 003          | None            | False  |
+| -s 009| Sto_wet_c03_s03.StObin | False   | 4     | NaN | 003          | None            | False  |
 
 **Tabla**: Fechas de actualizacion de almacenamientos.
 
@@ -106,9 +106,10 @@ siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En 
 - **Si o No**: este actualiza (True) o no (False) cada tanto, esto con la finalidad de corregir problemas producidos en el largo plazo.
 - **Tiempo**: Cada cuanto se actualiza: Combinaciones tipo pandas (ej, 1h, 2.5h, 15min, etc).
 - **Condicion**: Si hay alguna condición para que se de la actualización (se listan a continuación):
-    - **No Rain, Xh**: Que no se registren lluvias **X** horas alrededor de la fecha actual.
-    - **Every Xh**: Independiente de la lluvia actualiza cada **X** horas.
-    - **Every Ejec**: En cada ejecución.
+    - **No Rain Next Xh**: No se registren lluvias en las siguientes **X** horas.
+    - **No Rain Last Xh **: No se registren lluvias en las ultimas **X** horas.
+    - **No Rain Xh**: Que no se registren lluvias **X** horas alrededor de la fecha actual.
+    > Se pueden incluir más definidas por el usuario.
 - **Calib actualiza**: Calibracion a partrir de la cual se actualizan los estados del modelo.
 - **Back Sto**: Archivo de background a partir del cual se cambian los estados del modelo cada **Tiempo** y con la **Condicion**.
 
