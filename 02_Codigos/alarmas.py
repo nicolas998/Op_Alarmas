@@ -57,6 +57,15 @@ def get_modelStore(RutesList):
             'Slides': l[8].rstrip().lstrip()}})
 	return DStore
 
+def get_modelStoreLastUpdate(RutesList):
+	DStoreUpdate = {}
+	for l in RutesList:
+		l = l.split('|')
+		DStoreUpdate.update({l[1].rstrip().lstrip():
+			{'Nombre': l[2].rstrip().lstrip(),
+			'Lastupdate': l[3].rstrip().lstrip()}})
+	return DStoreUpdate
+
 ########################################################################
 # FUNCIONES PARA LIDIAR CON CAMPOS DE LLUVIA
 
