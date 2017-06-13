@@ -72,13 +72,13 @@ ___
 
 **Tabla**: almacenamientos de ejecuciones.
 
-|id| Nombre                   | Si o No | Tiempo[h] | Condicion  | Calib Actualiza | Back Sto        | Slides |
+|id| Nombre                   | Update | Tiempo[h] | Condicion  | Calib Actualiza | Back Sto        | Slides |
 |:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
 | -s 001| Sto_wet_c01_s01.StObin | True    | 4     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
-| -s 002| Sto_wet_c01_s02.StObin | False   | 4     | NaN | 001          | None            | False  |
+| -s 002| Sto_wet_c01_s02.StObin | True    | 10    | No Rain 4h | 001          | None            | False  |
 | -s 003| Sto_wet_c01_s03.StObin | False   | 4     | NaN | 001          | None            | False  |
 | -s 004| Sto_wet_c02_s01.StObin | True    | 4     | No Rain Last 6h| 002          | Sto_wet-s02.StoBin | True|
-| -s 005| Sto_wet_c02_s02.StObin | False   | 4     | NaN | 002          | None            | False  |
+| -s 005| Sto_wet_c02_s02.StObin | True    | 12    | No Rain 4h | 002          | None            | False  |
 | -s 006| Sto_wet_c02_s03.StObin | False   | 4     | NaN | 002          | None            | False  |
 | -s 007| Sto_wet_c03_s01.StObin | True    | 4     | No Rain 4h| 003          | Sto_wet-s03.StoBin | True|
 | -s 008| Sto_wet_c03_s02.StObin | False   | 4     | NaN | 003          | None            | False  |
@@ -88,22 +88,22 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001| Sto_wet_c01_s01.StObin |2017-06-09-10:10      |
-| -t 002| Sto_wet_c01_s02.StObin |2017-06-09-10:10      |
-| -t 003| Sto_wet_c01_s03.StObin |2017-06-09-10:10      |
-| -t 004| Sto_wet_c02_s01.StObin |2017-06-09-10:10      |
-| -t 005| Sto_wet_c02_s02.StObin |2017-06-09-10:10      |
-| -t 006| Sto_wet_c02_s03.StObin |2017-06-09-10:10      |
-| -t 007| Sto_wet_c03_s01.StObin |2017-06-09-10:10      |
-| -t 008| Sto_wet_c03_s02.StObin |2017-06-09-10:10      |
-| -t 009| Sto_wet_c03_s03.StObin |2017-06-09-10:10      |
+| -t 001|Sto_wet_c01_s01.StObin|2017-06-13-15:40|
+| -t 002|Sto_wet_c01_s01.StObin|2017-06-13-12:40|
+| -t 003|None|2017-06-09-10:10|
+| -t 004|Sto_wet_c02_s01.StObin|2017-06-13-15:40|
+| -t 005|Sto_wet_c02_s01.StObin|2017-06-13-01:40|
+| -t 006|None|2017-06-09-10:10|
+| -t 007|Sto_wet_c03_s01.StObin|2017-06-13-15:40|
+| -t 008|None|2017-06-09-10:10|
+| -t 009|None|2017-06-09-10:10|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
 
 - **id**: del storage
 - **Nombre**: del archivo con las condiciones.
-- **Si o No**: este actualiza (True) o no (False) cada tanto, esto con la finalidad de corregir problemas producidos en el largo plazo.
+- **Update**: este actualiza (True) o no (False) cada tanto, esto con la finalidad de corregir problemas producidos en el largo plazo.
 - **Tiempo**: Cada cuanto se actualiza: Combinaciones tipo pandas (ej, 1h, 2.5h, 15min, etc).
 - **Condicion**: Si hay alguna condición para que se de la actualización (se listan a continuación):
     - **No Rain Next Xh**: No se registren lluvias en las siguientes **X** horas.

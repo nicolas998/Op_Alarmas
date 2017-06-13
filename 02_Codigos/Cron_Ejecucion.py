@@ -11,6 +11,9 @@ import alarmas as al
 date = dt.datetime.now()
 dateText = dt.datetime.now().strftime('%Y-%m-%d-%H:%M')
 
+print '\n'
+print '###################################### Fecha de Ejecucion: '+dateText+' ###############################\n'
+
 #Obtiene las rutas necesarias 
 ruta_de_rutas = '/home/nicolas/ProyectosGIT/Op_Alarmas/Rutas.md'
 RutasList = al.get_rutesList(ruta_de_rutas)
@@ -73,7 +76,6 @@ print lluvia_historica+'\n'
 #GENERA GRAFICAS DE CAMPOS
 #-------------------------------------------------------------------
 fecha2 = date.strftime('%Y-%m-%d-%H:%M')
-print fecha2
 
 # Grafica de la lluvia en los ultimos 3 dias 
 fecha1 = date - dt.timedelta(hours = 72)
@@ -119,7 +121,10 @@ print '############################## EJECUCION DEL MODELO #####################
 #Ruta archivo Ejecucion
 EjecFile = ruta_configuracion + 'EjemploCalib_Calib.md'
 #Ejecucion del modelo en el ultimo intervalo de tiempo
-comando = ruta_codigos+'Ejec_Model.py '+ruta_cuenca+' '+EjecFile+' -v'
-
+comando = ruta_codigos+'Model_Ejec.py '+ruta_cuenca+' '+EjecFile+' -v'
+print comando 
+#os.system(comando)
+#Actualiza las condiciones del modelo 
+comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+EjecFile+' -v'
 
 
