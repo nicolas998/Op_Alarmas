@@ -9,7 +9,8 @@ import glob
 ########################################################################
 # VARIABLES GLOBALES 
 
-
+ruta_store = None
+ruta_store_bck = None
 
 ########################################################################
 # FUNCIONES PARA OBTENER RUTAS 
@@ -200,3 +201,7 @@ def model_update_norain_last(RainRute, Hours):
 	# Lee el archivo de lluvia 
 	
 	print 'no last'
+
+def model_def_rutes(ruteStore, ruteStoreHist):
+	ruta_store = ruteStore
+	ruta_store_bck = ruteStoreHist
