@@ -20,6 +20,11 @@ def model_update_norain_last(key, umbral = 1):
 			os.system(comando)
 			#Actualiza la fecha de actualizacion 
 			DictUpdate['-t '+key[3:]]['LastUpdate'] = args.date
+			return 0
+		else:
+			return 1
+	else:
+		return 1
 
 def model_update_norain_next(key, umbral = 1):
 	#Suma la lluvia
@@ -30,7 +35,12 @@ def model_update_norain_next(key, umbral = 1):
 			os.system(comando)
 			#Actualiza la fecha de actualizacion 
 			DictUpdate['-t '+key[3:]]['LastUpdate'] = args.date
-
+			return 0
+		else:
+			return 1
+	else:
+		return 1
+		
 def model_update_norain(key, umbral = 1):
 	#lee la lluvia temporal
 	rainHist = pd.read_csv(ruta_rain_temp, 
@@ -44,7 +54,11 @@ def model_update_norain(key, umbral = 1):
 			os.system(comando)
 			#Actualiza la fecha de actualizacion 
 			DictUpdate['-t '+key[3:]]['LastUpdate'] = args.date
-
+			return 0
+		else:
+			return 1
+	else:
+		return 1
 
 
 #Parametros de entrada del trazador
@@ -115,20 +129,26 @@ for k in DictStore.keys():
 				#Obtiene las horas de la condicion
 				hours = float(DictStore[k]['Condition'][-3:-1])
 				al.get_rain_last_hours(ruta_rain_hist,ruta_rain_temp,hours, DeltaT)
-				model_update_norain(k, args.umbral)
+				estado = model_update_norain(k, args.umbral)
 			
 			#CASO 2: NO RAIN NEXT: No hay lluvia adelante.
 			elif DictStore[k]['Condition'][:-3] == 'No Rain Next':				
-				model_update_norain_next(k, args.umbral)
+				estado = model_update_norain_next(k, args.umbral)
 			
 			#CASO 3: NO RAIN LAST: no hay lluvia atras.
 			elif DictStore[k]['Condition'][:-3] == 'No Rain Last':
 				#Obtiene las horas de la condicion
 				hours = float(DictStore[k]['Condition'][-3:-1])
 				al.get_rain_last_hours(ruta_rain_hist,ruta_rain_temp,hours, DeltaT)
-				model_update_norain_last(k,args.umbral)
-			
+				estado = model_update_norain_last(k,args.umbral)
 			#CASO 4: ...
+			
+			#si esta diciendo lo que hace dice:
+			if args.verbose:
+				if estado == 0:
+					print 'Aviso: Se han remplazado los estados de: '+k
+				else:
+					print 'Aviso: No se han remplazado los estados de: '+k
 
 #Actualiza las fechas dentro del archivo de configuracion 
 

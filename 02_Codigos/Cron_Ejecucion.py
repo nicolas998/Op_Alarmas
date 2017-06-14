@@ -12,7 +12,7 @@ date = dt.datetime.now()
 dateText = dt.datetime.now().strftime('%Y-%m-%d-%H:%M')
 
 print '\n'
-print '###################################### Fecha de Ejecucion: '+dateText+' ###############################\n'
+print '###################################### Fecha de Ejecucion: '+dateText+' #############################\n'
 
 #Obtiene las rutas necesarias 
 ruta_de_rutas = '/home/nicolas/ProyectosGIT/Op_Alarmas/Rutas.md'
@@ -76,44 +76,47 @@ print lluvia_historica+'\n'
 #GENERA GRAFICAS DE CAMPOS
 #-------------------------------------------------------------------
 fecha2 = date.strftime('%Y-%m-%d-%H:%M')
+ListComandos = []
 
 # Grafica de la lluvia en los ultimos 3 dias 
 fecha1 = date - dt.timedelta(hours = 72)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain + 'Acumulado_3dias.png'
-comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 10 -2 90'
-os.system(comando)
-print 'Aviso: Campo de lluvia acumulado de 3 dias generado.'
+comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 10 -2 70 -v'
+ListComandos.append(comando)
 
 # Grafica de la lluvia en los ultimas 24 horas
 fecha1 = date - dt.timedelta(hours = 24)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain + 'Acumulado_1dia.png'
-comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 5 -2 25'
-os.system(comando)
-print 'Aviso: Campo de lluvia acumulado de 1 dia generado.'
+comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 5 -2 10 -v'
+ListComandos.append(comando)
 
 # Grafica en la ultima hora.
 fecha1 = date - dt.timedelta(hours = 1)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain + 'Acumulado_1hora.png'
-comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 1 -2 10'
-os.system(comando)
-print 'Aviso: Campo de lluvia acumulado de 1 hora'
+comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 1 -2 5 -v'
+ListComandos.append(comando)
 
-Grafica en los proximos 30min
+#Grafica en los proximos 30min
 fecha1 = date + dt.timedelta(minutes = 30)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain + 'Acumulado_30siguientes.png'
-comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha2+' '+fecha1+' '+ruta_cuenca+' '+lluvia_actual+' '+ruta_figura+' -1 1 -2 10'
-os.system(comando)
-print 'Aviso: Campo de lluvia acumulado de la proxima hora'
+comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha2+' '+fecha1+' '+ruta_cuenca+' '+lluvia_actual+' '+ruta_figura+' -1 1 -2 5 -v'
+ListComandos.append(comando)
+
+#Lanza los procesos de lluvia en paralelo
+p = Pool(processes = 4)
+p.map(os.system, ListComandos)
+p.close()
+print '\n'
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-print '############################## EJECUCION DEL MODELO ############################\n'
+print '###################################### EJECUCION DEL MODELO ############################\n'
 
 #Explicacion: Se pueden configurar diferentes ejecuciones con diferentes productos 
 #	de lluvia, este caso es uno de ejemplo.
@@ -124,7 +127,12 @@ os.system(comando)
 #Actualiza las condiciones del modelo 
 comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+ruta_configuracion_1+' -v'
 os.system(comando)
+print '\n'
 
-# Aca se pueden incluir mas configuraciones de ejecucion
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+print '###################################### PRODUCCION DE FIGURAS ############################\n'
 
 
