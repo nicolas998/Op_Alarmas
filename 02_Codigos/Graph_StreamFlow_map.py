@@ -23,7 +23,9 @@ parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion d
 parser.add_argument("-c", "--coord",help="Escribe archivo con coordenadas", default = False, type = bool)
 parser.add_argument("-r", "--record",help="Record de lectura en el binario para graficar", 
 	default = 1, type = int)
-
+parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agregando", 
+	action = 'store_true')
+	
 #lee todos los argumentos
 args=parser.parse_args()
 
@@ -35,7 +37,7 @@ ListConfig = al.get_rutesList(args.rutaConfig)
 ruta_qsim = al.get_ruta(ListConfig,'ruta_map_qsim')
 ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
 #Dicctionario con info de plot
-ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Slides')
+ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Qsim_map')
 DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
 
 #-------------------------------------------------------------------------------------------------------
@@ -47,23 +49,21 @@ qmed = cu.Load_BasinVar('stream')
 horton = cu.Load_BasinVar('horton')
 cauce = cu.Load_BasinVar('cauce')
 
-print ListPlotVar
-
 #construye las listas para plotear en paralelo
 ListaEjec = []
 for l in ListPlotVar:
 	ruta_in = ruta_sto + DictStore['-s '+l]['Nombre']
 	ruta_out_png = ruta_qsim + 'StreamFlow_'+l+'_'+args.date+'.png'
 	ruta_out_txt = ruta_qsim + 'StreamFlow_'+l+'_'+args.date+'.txt'
-	v,r = wmf.models.read_float_basin_ncol(ruta_in,1, cu.ncells, 5)
-	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v[-1]])
+	v,r = wmf.models.read_float_basin_ncol(ruta_in,args.record, cu.ncells, 5)
+	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v[-1], l])
 
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 
 def Plot_Qsim_Campo(Lista):
 	#obtiene la razon entre Qsim y Qmed 
-	Razon = Lista[-1] / qmed
+	Razon = Lista[-2] / qmed
 	#Prepara mapas de grosor y de razon 
 	RazonC = np.ones(cu.ncells)
 	Grosor = np.ones(cu.ncells)
@@ -77,14 +77,18 @@ def Plot_Qsim_Campo(Lista):
 		tranparent = True, 
 		ruta = Lista[1],
 		clean = True, 
-		colorbar = False, 
+		colorbar = False,
+		show_cbar = False, 
 		figsize = (10,12), 
 		umbral = cauce, 
 		escala = 1.5,
 		cmap = wmf.pl.get_cmap('viridis',5),
 		vmin = None,
 		vmax = None,
-		show = True)	
+		show = True)
+	#dice lo que hace
+	if args.verbose:
+		print 'Aviso: Plot de StreamFlow para '+Lista[-1]+' generado.'
 
 #Ejecuta los plots
 if len(ListaEjec) > 15:
