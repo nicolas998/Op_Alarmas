@@ -39,7 +39,7 @@ de las celdas.
 	> Ruta en la cual se van a guardar los binarios con los caudales actuales simulados.
 - **ruta_qsim_hist**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/03_CaudalHistorico/
 	> Ruta en donde se actualizan los archivos historicos de caudales simulados (**.csv**)
-- **ruta_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/Slides_map.bin
+- **ruta_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
 ___
 ## Calibracion
@@ -88,13 +88,13 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-06-13-15:40|
-| -t 002|Sto_wet_c01_s01.StObin|2017-06-13-12:40|
+| -t 001|Sto_wet_c01_s01.StObin|2017-06-16-06:35|
+| -t 002|Sto_wet_c01_s01.StObin|2017-06-16-05:55|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-06-13-15:40|
-| -t 005|Sto_wet_c02_s01.StObin|2017-06-13-01:40|
+| -t 004|Sto_wet_c02_s01.StObin|2017-06-16-06:10|
+| -t 005|Sto_wet_c02_s01.StObin|2017-06-15-21:50|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-06-13-15:40|
+| -t 007|Sto_wet_c03_s01.StObin|2017-06-16-06:35|
 | -t 008|None|2017-06-09-10:10|
 | -t 009|None|2017-06-09-10:10|
 
@@ -122,5 +122,30 @@ para alguno de los casos presentados en la tabla:
 - **Inicial Subterraneo**: 50
 - **Inicial Corriente**: 0.1
 
-**Tabla**: Ultima actualizacion
+___
+## Figuras
+
+Dentro de este apartado se indican las rutas donde se guardan las figuras 
+de las simulaciones y los mapas producidos por el modelo. Igualmente se 
+indican cual de las parametrizaciones es la que se usa para graficar algunas 
+de las variables tales como la animacion de caudales y la evolucion de la 
+humedad en la cuenca.
+
+- **ruta_map_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
+	> ruta donde se guardan los mapas de caudales simulados. 
+- **ruta_map_humedad**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_humedad/
+	> Ruta donde se guardan los mapas de humedad.
+- **ruta_map_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/
+	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
+- **ruta_serie_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
+	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
+
+**Tabla**: Variables y parametrizaciones a plotear.
+
+| Variable		  | Variable |
+|:---------------:|:--------:|
+| -p Qsim_map 		  | 001,003  |
+| -p Humedad_map 	  | 001,004  |
+| -p Slides 		  | 001,007,004 |
+
 

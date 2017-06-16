@@ -7,6 +7,7 @@ import alarmas as al
 from multiprocessing import Pool
 import glob
 import pandas as pd 
+import numpy as np 
 
 def model_warper(L):
 	#Ejecucion del modelo
@@ -59,6 +60,7 @@ cu = wmf.SimuBasin(rute=args.cuenca, SimSlides = True)
 ruta_sto = al.get_ruta(ListConfig, 'ruta_almacenamiento')
 ruta_out_sto = al.get_ruta(ListConfig, 'ruta_out_alm')
 ruta_out_slides = al.get_ruta(ListConfig, 'ruta_slides')
+ruta_slides_bin, ruta_slides_hdr = wmf.__Add_hdr_bin_2route__(ruta_out_slides)
 #Nombre de las simulaciones de caudal 
 QsimName = al.get_ruta(ListConfig,'Qsim Name')
 ruta_Qsim = al.get_ruta(ListConfig, 'ruta_qsim')
@@ -127,14 +129,35 @@ Nprocess = len(ListEjecs)
 if Nprocess > 15:
 	Nprocess = int(Nprocess/1.2)
 #Ejecucion  en paralelo y guarda caudales 
+if args.verbose:
+	print 'Resumen Ejecucion modelo'
+	print '\n'
 p = Pool(processes=Nprocess)
 R = p.map(model_warper, ListEjecs)
 p.close()
+#Un brinco para uqe quede lindo el print de deslizamientos.
+if args.verbose:
+	print '\n'
+	print 'Resumen deslizamientos'
 
 ############################ ESCRIBE EL BINARIO DE DESLIZAMIENTOS ##################
 
+#Archivo plano que dice cuales son las param que simularon deslizamientos 
+f = open(ruta_slides_hdr,'w')
+f.write('## Parametrizaciones Con Simulacion de Deslizamientos \n')
+f.write('Parametrizacion \t N_celdas_Desliza \n')
+#Termina de escribir el encabezado y escribe el binario.
 rec = 0
 for c,i in enumerate(ListEjecs):
 	if DictStore[i[0]]['Slides'] == 'True':
+		#Determina la cantidad de celdas que se deslizaron
+		Slides = np.copy(R[c]['Slides_Map'])
+		Nceldas_desliz = Slides[Slides<>0].shape[0]
+		f.write('%s \t %d \n' % (i[0], Nceldas_desliz))
+		#si esta verbose dice lo que pasa 
+		if args.verbose:
+			print 'Param '+i[0]+' tiene '+str(Nceldas_desliz)+' celdas deslizadas.'
+		#Escribe en el binario 
 		rec = rec+1
 		wmf.models.write_int_basin(ruta_out_slides, R[c]['Slides_Map'],rec,cu.ncells,1)
+f.close()

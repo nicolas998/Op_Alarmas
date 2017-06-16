@@ -51,13 +51,15 @@ while fecha_f.minute % 5 <>0 and cont<30:
 #Corrige la fecha para que este dentro del rango de fechas
 Flag = True
 cont = 0
-while Flag and cont<30:
+while Flag:
 	try:
 		pos = R.index.get_loc(fecha_f)
 		Flag = False
 	except:
 		fecha_f = fecha_f - pd.Timedelta('5 minutes')
 	cont+=1
+	if cont>30:
+		Flag = False
 #corrige fecha de inicio
 fecha_i = pd.to_datetime(args.fechaI)
 fecha_i = fecha_i - pd.Timedelta(str(fecha_f.second)+' seconds')

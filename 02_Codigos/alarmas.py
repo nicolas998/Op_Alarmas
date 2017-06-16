@@ -36,7 +36,7 @@ def get_rain_last_hours(ruta, rutaTemp, hours, DeltaT = 300):
 	comando = 'tail '+ruta+' -n '+str(Pasos)+' > '+rutaTemp
 	os.system(comando)
 
-def get_modelConfig_lines(RutesList, key, Calib_Storage = None):
+def get_modelConfig_lines(RutesList, key, Calib_Storage = None, PlotType = None):
 	List = []
 	for i in RutesList:
 		if i.startswith('|'+key) or i.startswith('| '+key):
@@ -48,9 +48,19 @@ def get_modelConfig_lines(RutesList, key, Calib_Storage = None):
 			return get_modelStore(List)
 		if Calib_Storage == 'Update':
 			return get_modelStoreLastUpdate(List)
+		if Calib_Storage == 'Plot':
+			return get_modelPlot(List, PlotType=PlotType)
 		return List
 	else:
 		return 'Aviso: no se encuentran lineas con el key de inicio especificado'
+
+def get_modelPlot(RutesList, PlotType = 'Qsim_map'):
+	for l in RutesList:
+		key = l.split('|')[1].rstrip().lstrip()
+		if key[3:] == PlotType:
+			EjecsList = [i.rstrip().lstrip() for i in l.split('|')[2].split(',')]
+			return EjecsList
+	return key
 
 def get_modelCalib(RutesList):
 	DCalib = {}
