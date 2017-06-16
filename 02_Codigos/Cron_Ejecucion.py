@@ -135,4 +135,20 @@ print '\n'
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 print '###################################### PRODUCCION DE FIGURAS ############################\n'
 
+#Figura de la evolucion de los caudales en el cauce
+ListaEjec = []
+for i in range(13):
+	fechaNueva = date + dt.timedelta(minutes = 5*i)
+	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+	comando = ruta_codigos+'Graph_StreamFlow_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+	ListaEjec.append(comando)
+#Ejecuta lass figuras en paralelo 
+p = Pool(processes = 10)
+p.map(os.system, ListaEjec)
+p.close()
+
+#figura de la evolucion de los deslizamientos 
+
+
+#figura de la humedad???
 

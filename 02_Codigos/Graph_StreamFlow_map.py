@@ -6,6 +6,7 @@ import os
 from wmf import wmf
 import alarmas as al
 from multiprocessing import Pool
+import glob
 
 #Parametros de entrada del trazador
 parser=argparse.ArgumentParser(
@@ -42,7 +43,7 @@ DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
 
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
-#Lectura de cuenc ay variables
+#Lectura de cuenca y variables
 cu = wmf.SimuBasin(rute=args.cuenca)
 #lectura de constantes 
 qmed = cu.Load_BasinVar('stream')
@@ -53,8 +54,14 @@ cauce = cu.Load_BasinVar('cauce')
 ListaEjec = []
 for l in ListPlotVar:
 	ruta_in = ruta_sto + DictStore['-s '+l]['Nombre']
-	ruta_out_png = ruta_qsim + 'StreamFlow_'+l+'_'+args.date+'.png'
-	ruta_out_txt = ruta_qsim + 'StreamFlow_'+l+'_'+args.date+'.txt'
+	#Mira la ruta del folder y si no existe la crea
+	ruta_folder = ruta_qsim + 'StreamMaps-'+l+'/'
+	Esta = glob.glob(ruta_folder)
+	if len(Esta) == 0:
+		os.system('mkdir '+ruta_folder)
+	#Obtiene las rutas de los archivos de salida
+	ruta_out_png = ruta_folder + 'StreamFlow_'+l+'_'+args.date+'.png'
+	ruta_out_txt = ruta_folder + 'StreamFlow_'+l+'_'+args.date+'.txt'
 	v,r = wmf.models.read_float_basin_ncol(ruta_in,args.record, cu.ncells, 5)
 	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v[-1], l])
 

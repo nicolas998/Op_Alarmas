@@ -80,23 +80,23 @@ ___
 | -s 004| Sto_wet_c02_s01.StObin | True    | 4     | No Rain Last 6h| 002          | Sto_wet-s02.StoBin | True|
 | -s 005| Sto_wet_c02_s02.StObin | True    | 12    | No Rain 4h | 002          | None            | False  |
 | -s 006| Sto_wet_c02_s03.StObin | False   | 4     | NaN | 002          | None            | False  |
-| -s 007| Sto_wet_c03_s01.StObin | True    | 4     | No Rain 4h| 003          | Sto_wet-s03.StoBin | True|
-| -s 008| Sto_wet_c03_s02.StObin | False   | 4     | NaN | 003          | None            | False  |
-| -s 009| Sto_wet_c03_s03.StObin | False   | 4     | NaN | 003          | None            | False  |
+| -s 007| Sto_wet_c03_s01.StObin | True    | 4     | No Rain 4h| 003          | Sto_wet-s01.StoBin | True|
+| -s 008| Sto_wet_c03_s02.StObin | True   | 4     | No Rain 4h | 003          | Sto_wet-s02.StoBin | False  |
+| -s 009| Sto_wet_c03_s03.StObin | True   | 4     | No Rain 4h | 003          | Sto_wet-s03.StoBin | False  |
 
 **Tabla**: Fechas de actualizacion de almacenamientos.
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-06-16-06:35|
+| -t 001|Sto_wet_c01_s01.StObin|2017-06-16-10:40|
 | -t 002|Sto_wet_c01_s01.StObin|2017-06-16-05:55|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-06-16-06:10|
-| -t 005|Sto_wet_c02_s01.StObin|2017-06-15-21:50|
+| -t 004|Sto_wet_c02_s01.StObin|2017-06-16-10:15|
+| -t 005|Sto_wet_c02_s01.StObin|2017-06-16-09:55|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-06-16-06:35|
-| -t 008|None|2017-06-09-10:10|
-| -t 009|None|2017-06-09-10:10|
+| -t 007|Sto_wet_c03_s01.StObin|2017-06-16-10:40|
+| -t 008|Sto_wet_c03_s02.StObin|2017-06-16-09:35|
+| -t 009|Sto_wet_c03_s03.StObin|2017-06-16-09:35|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
@@ -144,8 +144,8 @@ humedad en la cuenca.
 
 | Variable		  | Variable |
 |:---------------:|:--------:|
-| -p Qsim_map 		  | 001,003  |
-| -p Humedad_map 	  | 001,004  |
+| -p Qsim_map 		  | 001,003,002|
+| -p Humedad_map 	  | 001,004|
 | -p Slides 		  | 001,007,004 |
 
 
