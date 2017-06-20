@@ -82,7 +82,8 @@ Lparam = ['Dt[seg]','Dx[mts]',
 	'ruta_almacenamiento',
 	'Retorno',
 	'Simular Deslizamientos',
-	'Factor de Seguridad FS']
+	'Factor de Seguridad FS',
+	'Factor Corrector Zg']
 DictParam = {}
 for i in Lparam:
 	a = al.get_ruta(ListConfig, i)
@@ -100,6 +101,8 @@ if DictParam['Separar Flujos'] == 'True':
 if DictParam['Simular Deslizamientos'] == 'True':
 	wmf.models.sim_slides = 1
 	wmf.models.sl_fs = float(DictParam['Factor de Seguridad FS'])
+	cu.set_Slides(wmf.models.sl_zs * float(DictParam['Factor Corrector Zg']), 'Zs')
+print wmf.models.sl_zs.mean()
 
 ############################ LECTURA DE CALIBRACIONES #############################
 

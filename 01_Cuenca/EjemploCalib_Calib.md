@@ -20,6 +20,7 @@ Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
 
 - **Simular Deslizamientos**: True
 - **Factor de Seguridad FS**: 0.5
+- **Factor Corrector Zg**: 4.5
 
 > Parametros para determinar si se hace modelación de deslizamientos o no, además se 
 puede modificar el factor de seguridad mediante el cual se determina la vulnerabilidad 
@@ -74,29 +75,29 @@ ___
 
 |id| Nombre                   | Update | Tiempo[h] | Condicion  | Calib Actualiza | Back Sto        | Slides |
 |:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
-| -s 001| Sto_wet_c01_s01.StObin | True    | 4     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
+| -s 001| Sto_wet_c01_s01.StObin | True    | 10     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
 | -s 002| Sto_wet_c01_s02.StObin | True    | 10    | No Rain 4h | 001          | None            | False  |
 | -s 003| Sto_wet_c01_s03.StObin | False   | 4     | NaN | 001          | None            | False  |
 | -s 004| Sto_wet_c02_s01.StObin | True    | 4     | No Rain Last 6h| 002          | Sto_wet-s02.StoBin | True|
-| -s 005| Sto_wet_c02_s02.StObin | True    | 12    | No Rain 4h | 002          | None            | False  |
+| -s 005| Sto_wet_c02_s02.StObin | True    | 15    | No Rain 4h | 002          | None            | False  |
 | -s 006| Sto_wet_c02_s03.StObin | False   | 4     | NaN | 002          | None            | False  |
-| -s 007| Sto_wet_c03_s01.StObin | True    | 4     | No Rain 4h| 003          | Sto_wet-s01.StoBin | True|
-| -s 008| Sto_wet_c03_s02.StObin | True   | 4     | No Rain 4h | 003          | Sto_wet-s02.StoBin | False  |
-| -s 009| Sto_wet_c03_s03.StObin | True   | 4     | No Rain 4h | 003          | Sto_wet-s03.StoBin | False  |
+| -s 007| Sto_wet_c03_s01.StObin | True    | 2     | No Rain 4h| 003          | Sto_wet-s01.StoBin | True|
+| -s 008| Sto_wet_c03_s02.StObin | True   | 8     | No Rain 4h | 003          | Sto_wet-s02.StoBin | False  |
+| -s 009| Sto_wet_c03_s03.StObin | True   | 15     | No Rain 4h | 003          | Sto_wet-s03.StoBin | False  |
 
 **Tabla**: Fechas de actualizacion de almacenamientos.
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-06-16-10:40|
-| -t 002|Sto_wet_c01_s01.StObin|2017-06-16-05:55|
+| -t 001|Sto_wet_c01_s01.StObin|2017-06-20-08:40|
+| -t 002|Sto_wet_c01_s01.StObin|2017-06-20-10:45|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-06-16-10:15|
-| -t 005|Sto_wet_c02_s01.StObin|2017-06-16-09:55|
+| -t 004|Sto_wet_c02_s01.StObin|2017-06-20-12:15|
+| -t 005|Sto_wet_c02_s01.StObin|2017-06-20-10:35|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-06-16-10:40|
-| -t 008|Sto_wet_c03_s02.StObin|2017-06-16-09:35|
-| -t 009|Sto_wet_c03_s03.StObin|2017-06-16-09:35|
+| -t 007|Sto_wet_c03_s01.StObin|2017-06-20-12:50|
+| -t 008|Sto_wet_c03_s02.StObin|2017-06-20-07:30|
+| -t 009|Sto_wet_c03_s03.StObin|2017-06-20-07:30|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
@@ -107,7 +108,7 @@ siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En 
 - **Tiempo**: Cada cuanto se actualiza: Combinaciones tipo pandas (ej, 1h, 2.5h, 15min, etc).
 - **Condicion**: Si hay alguna condición para que se de la actualización (se listan a continuación):
     - **No Rain Next Xh**: No se registren lluvias en las siguientes **X** horas.
-    - **No Rain Last Xh **: No se registren lluvias en las ultimas **X** horas.
+    - **No Rain Last Xh**: No se registren lluvias en las ultimas **X** horas.
     - **No Rain Xh**: Que no se registren lluvias **X** horas alrededor de la fecha actual.
     > Se pueden incluir más definidas por el usuario.
 - **Calib actualiza**: Calibracion a partrir de la cual se actualizan los estados del modelo.
@@ -144,7 +145,7 @@ humedad en la cuenca.
 
 | Variable		  | Variable |
 |:---------------:|:--------:|
-| -p Qsim_map 		  | 001,003,002|
+| -p Qsim_map 		  | 001,003,002,004|
 | -p Humedad_map 	  | 001,004|
 | -p Slides 		  | 001,007,004 |
 

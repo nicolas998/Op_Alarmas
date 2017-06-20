@@ -106,7 +106,7 @@ ruta_figura = ruta_out_rain + 'Acumulado_30siguientes.png'
 comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha2+' '+fecha1+' '+ruta_cuenca+' '+lluvia_actual+' '+ruta_figura+' -1 1 -2 5 -v'
 ListComandos.append(comando)
 
-#Lanza los procesos de lluvia en paralelo
+##Lanza los procesos de lluvia en paralelo
 p = Pool(processes = 4)
 p.map(os.system, ListComandos)
 p.close()
