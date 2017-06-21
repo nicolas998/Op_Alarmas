@@ -44,6 +44,8 @@ R = DictRain[u' Record']
 fecha_f = pd.to_datetime(args.fechaF)
 fecha_f = fecha_f - pd.Timedelta(str(fecha_f.second)+' seconds')
 fecha_f = fecha_f - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+
+#corrige las fechas
 cont = 0
 while fecha_f.minute % 5 <>0 and cont<30:
 	fecha_f = fecha_f + pd.Timedelta('1 minutes')
@@ -75,6 +77,9 @@ while Flag:
 #Obtiene el periodo
 pos = R[fecha_i:fecha_f].values
 pos = pos[pos <>1 ]
+#imprime el tamano de lo que esta haciendo 
+if args.verbose:
+	print fecha_f - fecha_i
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # GENERA LA GRAFICA

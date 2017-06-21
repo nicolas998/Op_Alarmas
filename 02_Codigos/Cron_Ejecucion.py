@@ -6,6 +6,7 @@ from multiprocessing import Pool
 import numpy as np
 import pickle 
 import alarmas as al
+import glob 
 
 # Texto Fecha: el texto de fecha que se usa para guardar algunos archivos de figuras.
 date = dt.datetime.now()
@@ -146,6 +147,7 @@ for i in range(13):
 p = Pool(processes = 10)
 p.map(os.system, ListaEjec)
 p.close()
+
 
 #figura de la evolucion de los deslizamientos 
 

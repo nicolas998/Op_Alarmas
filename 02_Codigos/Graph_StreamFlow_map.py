@@ -18,7 +18,7 @@ parser=argparse.ArgumentParser(
         '''))
 
 #Parametros obligatorios
-parser.add_argument("date",help="(Obligatorio) Decha actual de ejecucion YYYY-MM-DD-HH:MM")
+parser.add_argument("date",help="(Obligatorio) Fecha actual de ejecucion YYYY-MM-DD-HH:MM")
 parser.add_argument("cuenca",help="Archivo -nc de la cuenca con la cual se va a realizar el trabajo")
 parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion de la cuenca")
 parser.add_argument("-c", "--coord",help="Escribe archivo con coordenadas", default = False, type = bool)
@@ -55,7 +55,7 @@ ListaEjec = []
 for l in ListPlotVar:
 	ruta_in = ruta_sto + DictStore['-s '+l]['Nombre']
 	#Mira la ruta del folder y si no existe la crea
-	ruta_folder = ruta_qsim + 'StreamMaps-'+l+'/'
+	ruta_folder = ruta_qsim +'-'+l+'/'
 	Esta = glob.glob(ruta_folder)
 	if len(Esta) == 0:
 		os.system('mkdir '+ruta_folder)
