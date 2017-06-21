@@ -102,6 +102,7 @@ if len(pos)>0:
 		)
 	if args.verbose:
 		print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero'
+		print fecha_f - fecha_i
 else:
 	Vsum = np.zeros(cu.ncells)
 	c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
@@ -114,3 +115,4 @@ else:
 		)
 	if args.verbose:
 		print 'Aviso: Se ha producido un campo sin lluvia.'
+		print fecha_f - fecha_i
