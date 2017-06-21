@@ -3,8 +3,6 @@ import argparse
 import textwrap
 import numpy as np
 import os 
-import pandas as pd
-import pylab as pl
 import glob 
 import alarmas as al
 
@@ -32,21 +30,25 @@ ListConfig = al.get_rutesList(args.rutaConfig)
 #rurta de las figuras 
 rutaFiguras = al.get_ruta(ListConfig, args.nameFiguras)
 
-
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 #Lista las carpetas con figuras de esas 
 Lista = glob.glob(rutaFiguras+'*')
-print Lista
 #Itera sobre las carpetas, las organiza y borra lo viejo 
 for l in Lista:
 	ListTemp = glob.glob(l+'/*')
 	ListTemp.sort()
 	print len(ListTemp)
-	for i in ListTemp[:args.nfiles]:
-		os.system('rm '+i)
-	print 'Aviso: Se han dejado solo '+str(args.nfiles)+' elementos para '
-	print l
+	if len(ListTemp)>= args.nfiles:
+		for i in ListTemp[:-args.nfiles]:
+			os.system('rm '+i)
+		if args.verbose:
+			print 'Aviso: Se han dejado solo '+str(args.nfiles)+' elementos para '
+			print l
+	else:
+		if args.verbose:
+			print 'Aviso: No hay suficientes archivos para borrar'
+	
 
 
 
