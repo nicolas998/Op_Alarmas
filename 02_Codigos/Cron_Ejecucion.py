@@ -6,6 +6,7 @@ from multiprocessing import Pool
 import numpy as np
 import pickle 
 import alarmas as al
+import time 
 
 # Texto Fecha: el texto de fecha que se usa para guardar algunos archivos de figuras.
 date = dt.datetime.now()
@@ -26,6 +27,7 @@ ruta_configuracion_1 = al.get_ruta(RutasList, 'ruta_configuracion_1')
 ruta_almacenamiento = al.get_ruta(RutasList, 'ruta_almacenamiento')
 # Rutas de objetos de salida
 ruta_out_rain = al.get_ruta(RutasList, 'ruta_rain')
+ruta_out_rain_png = al.get_ruta(RutasList, 'ruta_rain_png')
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -81,28 +83,28 @@ ListComandos = []
 # Grafica de la lluvia en los ultimos 3 dias 
 fecha1 = date - dt.timedelta(hours = 72)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
-ruta_figura = ruta_out_rain + 'Acumulado_3dias.png'
+ruta_figura = ruta_out_rain_png + 'Acumulado_3dias.png'
 comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 10 -2 70 -v'
 ListComandos.append(comando)
 
 # Grafica de la lluvia en los ultimas 24 horas
 fecha1 = date - dt.timedelta(hours = 24)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
-ruta_figura = ruta_out_rain + 'Acumulado_1dia.png'
+ruta_figura = ruta_out_rain_png + 'Acumulado_1dia.png'
 comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 5 -2 10 -v'
 ListComandos.append(comando)
 
 # Grafica en la ultima hora.
 fecha1 = date - dt.timedelta(hours = 1)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
-ruta_figura = ruta_out_rain + 'Acumulado_1hora.png'
+ruta_figura = ruta_out_rain_png + 'Acumulado_1hora.png'
 comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha1+' '+fecha2+' '+ruta_cuenca+' '+lluvia_historica+' '+ruta_figura+' -1 1 -2 5 -v'
 ListComandos.append(comando)
 
 #Grafica en los proximos 30min
 fecha1 = date + dt.timedelta(minutes = 30)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
-ruta_figura = ruta_out_rain + 'Acumulado_30siguientes.png'
+ruta_figura = ruta_out_rain_png + 'Acumulado_30siguientes.png'
 comando = ruta_codigos+'Graph_Rain_Campo.py '+fecha2+' '+fecha1+' '+ruta_cuenca+' '+lluvia_actual+' '+ruta_figura+' -1 1 -2 5 -v'
 ListComandos.append(comando)
 
@@ -110,6 +112,8 @@ ListComandos.append(comando)
 p = Pool(processes = 4)
 p.map(os.system, ListComandos)
 p.close()
+p.join()
+#time.sleep(20)
 print '\n'
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -150,5 +154,16 @@ p.close()
 #figura de la evolucion de los deslizamientos 
 
 
-#figura de la humedad???
+#Figura de la humedad simulada en el tiempo actual
+
+ListaEjec = []
+fechaNueva = date + dt.timedelta(minutes = 5*i)
+fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+ListaEjec.append(comando)
+#Ejecuta lass figuras en paralelo 
+p = Pool(processes = 3)
+p.map(os.system, ListaEjec)
+p.close()
+
 

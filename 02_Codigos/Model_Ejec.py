@@ -138,6 +138,7 @@ if args.verbose:
 p = Pool(processes=Nprocess)
 R = p.map(model_warper, ListEjecs)
 p.close()
+p.join()
 #Un brinco para uqe quede lindo el print de deslizamientos.
 if args.verbose:
 	print '\n'

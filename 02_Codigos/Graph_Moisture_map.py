@@ -7,14 +7,15 @@ from wmf import wmf
 import alarmas as al
 from multiprocessing import Pool
 import glob
+import pylab as pl 
 
 #Parametros de entrada del trazador
 parser=argparse.ArgumentParser(
-        prog='Genera_Grafica_Qsim',
+        prog='Genera_Grafica_Moist_sim',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=textwrap.dedent('''\
-        Genera la figura de caudales simulados para un periodo asignado de tiempo, de forma 
-        adicional presenta el hietograma de precipitacion.
+        Genera la figura de la humedad simulada en tanques capilar 0 y gravitacional 2 
+        para un periodo asignado de tiempo.
         '''))
 
 #Parametros obligatorios
@@ -34,68 +35,49 @@ args=parser.parse_args()
 #-------------------------------------------------------------------------------------------------------
 #Lee el archivo de configuracion
 ListConfig = al.get_rutesList(args.rutaConfig)
-#Lectura de rutas
-ruta_qsim = al.get_ruta(ListConfig,'ruta_map_qsim')
+#Lectura de lectura de entrada de almacenamiento para correr modelo
 ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
-#Dicctionario con info de plot
-ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Qsim_map')
+#Lectura de rutas de salida del mapa
+ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad')
+#Diccionario con info de plot
+ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Humedad_map')
 DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
 
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 #Lectura de cuenca y variables
 cu = wmf.SimuBasin(rute=args.cuenca)
-#lectura de constantes 
-qmed = cu.Load_BasinVar('stream')
-horton = cu.Load_BasinVar('horton')
-cauce = cu.Load_BasinVar('cauce')
 
 #construye las listas para plotear en paralelo
 ListaEjec = []
 for l in ListPlotVar:
 	ruta_in = ruta_sto + DictStore['-s '+l]['Nombre']
 	#Mira la ruta del folder y si no existe la crea
-	ruta_folder = ruta_qsim +l+'/'
+	#Se crea un folder en el que se van a contener las imagenes de cada parametrizacion asignada
+	ruta_folder = ruta_Hsim+l+'/'
 	Esta = glob.glob(ruta_folder)
 	if len(Esta) == 0:
 		os.system('mkdir '+ruta_folder)
 	#Obtiene las rutas de los archivos de salida
-	ruta_out_png = ruta_folder + 'StreamFlow_'+l+'_'+args.date+'.png'
-	ruta_out_txt = ruta_folder + 'StreamFlow_'+l+'_'+args.date+'.txt'
+	ruta_out_png = ruta_folder + 'Humedad_'+l+'_'+args.date+'.png'
+	ruta_out_txt = ruta_folder + 'Humedad_'+l+'_'+args.date+'.txt'
+	#Lee los binarios de humedad para la cuenca de cada parametrizacion
 	v,r = wmf.models.read_float_basin_ncol(ruta_in,args.record, cu.ncells, 5)
-	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v[-1], l])
+	#Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
+	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v, l])
 
 #-------------------------------------------------------------------------------------------------------
+#Se generan  los plots de humedad de cada parametrizacion 
 #-------------------------------------------------------------------------------------------------------
 
-def Plot_Qsim_Campo(Lista):
-	#obtiene la razon entre Qsim y Qmed 
-	Razon = Lista[-2] / qmed
-	#Prepara mapas de grosor y de razon 
-	RazonC = np.ones(cu.ncells)
-	Grosor = np.ones(cu.ncells)
-	for c,i in enumerate([20,50,80,200]):
-		for h in range(1,6):        
-			camb = 6 - h
-			RazonC[(Razon >= i*camb) & (horton == h)] = c+2
-			Grosor[(Razon >= i*camb) & (horton == h)] = np.log((c+1)*10)**1.4
-	#Plot 	
-	Coord = cu.Plot_Net(Grosor, RazonC,  
-		tranparent = True, 
-		ruta = Lista[1],
-		clean = True, 
-		colorbar = False,
-		show_cbar = False, 
-		figsize = (10,12), 
-		umbral = cauce, 
-		escala = 1.5,
-		cmap = wmf.pl.get_cmap('viridis',5),
-		vmin = None,
-		vmax = None,
-		show = True)
+def Plot_Hsim(Lista):
+	#Plot 
+	Coord=cu.Plot_basinClean(Lista[-2][0]+Lista[-2][2],ruta = Lista[1],
+					cmap = pl.get_cmap('viridis'),
+					figsize = (10,12))
 	#dice lo que hace
 	if args.verbose:
-		print 'Aviso: Plot de StreamFlow para '+Lista[-1]+' generado.'
+		print 'Aviso: Plot de Humedad para '+Lista[-1]+' generado.'
 
 #Ejecuta los plots
 if len(ListaEjec) > 15:
@@ -103,10 +85,10 @@ if len(ListaEjec) > 15:
 else:
 	Nprocess = len(ListaEjec)
 p = Pool(processes = Nprocess)
-p.map(Plot_Qsim_Campo, ListaEjec)
+p.map(Plot_Hsim, ListaEjec)
 p.close()
 
-#Guarda archuivo con coordenadas
+#Guarda archuivo con coordenadas - por defecto es false, cuando se cambie revisar Coord.
 if args.coord:
 	f = open(ListaEjec[0][2], 'w')
 	for t,i in zip(['Left', 'Right', 'Bottom', 'Top'], Coord):
