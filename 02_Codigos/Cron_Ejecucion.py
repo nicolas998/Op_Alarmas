@@ -7,6 +7,7 @@ import numpy as np
 import pickle 
 import alarmas as al
 import glob 
+import time 
 
 # Texto Fecha: el texto de fecha que se usa para guardar algunos archivos de figuras.
 date = dt.datetime.now()
@@ -125,6 +126,8 @@ print '###################################### EJECUCION DEL MODELO #############
 #Ejecucion del modelo en el ultimo intervalo de tiempo
 comando = ruta_codigos+'Model_Ejec.py '+ruta_cuenca+' '+ruta_configuracion_1+' -v'
 os.system(comando)
+time.sleep(15)
+
 #Actualiza las condiciones del modelo 
 comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+ruta_configuracion_1+' -v'
 os.system(comando)
@@ -147,7 +150,8 @@ for i in range(13):
 p = Pool(processes = 10)
 p.map(os.system, ListaEjec)
 p.close()
-
+#elimina figuras viejas 
+comando = ruta_codigos+'Graph_Erase_Last.py'+
 
 #figura de la evolucion de los deslizamientos 
 
