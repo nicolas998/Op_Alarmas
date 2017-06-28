@@ -151,7 +151,7 @@ p = Pool(processes = 10)
 p.map(os.system, ListaEjec)
 p.close()
 
-#figura de la evolucion de los deslizamientos 
+print 'Se ejecutan figuras con mapa de StreamFlow'
 
 
 #Figura de la humedad simulada en el tiempo actual
@@ -166,4 +166,19 @@ p = Pool(processes = 3)
 p.map(os.system, ListaEjec)
 p.close()
 
+print 'Se ejecutan figuras con mapa de Humedad'
+
+#Figura de los deslizamiento simuados en el tiempo acumulado 
+
+ListaEjec = []
+fechaNueva = date + dt.timedelta(minutes = 5*i)
+fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+comando = ruta_codigos+'Graph_Slides_map2.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
+ListaEjec.append(comando)
+#Ejecuta las figuras en paralelo 
+p = Pool(processes = 3)
+p.map(os.system, ListaEjec)
+p.close()
+
+print 'Se ejecutan figuras con mapa de Deslizamientos'
 

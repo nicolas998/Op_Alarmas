@@ -35,11 +35,11 @@ args=parser.parse_args()
 #-------------------------------------------------------------------------------------------------------
 #Lee el archivo de configuracion
 ListConfig = al.get_rutesList(args.rutaConfig)
-#Lectura de lectura de entrada de almacenamiento para correr modelo
+#Lectura de entrada de almacenamiento para correr modelo
 ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
 #Lectura de rutas de salida del mapa
 ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad')
-#Diccionario con info de plot
+#Diccionario con info de plot: se lee la info de todos los parametrizaciones
 ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Humedad_map')
 DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
 
@@ -50,10 +50,12 @@ cu = wmf.SimuBasin(rute=args.cuenca)
 
 #construye las listas para plotear en paralelo
 ListaEjec = []
+
 for l in ListPlotVar:
+	#Se define ruta donde se leeran los resultados a plotear
 	ruta_in = ruta_sto + DictStore['-s '+l]['Nombre']
-	#Mira la ruta del folder y si no existe la crea
 	#Se crea un folder en el que se van a contener las imagenes de cada parametrizacion asignada
+	#Mira la ruta del folder y si no existe la crea
 	ruta_folder = ruta_Hsim+l+'/'
 	Esta = glob.glob(ruta_folder)
 	if len(Esta) == 0:
@@ -73,6 +75,7 @@ for l in ListPlotVar:
 def Plot_Hsim(Lista):
 	#Plot 
 	Coord=cu.Plot_basinClean(Lista[-2][0]+Lista[-2][2],ruta = Lista[1],
+					show_cbar=True,
 					cmap = pl.get_cmap('viridis'),
 					figsize = (10,12))
 	#dice lo que hace
