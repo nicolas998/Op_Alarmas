@@ -45,13 +45,17 @@ ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',Pl
 #construye las listas para plotear en paralelo para cada parametrizacion
 #Ademas se acumula el numero de celdas acumuladas de todas las parametrizaciones.
 ListaEjec = []; Vsum = np.zeros(cu.ncells)
-#Se define ruta donde se leeran los resultados a plotear
-#ruta_in = args.slides
+
 
 for l in range(0,len(ListPlotVar)):
+	#Mira la ruta del folder y si no existe la crea
+	ruta_folder = ruta_out+ListPlotVar[l]+'/Slides'
+	Esta = glob.glob(ruta_folder)
+	if len(Esta) == 0:
+		os.system('mkdir '+ruta_folder)
 	#Obtiene las rutas de los archivos de salida
-	ruta_out_png = ruta_out+ListPlotVar[l]+'_'+args.date+'.png'
-	ruta_out_txt = ruta_out+ListPlotVar[l]+'_'+args.date+'.txt'
+	ruta_out_png = ruta_folder+ListPlotVar[l]'_'+args.date+'.png'
+	ruta_out_txt = ruta_folder+ListPlotVar[l]'_'+args.date+'.txt'
 	#Lee los binarios de deslizamientos para la cuenca, para cada parametrizacion
 	v,r = wmf.models.read_int_basin(ruta_in,l+1,cu.ncells)
 	#Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
@@ -61,8 +65,8 @@ for l in range(0,len(ListPlotVar)):
 
 ###Se agrega el mapa de celdas acumuladas entre los que se van a plotear desde la info en ListaEjec
 #Obtiene las rutas de los archivos de salida
-ruta_out_png = ruta_out+'ParsAcum'+args.date+'.png'
-ruta_out_txt = ruta_out+'ParsAcum'+args.date+'.txt'
+ruta_out_png = ruta_out+'ParsAcum/SlidesParsAcum_'+args.date+'.png'
+ruta_out_txt = ruta_out+'ParsAcum/SlidesParsAcum_'+args.date+'.txt'
 #Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
 ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, Vsum, '999'])
 

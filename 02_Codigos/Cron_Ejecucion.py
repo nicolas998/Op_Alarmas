@@ -161,7 +161,7 @@ fechaNueva = date + dt.timedelta(minutes = 5*i)
 fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
 comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
 ListaEjec.append(comando)
-#Ejecuta lass figuras en paralelo 
+#Ejecuta las figuras en paralelo 
 p = Pool(processes = 3)
 p.map(os.system, ListaEjec)
 p.close()
