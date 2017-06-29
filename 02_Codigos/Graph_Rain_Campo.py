@@ -86,7 +86,7 @@ if args.verbose:
 #-------------------------------------------------------------------------------------------------------------------------------------
 #Textos para la legenda
 lab = np.linspace(args.vmin, args.vmax, 4)
-texto = ['bajo', 'medio', 'alto', 'muy alto']
+texto = ['Bajo', 'Medio', 'Alto', 'Muy alto']
 labText = ['%dmm\n%s'%(i,j) for i,j in zip(lab, texto)]
 #se fija si si hay algo para graficar 
 if len(pos)>0:
@@ -103,8 +103,9 @@ if len(pos)>0:
 		cbar_ticks= lab,
 		cbar_ticklabels = labText,
 		cbar_aspect = 17,
-		ruta = args.rutaFigura
-		)
+		ruta = args.rutaFigura,
+		show=False,figsize = (10,12))
+	c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
 	if args.verbose:
 		print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero'
 		print fecha_f - fecha_i
@@ -116,8 +117,9 @@ else:
 		cbar_ticks= lab,
 		cbar_ticklabels = labText,
 		cbar_aspect = 17,
-		ruta = args.rutaFigura
-		)
+		ruta = args.rutaFigura,
+		show=False,figsize = (10,12))
+	c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
 	if args.verbose:
 		print 'Aviso: Se ha producido un campo sin lluvia.'
 		print fecha_f - fecha_i

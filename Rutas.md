@@ -18,6 +18,7 @@ Rutas necesarias para los datos de entrada en la operación del modelo:
 Rutas donde se alojan los resultados obtenidos por el modelo.
 
 - **ruta_rain**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/01_Rain/
+- **ruta_rain_png**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/
 - **ruta_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal
 - **ruta_storage**:
 - **ruta_slides**:

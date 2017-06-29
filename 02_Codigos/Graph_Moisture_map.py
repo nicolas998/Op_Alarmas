@@ -33,20 +33,22 @@ args=parser.parse_args()
 
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
+#Lectura de cuenca y variables
+cu = wmf.SimuBasin(rute=args.cuenca)
+
+#-------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------
 #Lee el archivo de configuracion
 ListConfig = al.get_rutesList(args.rutaConfig)
-#Lectura de entrada de almacenamiento para correr modelo
+#Se define ruta donde se leeran los resultados a plotear
 ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
-#Lectura de rutas de salida del mapa
-ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad')
+#Lectura de rutas de salida de la imagen
+ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad2')
 #Diccionario con info de plot: se lee la info de todos los parametrizaciones
 ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Humedad_map')
 DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-#Lectura de cuenca y variables
-cu = wmf.SimuBasin(rute=args.cuenca)
+
 
 #construye las listas para plotear en paralelo
 ListaEjec = []
@@ -61,8 +63,8 @@ for l in ListPlotVar:
 	if len(Esta) == 0:
 		os.system('mkdir '+ruta_folder)
 	#Obtiene las rutas de los archivos de salida
-	ruta_out_png = ruta_folder + 'Humedad_'+l+'_'+args.date+'.png'
-	ruta_out_txt = ruta_folder + 'Humedad_'+l+'_'+args.date+'.txt'
+	ruta_out_png = ruta_folder +'Humedad'+l+'_'+args.date+'.png'
+	ruta_out_txt = ruta_folder +'Humedad'+l+'_'+args.date+'.txt'
 	#Lee los binarios de humedad para la cuenca de cada parametrizacion
 	v,r = wmf.models.read_float_basin_ncol(ruta_in,args.record, cu.ncells, 5)
 	#Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
@@ -74,10 +76,14 @@ for l in ListPlotVar:
 
 def Plot_Hsim(Lista):
 	#Plot 
-	Coord=cu.Plot_basinClean(Lista[-2][0]+Lista[-2][2],ruta = Lista[1],
+	VarToPlot=Lista[-2][0]+Lista[-2][2]; ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/4)
+	Coord,ax=cu.Plot_basinClean(VarToPlot,ruta = Lista[1],
 					show_cbar=True,
 					cmap = pl.get_cmap('viridis'),
-					figsize = (10,12))
+					#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+					cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,
+					show=False,figsize = (10,12))
+	ax.set_title('Mapa Humedad Par'+Lista[-1], fontsize=18 )
 	#dice lo que hace
 	if args.verbose:
 		print 'Aviso: Plot de Humedad para '+Lista[-1]+' generado.'

@@ -20,7 +20,7 @@ Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
 
 - **Simular Deslizamientos**: True
 - **Factor de Seguridad FS**: 0.5
-- **Factor Corrector Zg**: 4.5
+- **Factor Corrector Zg**: 1.0
 
 > Parametros para determinar si se hace modelación de deslizamientos o no, además se 
 puede modificar el factor de seguridad mediante el cual se determina la vulnerabilidad 
@@ -89,15 +89,15 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-06-20-08:40|
-| -t 002|Sto_wet_c01_s01.StObin|2017-06-20-10:45|
+| -t 001|Sto_wet_c01_s01.StObin|2017-06-28-17:00|
+| -t 002|Sto_wet_c01_s01.StObin|2017-06-28-17:00|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-06-20-12:15|
-| -t 005|Sto_wet_c02_s01.StObin|2017-06-20-10:35|
+| -t 004|Sto_wet_c02_s01.StObin|2017-06-28-19:20|
+| -t 005|Sto_wet_c02_s01.StObin|2017-06-28-16:55|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-06-20-12:50|
-| -t 008|Sto_wet_c03_s02.StObin|2017-06-20-07:30|
-| -t 009|Sto_wet_c03_s03.StObin|2017-06-20-07:30|
+| -t 007|Sto_wet_c03_s01.StObin|2017-06-28-20:05|
+| -t 008|Sto_wet_c03_s02.StObin|2017-06-28-19:00|
+| -t 009|Sto_wet_c03_s03.StObin|2017-06-28-16:55|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
@@ -132,11 +132,13 @@ indican cual de las parametrizaciones es la que se usa para graficar algunas
 de las variables tales como la animacion de caudales y la evolucion de la 
 humedad en la cuenca.
 
-- **ruta_map_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
+- **ruta_map_qsim**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/StreamMaps
 	> ruta donde se guardan los mapas de caudales simulados. 
-- **ruta_map_humedad**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_humedad/
+- **ruta_map_humedad**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/HumedadMaps
+- **ruta_map_humedad2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_humedad/HumedadMaps
 	> Ruta donde se guardan los mapas de humedad.
-- **ruta_map_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/
+- **ruta_map_slides**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/SlidesMaps
+- **ruta_map_slides2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
 - **ruta_serie_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
