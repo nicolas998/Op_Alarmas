@@ -9,7 +9,7 @@ los espacios, ya que estos permiten la lectura de las mismas.
 Rutas necesarias para los datos de entrada en la operación del modelo:
 
 - **ruta_campos**: /media/nicolas/Home/nicolas/101_RadarClass/
-- **ruta_cuenca**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/LaInmaculada_12m2.nc
+- **ruta_cuenca**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/LaInmaculada_12m.nc
 - **ruta_configuracion_1**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/EjemploCalib_Calib.md
 - **ruta_codigos**: /home/nicolas/ProyectosGIT/Op_Alarmas/02_Codigos/
 

@@ -8,7 +8,7 @@ import alarmas as al
 
 #Parametros de entrada del trazador
 parser=argparse.ArgumentParser(
-	prog='Plot_Rain_Campo',
+	prog='Erase_pngs',
 	formatter_class=argparse.RawDescriptionHelpFormatter,
 	description=textwrap.dedent('''\
 	Borra la cantidad de figuras historicas que se le indiquen 
@@ -26,28 +26,27 @@ args=parser.parse_args()
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 #Lee el archivo de configuracion 
-ListConfig = al.get_rutesList(args.rutaConfig)
+#ListConfig = al.get_rutesList(args.rutaConfig)
 #rurta de las figuras 
-rutaFiguras = al.get_ruta(ListConfig, args.nameFiguras)
+#rutaFiguras = al.get_ruta(ListConfig, args.nameFiguras)
 
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
-#Lista las carpetas con figuras de esas 
-Lista = glob.glob(rutaFiguras+'*')
-#Itera sobre las carpetas, las organiza y borra lo viejo 
+#Lista las carpetas que coinciden con la ruta 
+Lista = glob.glob(args.nameFiguras+'*')
+#Itera sobre cada carpeta, organiza archivos y borra lo viejo 
 for l in Lista:
 	ListTemp = glob.glob(l+'/*')
 	ListTemp.sort()
-	print len(ListTemp)
+	#print len(ListTemp)
 	if len(ListTemp)>= args.nfiles:
 		for i in ListTemp[:-args.nfiles]:
 			os.system('rm '+i)
 		if args.verbose:
-			print 'Aviso: Se han dejado solo '+str(args.nfiles)+' elementos para '
-			print l
+			print 'Aviso: Se han dejado solo '+str(args.nfiles)+' elementos en '+l
 	else:
 		if args.verbose:
-			print 'Aviso: No hay suficientes archivos para borrar'
+			print 'Aviso: No hay suficientes archivos para borrar '+str(len(ListTemp))
 	
 
 

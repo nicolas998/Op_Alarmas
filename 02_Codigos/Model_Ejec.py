@@ -126,6 +126,8 @@ for i in DictStore.keys():
 	Calib = DictCalib[DictStore[i]['Calib']]
 	ListEjecs.append([i, Calib, rain_bin, Npasos, 1, S, ruta_sto+DictStore[i]['Nombre']])
 
+
+
 #Ejecucion
 # Cantidad de procesos 
 Nprocess = len(ListEjecs)

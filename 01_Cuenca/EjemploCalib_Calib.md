@@ -89,15 +89,15 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-06-28-17:00|
-| -t 002|Sto_wet_c01_s01.StObin|2017-06-28-17:00|
+| -t 001|Sto_wet_c01_s01.StObin|2017-07-11-01:25|
+| -t 002|Sto_wet_c01_s01.StObin|2017-07-11-01:25|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-06-28-19:20|
-| -t 005|Sto_wet_c02_s01.StObin|2017-06-28-16:55|
+| -t 004|Sto_wet_c02_s01.StObin|2017-07-11-08:55|
+| -t 005|Sto_wet_c02_s01.StObin|2017-07-11-06:35|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-06-28-20:05|
-| -t 008|Sto_wet_c03_s02.StObin|2017-06-28-19:00|
-| -t 009|Sto_wet_c03_s03.StObin|2017-06-28-16:55|
+| -t 007|Sto_wet_c03_s01.StObin|2017-07-11-09:40|
+| -t 008|Sto_wet_c03_s02.StObin|2017-07-11-07:30|
+| -t 009|Sto_wet_c03_s03.StObin|2017-07-11-06:35|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
@@ -140,7 +140,9 @@ humedad en la cuenca.
 - **ruta_map_slides**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/SlidesMaps
 - **ruta_map_slides2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
+- **ruta_serie_qsim2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/LevelsGraphs
+	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
+- **ruta_serie_qsim**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
 
 **Tabla**: Variables y parametrizaciones a plotear.

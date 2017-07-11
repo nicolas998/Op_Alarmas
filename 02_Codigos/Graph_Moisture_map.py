@@ -43,7 +43,7 @@ ListConfig = al.get_rutesList(args.rutaConfig)
 #Se define ruta donde se leeran los resultados a plotear
 ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
 #Lectura de rutas de salida de la imagen
-ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad2')
+ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad')
 #Diccionario con info de plot: se lee la info de todos los parametrizaciones
 ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Humedad_map')
 DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
@@ -76,14 +76,17 @@ for l in ListPlotVar:
 
 def Plot_Hsim(Lista):
 	#Plot 
-	VarToPlot=Lista[-2][0]+Lista[-2][2]; ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/4)
-	Coord,ax=cu.Plot_basinClean(VarToPlot,ruta = Lista[1],
+	bins=4
+	VarToPlot=Lista[-2][0]+Lista[-2][2]; ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)
+	Coord,ax=cu.Plot_basinClean(VarToPlot,
 					show_cbar=True,
 					cmap = pl.get_cmap('viridis'),
 					#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
 					cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,
 					show=False,figsize = (10,12))
-	ax.set_title('Mapa Humedad Par'+Lista[-1], fontsize=18 )
+	ax.set_title('Moisture Map Par'+Lista[-1]+' '+args.date, fontsize=18 )
+	ax.figure.savefig(Lista[1],bbox_inches='tight')
+
 	#dice lo que hace
 	if args.verbose:
 		print 'Aviso: Plot de Humedad para '+Lista[-1]+' generado.'

@@ -85,7 +85,7 @@ def Plot_Qsim_Campo(Lista):
 		ruta = Lista[1],
 		clean = True, 
 		colorbar = False,
-		show_cbar = False, 
+		#show_cbar = True, 
 		figsize = (10,12), 
 		umbral = cauce, 
 		escala = 1.5,
