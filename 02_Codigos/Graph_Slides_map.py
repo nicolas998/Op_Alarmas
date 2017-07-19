@@ -92,34 +92,30 @@ def Plot_SlidesSim(Lista):
 		ticks_vec=np.arange(0,3.5,0.5)
 
 	if Lista[-1] != '999':
+		fig = pl.figure(figsize=(10,12))
 		Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
 									cmap = pl.get_cmap('viridis',bins),								
 									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
 									cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
 									show=False,figsize = (10,12))
-		ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
+		#ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
+		pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
 		ax.figure.savefig(Lista[1],bbox_inches='tight')
 	#Plot de mapa acumulado de deslizamientos en todas las Parametrizaciones
 	else:
+		fig = pl.figure(figsize=(10,12))
 		Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,
 									cmap = pl.get_cmap('viridis',bins),									
 									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
 									cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,																		
-									show=False,figsize = (10,12),
-									ruta=Lista[1])
-		ax.set_title('Slides Map AcumPars '+args.date, fontsize=16 )
-		#ax.figure.savefig(Lista[1],bbox_inches='tight')		
+									show=False,figsize = (10,12))
+		#ax.set_title('Slides Map AcumPars '+args.date, fontsize=16 )
+		pl.suptitle('Slides Map AcumPars '+args.date, fontsize=18, x=0.5, y=0.09)				
+		ax.figure.savefig(Lista[1],bbox_inches='tight')
 	#dice lo que hace
 	if args.verbose:
-		print 'Aviso: Plot de Humedad para '+Lista[-1]+' generado.'
-	#~ ticks_vec=np.arange(0,3.5,0.5)
-	#~ Coord,ax=cu.Plot_basinClean(Lista[-2],ruta = Lista[1],show_cbar=True,
-								#~ cmap = pl.get_cmap('viridis',4),
-								#~ ##se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-								#~ #cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,
-								#~ cbar_ticklabels=np.arange(0,3.5,0.5), cbar_ticksize=16,
-								#~ show=False,figsize = (10,12))
-	#~ ax.set_title('Mapa Deslizamientos Par'+Lista[-1], fontsize=16 )
+		print 'Aviso: Plot de Deslizamientos para '+Lista[-1]+' generado.'
+
 	#~ 
 	#~ #dice lo que hace
 	#~ if args.verbose:

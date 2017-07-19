@@ -76,15 +76,18 @@ for l in ListPlotVar:
 
 def Plot_Hsim(Lista):
 	#Plot 
+	fig = pl.figure(figsize=(10,12))
 	bins=4
-	VarToPlot=Lista[-2][0]+Lista[-2][2]; ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)
+	VarToPlot=((Lista[-2][0]+Lista[-2][2])/(wmf.models.max_gravita+wmf.models.max_capilar))*100
+	ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)
 	Coord,ax=cu.Plot_basinClean(VarToPlot,
 					show_cbar=True,
-					cmap = pl.get_cmap('viridis'),
+					cmap = pl.get_cmap('viridis',8),
 					#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-					cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,
-					show=False,figsize = (10,12))
-	ax.set_title('Moisture Map Par'+Lista[-1]+' '+args.date, fontsize=18 )
+					cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=15,
+					show=False)
+	#ax.set_title('Moisture Map Par'+Lista[-1]+' '+args.date, fontsize=18 )
+	pl.suptitle('Saturacion del suelo [%] Par'+Lista[-1]+' '+args.date, fontsize=16, x=0.5, y=0.09)
 	ax.figure.savefig(Lista[1],bbox_inches='tight')
 
 	#dice lo que hace
