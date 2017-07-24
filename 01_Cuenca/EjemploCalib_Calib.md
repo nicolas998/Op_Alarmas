@@ -28,7 +28,9 @@ de las celdas.
 
 ### Rutas
 
-- **ruta_almacenamiento**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/
+- **ruta_almsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_almacenamiento/
+	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
+- **ruta_almhist**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_almacenamiento/01_almacenamiento_hist/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
 - **ruta_bkc_alm**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/03_BackSto/
 	> Ruta en donde se encuentran las copias de almacenamiento que pueden remplazar a las operacionales
@@ -42,6 +44,10 @@ de las celdas.
 	> Ruta en donde se actualizan los archivos historicos de caudales simulados (**.csv**)
 - **ruta_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
+- **ruta_qsim2Json**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/Qsim_Rain_s_003.msg
+	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
+- **ruta_qhist2Json**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/03_CaudalHistorico/Qsim_Rain_s_003hist.csv
+	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
 ## Calibracion
 
@@ -89,15 +95,15 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-07-11-01:25|
-| -t 002|Sto_wet_c01_s01.StObin|2017-07-11-01:25|
+| -t 001|Sto_wet_c01_s01.StObin|2017-07-24-12:10|
+| -t 002|Sto_wet_c01_s01.StObin|2017-07-24-14:30|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-07-11-08:55|
-| -t 005|Sto_wet_c02_s01.StObin|2017-07-11-06:35|
+| -t 004|Sto_wet_c02_s01.StObin|2017-07-24-14:30|
+| -t 005|Sto_wet_c02_s01.StObin|2017-07-24-04:35|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-07-11-09:40|
-| -t 008|Sto_wet_c03_s02.StObin|2017-07-11-07:30|
-| -t 009|Sto_wet_c03_s03.StObin|2017-07-11-06:35|
+| -t 007|Sto_wet_c03_s01.StObin|2017-07-24-14:30|
+| -t 008|Sto_wet_c03_s02.StObin|2017-07-24-14:45|
+| -t 009|Sto_wet_c03_s03.StObin|2017-07-24-04:35|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
@@ -144,6 +150,8 @@ humedad en la cuenca.
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
 - **ruta_serie_qsim**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
+- **ruta_Json**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/Qsim.json
+	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
 
 **Tabla**: Variables y parametrizaciones a plotear.
 

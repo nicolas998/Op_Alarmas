@@ -57,7 +57,8 @@ DataRain = wmf.read_rain_struct(rain_hdr)
 Rain = wmf.read_mean_rain(rain_hdr)
 #Lee archivo de configuracion y la cuenca, almacenamiento 
 cu = wmf.SimuBasin(rute=args.cuenca, SimSlides = True)
-ruta_sto = al.get_ruta(ListConfig, 'ruta_almacenamiento')
+ruta_sto = al.get_ruta(ListConfig, 'ruta_almsim')
+ruta_stohist = al.get_ruta(ListConfig, 'ruta_almhist')
 ruta_out_sto = al.get_ruta(ListConfig, 'ruta_out_alm')
 ruta_out_slides = al.get_ruta(ListConfig, 'ruta_slides')
 ruta_slides_bin, ruta_slides_hdr = wmf.__Add_hdr_bin_2route__(ruta_out_slides)
@@ -120,12 +121,13 @@ for i in DictStore.keys():
 	FileName = glob.glob(ruta_sto + DictStore[i]['Nombre'])
 	if len(FileName):
 		S = wmf.models.read_float_basin_ncol(ruta_sto+DictStore[i]['Nombre'],1,cu.ncells,5)[0]
+		print 'CI corridas'
 	else:
 		S = al.model_get_constStorage(List, cu.ncells)
+		print 'CI constantes'
 	#Arma la ejecucion
 	Calib = DictCalib[DictStore[i]['Calib']]
 	ListEjecs.append([i, Calib, rain_bin, Npasos, 1, S, ruta_sto+DictStore[i]['Nombre']])
-
 
 
 #Ejecucion

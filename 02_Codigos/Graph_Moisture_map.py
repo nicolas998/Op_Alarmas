@@ -41,7 +41,7 @@ cu = wmf.SimuBasin(rute=args.cuenca)
 #Lee el archivo de configuracion
 ListConfig = al.get_rutesList(args.rutaConfig)
 #Se define ruta donde se leeran los resultados a plotear
-ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
+ruta_sto = al.get_ruta(ListConfig,'ruta_almsim')
 #Lectura de rutas de salida de la imagen
 ruta_Hsim = al.get_ruta(ListConfig,'ruta_map_humedad')
 #Diccionario con info de plot: se lee la info de todos los parametrizaciones

@@ -11,11 +11,14 @@ import textwrap
 import alarmas as al
 from multiprocessing import Pool
 
-
 import MySQLdb
+import csv
 import fnmatch
 import matplotlib
+import matplotlib.font_manager
+from datetime import timedelta
 import datetime as dt
+import pickle
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -53,14 +56,16 @@ ruta_out = al.get_ruta(ListConfig,'ruta_serie_qsim')
 #-----------------
 #Argumentos fijos.
 #-----------------
+
 nodo=75
-#A=fit[0];B=fit[1];C=fit[2]
-#cm_conversion=10*5
+#~ A=fit[0];B=fit[1];C=fit[2]
+#~ cm_conversion=10*5
 codeest=106
 lcolors=['g','orange','orangered','purple']
 cmap=pl.cm.PuBuGn#nipy_spectral#winter#autumn#summer#PuBuGn
 backcolor='dimgray'
-c_ylim=15
+c_ylim=10
+
 
 #Mira la ruta del folder y si no existe la crea
 ruta_folder = ruta_out+'/'
@@ -79,9 +84,9 @@ ListaEjec=[ruta_in,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out_png]
 #-------------------------------------------------------------------------------------------------------
 
 def Plot_Levels(Lista):
-	#-------------------------
+	#-------------------------------------------------------------------------------------------------------
 	#Se leen las simulaciones
-	#-------------------------
+	#------------------------------------------------------------------------------------------------------
 	#Se cuentan los archivos en esa ruta que terminen en con ese key.
 	numberoffiles=len(fnmatch.filter(os.listdir(Lista[0]), '*.msg'))
 
@@ -91,14 +96,14 @@ def Plot_Levels(Lista):
 		rqsim=Lista[0]+'Qsim_Rain_s_00'+str(i)+'.msg'
 		qsim=pd.read_msgpack(rqsim)
 		qEst=qsim[Lista[1]]
-		###Ecuacion de 3 aguas. De Q m3/s a N cm.
+		#Ecuacion de 3 aguas. De Q m3/s a N cm.
 		#alpha=2.35;c=32.6
 		#z=((np.log(qEst)-np.log(c))/alpha)
 		#nEst=np.exp(z)* Lista[2]
-		###Curva de calibracion N-Q
+		#Curva de calibracion N-Q
 		#nEst=fit[0]*qEst**2+fit[1]*qEst+fit[2]
 		#nEst=nEst*cm_conversion
-		Nsims.append(qEst)
+		Nsims.append(qEst)     
 
 	#-------------------------------------------------------------------------------------------------------
 	#Consulta a base de datos: Nobs y Ns de alerta'
@@ -107,7 +112,7 @@ def Plot_Levels(Lista):
 	serieN=Nsims[0]
 	FI=serieN.index.strftime('%Y-%m-%d')[0]
 	FF=serieN.index.strftime('%Y-%m-%d')[-1]
-	HI=serieN.index.strftime('%H:%M')[0]
+	HI=(serieN.index[0]-timedelta(hours=1)).strftime('%H:%M')
 	HF=serieN.index.strftime('%H:%M')[-1]
 	# codigo de la estacion.
 	codeest=Lista[2]
@@ -160,20 +165,21 @@ def Plot_Levels(Lista):
 	#~ #Media movil para graficas lindas
 	#~ Nobs_mean=Nobs.rolling(5,center=True).mean()
 
+	#-------------------------------------------------------------------------------------------------------
+	#Grafica comparatica de niveles, con escala de colores y backgroud de siata.
+	#-------------------------------------------------------------------------------------------------------
 	fig= pl.figure(figsize=(12,9))
 	ax= fig.add_subplot(111)
+
 	# Grafica niveles de riesgo.
-	#se usa el range de la primera serie sim para graficar.
-	serieN=Nsims[0]
 	ylim4=n4+(n4*0.2)
 	levels=[n1,n2,n3,n4,ylim4]
 	lnames=['Q1','Q2', 'Q3', 'Q4']
 	lcolors=Lista[3]
-	#lcolors=['g','orange','orangered','m']
+	#plot
 	for i in range(0,len(levels)):
 		try:
-			#ax.hlines(levels[i], 0, xlim, lcolors[i],lw = 1.25)#,label=lnames[i])
-			ax.fill_between(x=[serieN.index[0],serieN.index[-1]],#xlim], 
+			ax.fill_between(x=[Qobs.index[0],serieN.index[-1]], 
 							y1=[levels[i],levels[i]],
 							y2=[levels[i+1],levels[i+1]], 
 							color = lcolors[i], 
@@ -182,9 +188,8 @@ def Plot_Levels(Lista):
 		except:
 			pass
 
-
 	#Grafica de niveles.
-	#COLORMAP
+	#Colormap
 	#-------------------------------------------------------------------------------------------------------
 	parameters = np.linspace(0,len(Nsims),len(Nsims))
 	# norm is a class which, when called, can normalize data into the [0.0, 1.0] interval.
@@ -197,14 +202,13 @@ def Plot_Levels(Lista):
 	s_m = pl.cm.ScalarMappable(cmap=c_m, norm=norm)
 	s_m.set_array([])
 	#-------------------------------------------------------------------------------------------------------
-
+	#plot
 	for i,parameter in zip(np.arange(0,len(Nsims)),parameters):
-		#plot
 		ax.plot(Nsims[i],lw=3,linestyle='--', label='Qsim_par0%s'%(i+1),color=s_m.to_rgba(parameter))
 	#Text ans ticks color.
 	backcolor=Lista[5]  
 	ax.plot(Qobs,c='k',lw=3, label='Qobs')
-	ax.set_title('%s. %s __ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
+	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Caudal  $[{m}^3.{s}^{-1}]$', fontsize=17,color=backcolor)
 	ax.set_xticklabels(serieN.index.strftime('%H:%M'))
 	ax.tick_params(labelsize=14)

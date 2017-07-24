@@ -36,7 +36,7 @@ args=parser.parse_args()
 ListConfig = al.get_rutesList(args.rutaConfig)
 #Lectura de rutas
 ruta_qsim = al.get_ruta(ListConfig,'ruta_map_qsim')
-ruta_sto = al.get_ruta(ListConfig,'ruta_almacenamiento')
+ruta_sto = al.get_ruta(ListConfig,'ruta_almsim')
 #Dicctionario con info de plot
 ListPlotVar = al.get_modelConfig_lines(ListConfig, '-p', Calib_Storage='Plot',PlotType='Qsim_map')
 DictStore = al.get_modelConfig_lines(ListConfig, '-s', 'Store')
