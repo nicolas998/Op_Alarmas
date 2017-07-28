@@ -22,9 +22,69 @@ def model_warper(L):
 	#Actualiza historico de caudales simulados
 	ruta = ruta_qsim_h + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'hist.csv'
 	al.model_write_qsim(ruta, Res['Qsim'][1:].T[0], Rain.index[0], posControl)
+	
+	#Actualiza historico de humedad promedio simulada.
+	#Lista archivos de humedad simulada promedio
+	S = os.listdir(L[7])
+	S = [i for i in S if i.endswith('StOhdr')]
+	Lhist = [i[:-7] + 'hist.msg' for i in S]
+	
+	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si estaq quiere renovarse.
+	if args.newhist:	
+		FechaI = args.fechai
+		FechaF = args.fechaf
+		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
+		Sh = pd.DataFrame(np.zeros((DifIndex.size, 5))*np.nan, 
+			index=pd.date_range(FechaI, FechaF, freq='5min'))
+			#~ columns = ['Tanque_'+str(i) for i in range(1,6)])
+		Lold = os.listdir(L[8])
+		for i in Lhist:
+			#Pregunta si esta
+			try:
+				pos = Lold.index(i)
+				flag = raw_input('Aviso: El archivo historico : '+i+' ya existe, desea sobre-escribirlo, perdera la historia de este!! (S o N): ')
+				if flag == 'S':
+					flag = True
+				else:
+					flag = False
+			except:
+				flag = True
+			#Guardado
+			if flag:
+				Sh.to_msgpack(L[8]+ i)
+	
+	#Actualiza historicos de humedad
+	for act, hist in zip(S, Lhist):
+		try:
+			#Lee el almacenamiento actual
+			Sactual = pd.read_csv(L[7]+act, header = 4, index_col = 5, parse_dates = True, usecols=(1,2,3,4,5,6))
+			St = pd.DataFrame(Sactual[Sactual.index == Sactual.index[0]].values, index=[Sactual.index[0],])
+				#~ columns = ['Tanque_'+str(i) for i in range(1,6)])
+			#Lee el historico
+			Shist = pd.read_msgpack(L[8] + hist)
+			# encuentra el pedazo que falta entre ambos
+			if Shist.index[-1]==Sactual.index[0]:
+				pass
+			else:
+				Gap = pd.date_range(Shist.index[-1], Sactual.index[0], freq='5min')
+				#Genera el pedazo con faltantes
+				GapData = pd.DataFrame(np.zeros((Gap.size - 2, 5))*np.nan, 
+						index= Gap[1:-1])
+					#~ columns = ['Tanque_'+str(i) for i in range(1,6)])        
+				#pega el gap con nans
+				Shist = Shist.append(GapData)
+			#si no hay gap entre ellos, pega la info
+			Shist = Shist.append(St)
+			#Guarda el archivo historico 
+			Shist.to_msgpack(L[8]+ hist)
+			#Aviso
+			print 'Aviso: Se ha actualizado el archivo de estados historicos: '+hist
+		except:
+			print 'Aviso: No se encuentra el historico de estados: '+hist+' Por lo tanto no se actualiza'
+
 	#imprime que ya ejecuto
 	if args.verbose:
-		print L[0]+' ejecutado.'
+		print L[0]+' ejecutado'
 	return Res
 
 #Parametros de entrada del trazador
@@ -40,6 +100,10 @@ parser=argparse.ArgumentParser(
 #Parametros obligatorios
 parser.add_argument("cuenca",help="(Obligatorio) Ruta de la cuenca en formato .nc")
 parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion de la cuenca")
+parser.add_argument("-n", "--newhist", help="(Opcional) Con esta opcion el la funcion model_warper, genera archivos vacios para cada parametrizacion cuando no existe historia o si estaq quiere renovarse",
+	action = 'store_true', default = False)
+parser.add_argument("-i", "--fechai", help="(Opcional) string, Fecha de inicio de nuevo punto de historicos (YYYY-MM-DD HH:MM)")
+parser.add_argument("-f", "--fechaf", help="(Opcional) string, Fecha de fin de nuevo punto de historicos (YYYY-MM-DD HH:MM)")
 parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agregando", 
 	action = 'store_true')
 
@@ -127,7 +191,7 @@ for i in DictStore.keys():
 		print 'CI constantes'
 	#Arma la ejecucion
 	Calib = DictCalib[DictStore[i]['Calib']]
-	ListEjecs.append([i, Calib, rain_bin, Npasos, 1, S, ruta_sto+DictStore[i]['Nombre']])
+	ListEjecs.append([i, Calib, rain_bin, Npasos, 1, S, ruta_sto+DictStore[i]['Nombre'],ruta_sto,ruta_stohist])
 
 
 #Ejecucion

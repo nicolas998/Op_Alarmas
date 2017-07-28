@@ -19,6 +19,7 @@ import matplotlib.font_manager
 from datetime import timedelta
 import datetime as dt
 import pickle
+import matplotlib.dates as mdates
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -210,7 +211,9 @@ def Plot_Levels(Lista):
 	ax.plot(Qobs,c='k',lw=3, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Caudal  $[{m}^3.{s}^{-1}]$', fontsize=17,color=backcolor)
-	ax.set_xticklabels(serieN.index.strftime('%H:%M'))
+	myFmt = mdates.DateFormatter('%H:%m')
+	ax.xaxis.set_major_formatter(myFmt)	
+	#~ ax.set_xticklabels(serieN.index.strftime('%H:%M'))
 	ax.tick_params(labelsize=14)
 	ax.grid()
 	ax.autoscale(enable=True, axis='both', tight=True)

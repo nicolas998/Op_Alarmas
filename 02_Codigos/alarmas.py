@@ -177,7 +177,7 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 def model_get_constStorage(RutesList, ncells):
 	Storage = np.zeros((5, ncells))
 	for i,c in enumerate(['Inicial Capilar','Inicial Escorrentia','Inicial Subsup','Inicial Subterraneo','Inicial Corriente']):
-		Cs = float(get_ruta(List, c))
+		Cs = float(get_ruta(RutesList, c))
 		Storage[i] = Cs
 	return Storage.astype(float)
 

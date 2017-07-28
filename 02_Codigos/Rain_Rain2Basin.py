@@ -139,10 +139,10 @@ for dates,pos in zip(datesDt[1:],PosDates):
 			g = netCDF4.Dataset(ListRutas[p])
 			RadProp = [g.ncols, g.nrows, g.xll, g.yll, g.dx, g.dx]                        
 			#Agrega la lluvia en el intervalo 
-			rvec += cuAMVA.Transform_Map2Basin(g.variables['Rain'][:].T/ (12*1000), RadProp) 
+			rvec += cuAMVA.Transform_Map2Basin(g.variables['Rain'][:].T/ (12*1000.0), RadProp) 
 			if args.save_escenarios:
-				rhigh += cuAMVA.Transform_Map2Basin(g.variables['Rhigh'][:].T / (12*1000), RadProp) 
-				rlow += cuAMVA.Transform_Map2Basin(g.variables['Rlow'][:].T / (12*1000), RadProp) 
+				rhigh += cuAMVA.Transform_Map2Basin(g.variables['Rhigh'][:].T / (12*1000.0), RadProp) 
+				rlow += cuAMVA.Transform_Map2Basin(g.variables['Rlow'][:].T / (12*1000.0), RadProp) 
 			#Agrega la clasificacion para la ultima imagen del intervalo
 			ConvStra = cuAMVA.Transform_Map2Basin(g.variables['Conv_Strat'][:].T, RadProp)
 			Conv = np.copy(ConvStra)
