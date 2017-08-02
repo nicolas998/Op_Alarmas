@@ -130,10 +130,10 @@ def Plot_Levels(Lista):
 	result = np.array(db_cursor.fetchall())
 	#definicion de niveles de alerta y demas.
 	nombreest=result[0][1] 
-	n1=32.6*((float(result[0][4])/100)**2.35)
-	n2=32.6*((float(result[0][5])/100)**2.35)
-	n3=32.6*((float(result[0][6])/100)**2.35)
-	n4=32.6*((float(result[0][7])/100)**2.35)
+	n1=3.26*((float(result[0][4])/100)**2.35)
+	n2=3.26*((float(result[0][5])/100)**2.35)
+	n3=3.26*((float(result[0][6])/100)**2.35)
+	n4=3.26*((float(result[0][7])/100)**2.35)
 	#definicion de tipo N para consultar campo.
 	tipo=int(result[0][3])
 	if tipo == 1:#radar
@@ -161,7 +161,7 @@ def Plot_Levels(Lista):
 		pass
 	Nobs[Nobs>600.0]==np.nan
 	#Convertir a caudal con curva de calibracion de 3 aguas.
-	Qobs=32.6*((Nobs/100)**2.35)
+	Qobs=3.26*((Nobs/100)**2.35)
 
 	#~ #Media movil para graficas lindas
 	#~ Nobs_mean=Nobs.rolling(5,center=True).mean()
