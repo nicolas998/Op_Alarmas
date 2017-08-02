@@ -62,7 +62,7 @@ nodo=75
 #~ A=fit[0];B=fit[1];C=fit[2]
 #~ cm_conversion=10*5
 codeest=106
-lcolors=['g','orange','orangered','purple']
+lcolors=['g','orange','orangered','indigo']
 cmap=pl.cm.PuBuGn#nipy_spectral#winter#autumn#summer#PuBuGn
 backcolor='dimgray'
 c_ylim=10
@@ -159,7 +159,7 @@ def Plot_Levels(Lista):
 		Nobs[np.where((calidad!=1)&(calidad!=2))[0]]==np.nan
 	except:
 		pass
-
+	Nobs[Nobs>600.0]==np.nan
 	#Convertir a caudal con curva de calibracion de 3 aguas.
 	Qobs=32.6*((Nobs/100)**2.35)
 
@@ -211,8 +211,8 @@ def Plot_Levels(Lista):
 	ax.plot(Qobs,c='k',lw=3, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Caudal  $[{m}^3.{s}^{-1}]$', fontsize=17,color=backcolor)
-	myFmt = mdates.DateFormatter('%H:%m')
-	ax.xaxis.set_major_formatter(myFmt)	
+	#~ myFmt = mdates.DateFormatter('%H:%m')
+	#~ ax.xaxis.set_major_formatter(myFmt)	
 	#~ ax.set_xticklabels(serieN.index.strftime('%H:%M'))
 	ax.tick_params(labelsize=14)
 	ax.grid()

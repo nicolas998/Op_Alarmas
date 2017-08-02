@@ -78,7 +78,7 @@ def Plot_Hsim(Lista):
 	#Plot
 	VarToPlot=((Lista[-2][0]+Lista[-2][2])/(wmf.models.max_gravita+wmf.models.max_capilar))*100
 	# si supera un umbral de saturacion se grafica, si no no.
-	if VarToPlot.max() >= 0.05:
+	if VarToPlot.max() >= 0.1:
 		fig = pl.figure(figsize=(10,12))
 		bins=4
 		ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)

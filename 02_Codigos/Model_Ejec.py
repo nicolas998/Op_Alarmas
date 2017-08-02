@@ -23,8 +23,10 @@ def model_warper(L):
 	ruta = ruta_qsim_h + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'hist.csv'
 	al.model_write_qsim(ruta, Res['Qsim'][1:].T[0], Rain.index[0], posControl)
 	#Se actualizan los historicos de humedad de la parametrizacion asociada.
-	al.model_write_Stosim(L[6],L[7])
-	
+	try:
+		al.model_write_Stosim(L[6],L[7])
+	except:
+		print 'no se actualiza ni mierda'
 	#imprime que ya ejecuto
 	if args.verbose:
 		print L[0]+' ejecutado'

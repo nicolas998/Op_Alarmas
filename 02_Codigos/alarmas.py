@@ -201,16 +201,16 @@ def model_write_qsim(ruta,Qsim, index, pcont):
 	with open(ruta, 'a') as f:
 		Qsim.to_csv(f, header=Nuevo,float_format='%.3f')
 
-def model_write_ruteSsim(newhist,FechaI,FechaF):
+def model_write_ruteShist(listrutas_Shist,FechaI,FechaF):
 	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si estaq quiere renovarse.
-	if newhist:	
+	for i in listrutas_Shist:
 		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
 		Sh = pd.DataFrame(np.zeros((DifIndex.size, 5))*np.nan, 
 			index=pd.date_range(FechaI, FechaF, freq='5min'))
 			#~ columns = ['Tanque_'+str(i) for i in range(1,6)])
 		#Pregunta si esta
 		try:
-			Lold = os.listdir(ruta)
+			Lold = os.listdir(i)
 			pos = Lold.index(i)
 			flag = raw_input('Aviso: El archivo historico : '+i+' ya existe, desea sobre-escribirlo, perdera la historia de este!! (S o N): ')
 			if flag == 'S':
@@ -221,7 +221,7 @@ def model_write_ruteSsim(newhist,FechaI,FechaF):
 			flag = True
 		#Guardado
 		if flag:
-			Sh.to_msgpack(ruta_Shist)
+			Sh.to_msgpack(i)
 
 def model_write_Stosim(ruta_Ssim,ruta_Shist):
 	###Se actualizan los historicos de humedad de la parametrizacion asociada.
@@ -231,18 +231,19 @@ def model_write_Stosim(ruta_Ssim,ruta_Shist):
 	St = pd.DataFrame(Sactual[Sactual.index == Sactual.index[0]].values, index=[Sactual.index[0],])
 	#~ columns = ['Tanque_'+str(i) for i in range(1,6)])
 	#Lee el historico
-	Shist = pd.read_msgpack(ruta_Shist)[0]
+	Shist = pd.read_msgpack(ruta_Shist)
 	# encuentra el pedazo que falta entre ambos
-	if Shist.index[-1]==Sactual.index[0]:
-		pass
-	else:
+	if Shist.index[-1]!=Sactual.index[0]:
 		Gap = pd.date_range(Shist.index[-1], Sactual.index[0], freq='5min')
 		#Genera el pedazo con faltantes
 		GapData = pd.DataFrame(np.zeros((Gap.size - 2, 5))*np.nan, 
 				index= Gap[1:-1])
 				#~ columns = ['Tanque_'+str(i) for i in range(1,6)])        
-	#pega el gap con nans
-	Shist = Shist.append(GapData)
+		#pega el gap con nans
+		Shist = Shist.append(GapData)
+	else:
+		pass		
+
 	#si no hay gap entre ellos, pega la info
 	Shist = Shist.append(St)
 	#Guarda el archivo historico 
