@@ -95,7 +95,7 @@ ruta_rain_hist = al.get_ruta(ListConfig, 'ruta_rainHistoryFile')
 ruta_rain_temp =  '/var/tmp/RainTemp.hdr'
 
 #Lee archivo de configuracion y la cuenca, almacenamiento 
-ruta_sto = al.get_ruta(ListConfig, 'ruta_almacenamiento')
+ruta_sto = al.get_ruta(ListConfig, 'ruta_almsim')
 ruta_bck_sto = al.get_ruta(ListConfig, 'ruta_bkc_alm')
 
 #Delta de tiempo
