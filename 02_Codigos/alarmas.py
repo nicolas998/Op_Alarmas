@@ -5,6 +5,7 @@ import pandas as pd
 from wmf import wmf
 import numpy as np 
 import glob 
+import pylab as pl
 
 ########################################################################
 # VARIABLES GLOBALES 
@@ -174,6 +175,124 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 ########################################################################
 # FUNCIONES PARA SET DEL MODELO 
 
+def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verbose=True):
+	''' Si hay lluvia en el periodo definido devuelve 1 si no 0.
+		Grafica si figure=True.
+		Siempre se debe poner la ruta de la figura.'
+		##Falta poner ventanas mas grandes de pronostico de lluvia ya que el calentamiento con las par y CI actuales se toma unos 25 pasos.'''
+	#Se lee la informacion
+	rutebin, rutehdr = wmf.__Add_hdr_bin_2route__(rutaRain)
+	cu = wmf.SimuBasin(rute=cuenca)
+	DictRain = wmf.read_rain_struct(rutehdr)
+	R = DictRain[u' Record']
+
+	#Se cuadran las fechas para que casen con las de los archivos de radar.
+
+	#Obtiene las fechas por dias
+	fecha_f = pd.to_datetime(fechaF)
+	fecha_f = fecha_f - pd.Timedelta(str(fecha_f.second)+' seconds')
+	fecha_f = fecha_f - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+
+	#corrige las fechas
+	cont = 0
+	while fecha_f.minute % 5 <>0 and cont<30:
+		fecha_f = fecha_f + pd.Timedelta('1 minutes')
+		cont+=1
+	#Corrige la fecha para que este dentro del rango de fechas
+	Flag = True
+	cont = 0
+	while Flag:
+		try:
+			pos = R.index.get_loc(fecha_f)
+			Flag = False
+		except:
+			fecha_f = fecha_f - pd.Timedelta('5 minutes')
+		cont+=1
+		if cont>30:
+			Flag = False
+	#corrige fecha de inicio
+	fecha_i = pd.to_datetime(fechaI)
+	fecha_i = fecha_i - pd.Timedelta(str(fecha_f.second)+' seconds')
+	fecha_i = fecha_i - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+	Flag = True
+	#Corrige la fecha para que este dentro del rango de fechas
+	while Flag:
+		try:
+			pos = R.index.get_loc(fecha_i)
+			Flag = False
+		except:
+			fecha_i = fecha_i - pd.Timedelta('5 minutes')
+	#Obtiene el periodo
+	pos = R[fecha_i:fecha_f].values
+	pos = pos[pos <>1 ]
+
+	#imprime el tamano de lo que esta haciendo 
+	if verbose:
+		print fecha_f - fecha_i
+	
+	#si hay barridos para graficar
+	if len(pos)>0:
+		#-------
+		#Grafica
+		#-------
+		#Textos para la legenda
+		lab = np.linspace(vmin, vmax, 4)
+		texto = ['Bajo', 'Medio', 'Alto', 'Muy alto']
+		labText = ['%dmm\n%s'%(i,j) for i,j in zip(lab, texto)]
+		#Acumula la lluvia para el periodo
+		Vsum = np.zeros(cu.ncells)
+		for i in pos:
+			v,r = wmf.models.read_int_basin(rutebin,i, cu.ncells)
+			v = v.astype(float); v = v/1000.0
+			Vsum+=v	
+		#Genera la figura 
+		c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
+			show_cbar=True, vmin = vmin, vmax = vmax,
+			cbar_ticksize = 16,
+			cbar_ticks= lab,
+			cbar_ticklabels = labText,
+			cbar_aspect = 17,
+			ruta = rutaFigura,
+			show=False,figsize = (10,12))
+		c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
+		return 1
+		if verbose:
+			print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero para '+rutaFigura[49:-4]
+			print fecha_f - fecha_i
+
+			#~ fig = pl.figure(figsize=(10,12))
+			#~ Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
+										#~ cmap = pl.get_cmap('viridis',bins),								
+										#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+										#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
+										#~ show=False,figsize = (10,12))
+			#~ #ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
+			#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
+			#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
+
+	#si no hay barridos
+	else:
+		return 0
+		#-------
+		#Grafica
+		#-------
+		Vsum = np.zeros(cu.ncells)
+		c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
+			show_cbar=True, vmin = vmin, vmax = vmax,
+			cbar_ticksize = 16,
+			cbar_ticks= lab,
+			cbar_ticklabels = labText,
+			cbar_aspect = 17,
+			ruta = rutaFigura,
+			show=False,figsize = (10,12))
+		c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
+		if verbose:
+			print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
+			print fecha_f - fecha_i
+
+
+
+
 def model_get_constStorage(RutesList, ncells):
 	Storage = np.zeros((5, ncells))
 	for i,c in enumerate(['Inicial Capilar','Inicial Escorrentia','Inicial Subsup','Inicial Subterraneo','Inicial Corriente']):
@@ -202,7 +321,7 @@ def model_write_qsim(ruta,Qsim, index, pcont):
 		Qsim.to_csv(f, header=Nuevo,float_format='%.3f')
 
 def model_write_ruteShist(listrutas_Shist,FechaI,FechaF):
-	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si estaq quiere renovarse.
+	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si esta quiere renovarse.
 	for i in listrutas_Shist:
 		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
 		Sh = pd.DataFrame(np.zeros((DifIndex.size, 5))*np.nan, 

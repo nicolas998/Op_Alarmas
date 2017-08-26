@@ -159,7 +159,7 @@ def Plot_Levels(Lista):
 		Nobs[np.where((calidad!=1)&(calidad!=2))[0]]==np.nan
 	except:
 		pass
-	Nobs[Nobs>600.0]==np.nan
+	Nobs[Nobs>500.0]==np.nan
 	#Convertir a caudal con curva de calibracion de 3 aguas.
 	Qobs=3.26*((Nobs/100)**2.35)
 
@@ -167,7 +167,7 @@ def Plot_Levels(Lista):
 	#~ Nobs_mean=Nobs.rolling(5,center=True).mean()
 
 	#-------------------------------------------------------------------------------------------------------
-	#Grafica comparatica de niveles, con escala de colores y backgroud de siata.
+	#Grafica comparativa de niveles, con escala de colores y backgroud de siata.
 	#-------------------------------------------------------------------------------------------------------
 	fig= pl.figure(figsize=(12,9))
 	ax= fig.add_subplot(111)

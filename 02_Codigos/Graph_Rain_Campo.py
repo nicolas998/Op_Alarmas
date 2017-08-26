@@ -30,7 +30,7 @@ parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agreg
 args=parser.parse_args()
 
 #-------------------------------------------------------------------------------------------------------------------------------------
-# LECTURA DE IONFORMACION
+# LECTURA DE INFORMACION
 #-------------------------------------------------------------------------------------------------------------------------------------
 rutebin, rutehdr = wmf.__Add_hdr_bin_2route__(args.rutaRain)
 cu = wmf.SimuBasin(rute=args.cuenca)
@@ -107,8 +107,19 @@ if len(pos)>0:
 		show=False,figsize = (10,12))
 	c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
 	if args.verbose:
-		print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero'
+		print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero para '+args.rutaFigura[49:-4]
 		print fecha_f - fecha_i
+
+		#~ fig = pl.figure(figsize=(10,12))
+		#~ Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
+									#~ cmap = pl.get_cmap('viridis',bins),								
+									#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+									#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
+									#~ show=False,figsize = (10,12))
+		#~ #ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
+		#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
+		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
+
 else:
 	Vsum = np.zeros(cu.ncells)
 	c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
@@ -121,5 +132,5 @@ else:
 		show=False,figsize = (10,12))
 	c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
 	if args.verbose:
-		print 'Aviso: Se ha producido un campo sin lluvia.'
+		print 'Aviso: Se ha producido un campo sin lluvia  para '+args.rutaFigura[49:-4]
 		print fecha_f - fecha_i
