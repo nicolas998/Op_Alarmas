@@ -12,7 +12,7 @@ import numpy as np
 def model_warper(L):
 	#Ejecucion del modelo
 	Res = cu.run_shia(L[1],L[2],L[3],L[4], 
-		StorageLoc = L[5], ruta_storage=L[6], kinematicN=12)
+		StorageLoc = L[5], ruta_storage=L[6], kinematicN=12,QsimDataFrame=False)
 	#Escribe resultados 
 	ruta = ruta_Qsim + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'.msg'
 	Qsim = pd.DataFrame(Res['Qsim'][1:].T, 
@@ -23,10 +23,7 @@ def model_warper(L):
 	ruta = ruta_qsim_h + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'hist.csv'
 	al.model_write_qsim(ruta, Res['Qsim'][1:].T[0], Rain.index[0], posControl)
 	#Se actualizan los historicos de humedad de la parametrizacion asociada.
-	try:
-		al.model_write_Stosim(L[6],L[7])
-	except:
-		print 'no se actualiza ni mierda'
+	al.model_write_Stosim(L[6],L[7])
 	#imprime que ya ejecuto
 	if args.verbose:
 		print L[0]+' ejecutado'

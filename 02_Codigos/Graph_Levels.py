@@ -13,7 +13,6 @@ from multiprocessing import Pool
 
 import MySQLdb
 import csv
-import fnmatch
 import matplotlib
 import matplotlib.font_manager
 from datetime import timedelta
@@ -50,20 +49,20 @@ args=parser.parse_args()
 ListConfig = al.get_rutesList(args.rutaConfig)
 
 #Se define ruta de donde se leeran los resultados a plotear
-ruta_in = al.get_ruta(ListConfig,'ruta_qsim')
+ruta_in1 = al.get_ruta(ListConfig,'ruta_qsim_hist')
+ruta_in2 = al.get_ruta(ListConfig,'ruta_qsim')
 #Lectura de rutas de salida de la imagen
 ruta_out = al.get_ruta(ListConfig,'ruta_serie_qsim')
+
 
 #-----------------
 #Argumentos fijos.
 #-----------------
 
 nodo=75
-#~ A=fit[0];B=fit[1];C=fit[2]
-#~ cm_conversion=10*5
 codeest=106
 lcolors=['g','orange','orangered','indigo']
-cmap=pl.cm.PuBuGn#nipy_spectral#winter#autumn#summer#PuBuGn
+cmap=pl.cm.nipy_spectral#nipy_spectral#winter#autumn#summer#PuBuGn
 backcolor='dimgray'
 c_ylim=10
 
@@ -75,9 +74,9 @@ if len(Esta) == 0:
 	os.system('mkdir '+ruta_folder)
 #Obtiene las ruta de archivo de salida
 ruta_out_png = ruta_folder+'LevelsSim'+'_'+args.date+'.png'
-#~ ruta_out_txt = ruta_folder+'LevelsSim'+'_'+args.date+'.txt'
+
 #Se organiza la lista con parametros necesarios para plotear  con la funcion que sigue
-ListaEjec=[ruta_in,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out_png]
+ListaEjec=[ruta_in1,ruta_in2,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out_png]
 
 
 #-------------------------------------------------------------------------------------------------------
@@ -85,38 +84,41 @@ ListaEjec=[ruta_in,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out_png]
 #-------------------------------------------------------------------------------------------------------
 
 def Plot_Levels(Lista):
-	#-------------------------------------------------------------------------------------------------------
-	#Se leen las simulaciones
-	#------------------------------------------------------------------------------------------------------
-	#Se cuentan los archivos en esa ruta que terminen en con ese key.
-	numberoffiles=len(fnmatch.filter(os.listdir(Lista[0]), '*.msg'))
-
-	#Se itera sobre los archivos Qsim y se convierten a nivel usando la ecuacion.
-	Nsims=[]
-	for i in np.arange(1,numberoffiles+1):
-		rqsim=Lista[0]+'Qsim_Rain_s_00'+str(i)+'.msg'
+	#Leer ultima hora de historico Qsim para cada par.
+	ruta=Lista[0]+'*'
+	readh=glob.glob(ruta)
+	#Leer las simulacion actual+extrapolacion
+	ruta=Lista[1]+'*'
+	read1=glob.glob(ruta)
+	#Guarda series completas e hist para sacar Nash
+	Qact=[];Qhist=[]
+	for rqhist,rqsim in zip(np.sort(readh),np.sort(read1)):
+		#Q HIST
+		df=pd.read_csv(rqhist,sep=',',error_bad_lines=False)
+		#ultima hora, 12 pasos de 5 min.
+		qh=df[str(Lista[2])].values[-12:]
+		dates=pd.to_datetime(df['Unnamed: 0'].values[-12:])    
+		#serie
+		qhist=pd.Series(qh,index=dates)
+		Qhist.append(qhist)
+		#Q ACT
 		qsim=pd.read_msgpack(rqsim)
-		qEst=qsim[Lista[1]]
-		#Ecuacion de 3 aguas. De Q m3/s a N cm.
-		#alpha=2.35;c=32.6
-		#z=((np.log(qEst)-np.log(c))/alpha)
-		#nEst=np.exp(z)* Lista[2]
-		#Curva de calibracion N-Q
-		#nEst=fit[0]*qEst**2+fit[1]*qEst+fit[2]
-		#nEst=nEst*cm_conversion
-		Nsims.append(qEst)     
+		qEst=qsim[Lista[2]]
+		#ult hr+ extrapolacion
+		Qact.append(qhist.append(qEst))
 
 	#-------------------------------------------------------------------------------------------------------
 	#Consulta a base de datos: Nobs y Ns de alerta'
 	#-------------------------------------------------------------------------------------------------------
 	#Se usa las fechas de una serie sim para consultar en bd.
-	serieN=Nsims[0]
+	serieN=Qact[0]
 	FI=serieN.index.strftime('%Y-%m-%d')[0]
 	FF=serieN.index.strftime('%Y-%m-%d')[-1]
-	HI=(serieN.index[0]-timedelta(hours=1)).strftime('%H:%M')
-	HF=serieN.index.strftime('%H:%M')[-1]
+	HI=serieN.index[0].strftime('%H:%M')
+	HF=serieN.index[-1].strftime('%H:%M')
+
 	# codigo de la estacion.
-	codeest=Lista[2]
+	codeest=Lista[3]
 	# coneccion a bd con usuario operacional
 	host   = '192.168.1.74'
 	user   = 'siata_Oper'
@@ -159,16 +161,13 @@ def Plot_Levels(Lista):
 		Nobs[np.where((calidad!=1)&(calidad!=2))[0]]==np.nan
 	except:
 		pass
-	Nobs[Nobs>500.0]==np.nan
+	Nobs[Nobs>600.0]==np.nan
 	#Convertir a caudal con curva de calibracion de 3 aguas.
 	Qobs=3.26*((Nobs/100)**2.35)
 
-	#~ #Media movil para graficas lindas
-	#~ Nobs_mean=Nobs.rolling(5,center=True).mean()
-
 	#-------------------------------------------------------------------------------------------------------
 	#Grafica comparativa de niveles, con escala de colores y backgroud de siata.
-	#-------------------------------------------------------------------------------------------------------
+	#------------------------------------------------------------------------------------------------------
 	fig= pl.figure(figsize=(12,9))
 	ax= fig.add_subplot(111)
 
@@ -176,7 +175,7 @@ def Plot_Levels(Lista):
 	ylim4=n4+(n4*0.2)
 	levels=[n1,n2,n3,n4,ylim4]
 	lnames=['Q1','Q2', 'Q3', 'Q4']
-	lcolors=Lista[3]
+	lcolors=Lista[4]
 	#plot
 	for i in range(0,len(levels)):
 		try:
@@ -184,7 +183,7 @@ def Plot_Levels(Lista):
 							y1=[levels[i],levels[i]],
 							y2=[levels[i+1],levels[i+1]], 
 							color = lcolors[i], 
-							alpha = 0.18,
+							alpha = 0.22,
 							label=lnames[i])
 		except:
 			pass
@@ -192,28 +191,34 @@ def Plot_Levels(Lista):
 	#Grafica de niveles.
 	#Colormap
 	#-------------------------------------------------------------------------------------------------------
-	parameters = np.linspace(0,len(Nsims),len(Nsims))
+	parameters = np.linspace(0,len(Qact),len(Qact))
 	# norm is a class which, when called, can normalize data into the [0.0, 1.0] interval.
 	norm = matplotlib.colors.Normalize(
 		vmin=np.min(parameters),
 		vmax=np.max(parameters))
 	#choose a colormap
-	c_m = Lista[4]
+	c_m = Lista[5]
 	# create a ScalarMappable and initialize a data structure
 	s_m = pl.cm.ScalarMappable(cmap=c_m, norm=norm)
 	s_m.set_array([])
 	#-------------------------------------------------------------------------------------------------------
-	#plot
-	for i,parameter in zip(np.arange(0,len(Nsims)),parameters):
-		ax.plot(Nsims[i],lw=3,linestyle='--', label='Qsim_par0%s'%(i+1),color=s_m.to_rgba(parameter))
+
+	#PLOT
+
+	#Pars
+	for i,parameter in zip(np.arange(0,len(Qact)),parameters):
+		#NASH
+		nash=wmf.__eval_nash__(Qobs,Qhist[i])
+		ax.plot(Qact[i],lw=1.8,linestyle='--', label='P0'+str(i+1)+'- NS:%.2f'%(nash),color=s_m.to_rgba(parameter))
 	#Text ans ticks color.
-	backcolor=Lista[5]  
+	backcolor=Lista[6]  
+	#Obs
 	ax.plot(Qobs,c='k',lw=3, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Caudal  $[{m}^3.{s}^{-1}]$', fontsize=17,color=backcolor)
-	#~ myFmt = mdates.DateFormatter('%H:%m')
-	#~ ax.xaxis.set_major_formatter(myFmt)	
-	#~ ax.set_xticklabels(serieN.index.strftime('%H:%M'))
+	#     ax.set_xticklabels(serieN.index.strftime('%H:%M'))
+	#     myFmt = mdates.DateFormatter('%H:%m')
+	#     ax.xaxis.set_major_formatter(myFmt)
 	ax.tick_params(labelsize=14)
 	ax.grid()
 	ax.autoscale(enable=True, axis='both', tight=True)
@@ -226,7 +231,7 @@ def Plot_Levels(Lista):
 	for text in leg.get_texts():
 		pl.setp(text, color = backcolor)
 	#ylim para la grafica
-	ylim=Qobs.mean()*Lista[6]
+	ylim=Qobs.mean()*10
 	ax.set_ylim(0,ylim)
 	#Se guarda la figura.
 	ax.figure.savefig(Lista[-1],bbox_inches='tight')

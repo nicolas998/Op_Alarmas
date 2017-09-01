@@ -95,13 +95,13 @@ r3dias=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,
 fecha1 = date - dt.timedelta(hours = 24)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain_png + 'Acumulado_1dia.png'
-r1dia=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=5,vmax=10)
+r1dia=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=5,vmax=70)
 
 # Grafica en la ultima hora.
 fecha1 = date - dt.timedelta(hours = 1)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain_png + 'Acumulado_1hora.png'
-r1hr=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=1,vmax=5)
+r1hr=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=1,vmax=20)
 
 #Grafica en los proximos 30min
 fecha1 = date + dt.timedelta(minutes = 30)
@@ -118,115 +118,115 @@ p.join()
 #time.sleep(20)
 print '\n'
 
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ print '###################################### EJECUCION DEL MODELO ############################\n'
-#~ 
-#~ #Explicacion: Se pueden configurar diferentes ejecuciones con diferentes productos 
-#~ #	de lluvia, este caso es uno de ejemplo.
-#~ 
-#~ #Ejecucion del modelo en el ultimo intervalo de tiempo
-#~ comando = ruta_codigos+'Model_Ejec.py '+ruta_cuenca+' '+ruta_configuracion_1+' -v'
-#~ os.system(comando)
-#~ time.sleep(15)
-#~ 
-#~ #Actualiza las condiciones del modelo 
-#~ comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+ruta_configuracion_1+' -v'
-#~ os.system(comando)
-#~ print '\n'
- #~ 
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#~ print '###################################### PRODUCCION DE FIGURAS ############################\n'
-#~ 
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+print '###################################### EJECUCION DEL MODELO ############################\n'
+
+#Explicacion: Se pueden configurar diferentes ejecuciones con diferentes productos 
+#	de lluvia, este caso es uno de ejemplo.
+
+#Ejecucion del modelo en el ultimo intervalo de tiempo
+comando = ruta_codigos+'Model_Ejec.py '+ruta_cuenca+' '+ruta_configuracion_1+' -v'
+os.system(comando)
+time.sleep(15)
+
+#Actualiza las condiciones del modelo 
+comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+ruta_configuracion_1+' -v'
+os.system(comando)
+print '\n'
+ 
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+print '###################################### PRODUCCION DE FIGURAS ############################\n'
+
 # si hay lluvia en la ultima hora y en los proximos 30 min se generan figuras
-#~ if r1hr == 0 and r30minnext == 0:
-	#~ print 'Aviso: No se generan graficas de resultados de simulacion ya que no hay lluvia en la ultima hora ni los prox. 30 min.'
-	#~ pass
-#~ else:
-	#~ #Lectura del archivo de configuracion
-	#~ ConfigFile = al.get_rutesList(ruta_configuracion_1)
-#~ 
-	#~ #Figura de la evolucion de los caudales en el cauce
-#~ 
-	#~ #Ruta donde se borraran graficas viejas los caudales en png
-	#~ ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
-#~ 
-	#~ ListaEjec = []
-	#~ for i in range(13):
-		#~ fechaNueva = date + dt.timedelta(minutes = 5*i)
-		#~ fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-		#~ comando = ruta_codigos+'Graph_StreamFlow_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
-		#~ ListaEjec.append(comando)
-	#~ #Ejecuta lass figuras en paralelo 
-	#~ p = Pool(processes = 10)
-	#~ p.map(os.system, ListaEjec)
-	#~ p.close()
-	#~ p.join()
-#~ 
-	#~ print '\n'
-	#~ print 'Se ejecutan figuras con mapa de StreamFlow'
-	#~ print '\n'
-#~ 
-	#~ #elimina figuras viejas 
-	#~ comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
-	#~ os.system(comando)
-#~ 
-#~ 
-	#~ #Figura de la humedad simulada en el tiempo actual
-	#~ #Ruta donde se guardan los caudales en png
-	#~ ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
-	#~ #lista de ejecuciones
-	#~ ListaEjec = []
-	#~ fechaNueva = date 
-	#~ fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	#~ comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
-	#~ ListaEjec.append(comando)
-	#~ #Ejecuta las figuras en paralelo 
-	#~ p = Pool(processes = 3)
-	#~ p.map(os.system, ListaEjec)
-	#~ p.close()
-	#~ p.join()
-#~ 
-	#~ print '\n'
-	#~ print 'Se ejecutan figuras con mapa de Humedad'
-	#~ print '\n'
-#~ 
-	#~ #elimina figuras viejas 
-	#~ comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-	#~ os.system(comando)
-#~ 
-#~ 
-	#~ #Figura de los deslizamiento simuados en el tiempo acumulado - 5 min.
-#~ 
-	#~ #Ruta donde se guardan los caudales en png
-	#~ ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
-#~ 
-	#~ ListaEjec = []
-	#~ fechaNueva = date
-	#~ fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	#~ comando = ruta_codigos+'Graph_Slides_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
-	#~ ListaEjec.append(comando)
-	#~ #Ejecuta las figuras en paralelo 
-	#~ p = Pool(processes = 3)
-	#~ p.map(os.system, ListaEjec)
-	#~ p.close()
-	#~ p.join()
-	#~ print '\n'
-	#~ print 'Se ejecutan figuras con mapa de Deslizamientos'
-	#~ print '\n'
-#~ 
-#~ 
-	#~ #elimina figuras viejas 
-	#~ comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-	#~ os.system(comando)
-#~ 
-#~ 
-#~ 
+if r1hr == 0 and r30minnext == 0:
+	print 'Aviso: No se generan graficas de resultados de simulacion ya que no hay lluvia en la ultima hora ni los prox. 30 min.'
+	pass
+else:
+	#Lectura del archivo de configuracion
+	ConfigFile = al.get_rutesList(ruta_configuracion_1)
+
+	#Figura de la evolucion de los caudales en el cauce
+
+	#Ruta donde se borraran graficas viejas los caudales en png
+	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
+
+	ListaEjec = []
+	for i in range(13):
+		fechaNueva = date + dt.timedelta(minutes = 5*i)
+		fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+		comando = ruta_codigos+'Graph_StreamFlow_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+		ListaEjec.append(comando)
+	#Ejecuta lass figuras en paralelo 
+	p = Pool(processes = 10)
+	p.map(os.system, ListaEjec)
+	p.close()
+	p.join()
+
+	print '\n'
+	print 'Se ejecutan figuras con mapa de StreamFlow'
+	print '\n'
+
+	#elimina figuras viejas 
+	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
+	os.system(comando)
+
+
+	#Figura de la humedad simulada en el tiempo actual
+	#Ruta donde se guardan los caudales en png
+	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
+	#lista de ejecuciones
+	ListaEjec = []
+	fechaNueva = date 
+	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+	comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+	ListaEjec.append(comando)
+	#Ejecuta las figuras en paralelo 
+	p = Pool(processes = 3)
+	p.map(os.system, ListaEjec)
+	p.close()
+	p.join()
+
+	print '\n'
+	print 'Se ejecutan figuras con mapa de Humedad'
+	print '\n'
+
+	#elimina figuras viejas 
+	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
+	os.system(comando)
+
+
+	#Figura de los deslizamiento simuados en el tiempo acumulado - 5 min.
+
+	#Ruta donde se guardan los caudales en png
+	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
+
+	ListaEjec = []
+	fechaNueva = date
+	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+	comando = ruta_codigos+'Graph_Slides_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
+	ListaEjec.append(comando)
+	#Ejecuta las figuras en paralelo 
+	p = Pool(processes = 3)
+	p.map(os.system, ListaEjec)
+	p.close()
+	p.join()
+	print '\n'
+	print 'Se ejecutan figuras con mapa de Deslizamientos'
+	print '\n'
+
+
+	#elimina figuras viejas 
+	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
+	os.system(comando)
+
+
+
 	#~ #Figura comparativa de niveles simulados vs. observado y los de alerta.
 #~ 
 	#~ #Ruta donde se guardan los caudales en png

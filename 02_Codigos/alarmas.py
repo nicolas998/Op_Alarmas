@@ -344,7 +344,6 @@ def model_write_ruteShist(listrutas_Shist,FechaI,FechaF):
 
 def model_write_Stosim(ruta_Ssim,ruta_Shist):
 	###Se actualizan los historicos de humedad de la parametrizacion asociada.
-	#~ try:
 	#Lee el almacenamiento actual
 	Sactual = pd.read_csv(ruta_Ssim[:-7]+'.StOhdr', header = 4, index_col = 5, parse_dates = True, usecols=(1,2,3,4,5,6))
 	St = pd.DataFrame(Sactual[Sactual.index == Sactual.index[0]].values, index=[Sactual.index[0],])

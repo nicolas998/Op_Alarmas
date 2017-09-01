@@ -48,8 +48,8 @@ for l in Lista:
 		if args.verbose:
 			print 'Aviso: No hay suficientes archivos para borrar '+str(len(ListTemp))
 	
-	#~ os.system('convert -delay 10 -loop 0 '+l+'/*00.png '+l+'/animation24hr.gif ')
-	#~ print 'animacion generada en'+l
+	os.system('convert -delay 10 -loop 0 '+l+'/*00.png '+l+'/animation24hr.gif ')
+	print 'animacion generada en'+l
 
 
 
