@@ -170,66 +170,80 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 				Fechas.append(pd.to_datetime('200001010000'))
 	#Fechas[1] = List[Diff.argmin()+1]
 	return Fechas
-			
-		
-########################################################################
-# FUNCIONES PARA SET DEL MODELO 
+
 
 def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verbose=True):
 	''' Si hay lluvia en el periodo definido devuelve 1 si no 0.
 		Grafica si figure=True.
 		Siempre se debe poner la ruta de la figura.'
 		##Falta poner ventanas mas grandes de pronostico de lluvia ya que el calentamiento con las par y CI actuales se toma unos 25 pasos.'''
-	#Se lee la informacion
-	rutebin, rutehdr = wmf.__Add_hdr_bin_2route__(rutaRain)
-	cu = wmf.SimuBasin(rute=cuenca)
-	DictRain = wmf.read_rain_struct(rutehdr)
-	R = DictRain[u' Record']
+#Se lee la informacion
+rutebin, rutehdr = wmf.__Add_hdr_bin_2route__(rutaRain)
+cu = wmf.SimuBasin(rute=cuenca)
+DictRain = wmf.read_rain_struct(rutehdr)
+R = DictRain[u' Record']
 
-	#Se cuadran las fechas para que casen con las de los archivos de radar.
+#Se cuadran las fechas para que casen con las de los archivos de radar.
 
-	#Obtiene las fechas por dias
-	fecha_f = pd.to_datetime(fechaF)
-	fecha_f = fecha_f - pd.Timedelta(str(fecha_f.second)+' seconds')
-	fecha_f = fecha_f - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+#Se obtienen las fechas con minutos en 00 o 05.
+####FechaF######
+#Obtiene las fechas por dias
+fecha_f = pd.to_datetime(fechaF)
+fecha_f = fecha_f - pd.Timedelta(str(fecha_f.second)+' seconds')
+fecha_f = fecha_f - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+#corrige las fechas
+cont = 0
+while fecha_f.minute % 5 <>0 and cont<30:
+	fecha_f = fecha_f - pd.Timedelta('1 minutes')
+	cont+=1
 
-	#corrige las fechas
-	cont = 0
-	while fecha_f.minute % 5 <>0 and cont<30:
-		fecha_f = fecha_f + pd.Timedelta('1 minutes')
-		cont+=1
-	#Corrige la fecha para que este dentro del rango de fechas
+####FechaI######
+#Obtiene las fechas por dias
+fecha_i = pd.to_datetime(fechaI)
+fecha_i = fecha_i - pd.Timedelta(str(fecha_f.second)+' seconds')
+fecha_i = fecha_i - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+#corrige las fechas
+cont = 0
+while fecha_i.minute % 5 <>0 and cont<30:
+	fecha_i = fecha_i - pd.Timedelta('1 minutes')
+	cont+=1
+
+#Evalua que se mantenga el dt, existan campos cada 5 min. Si no para aqui y no se grafica nada.
+try:
+	lol=pd.infer_freq(R[fecha_i:fecha_f])
+
+	#Ensaya si las fechas solicitadas cuentan con campo de radar en el binario historico, si no escoge la fecha anterior a esa. Este debe existir también, lo ideal es que se mantenga el dt, existan campos cada 5 min.
+	####FechaF######
 	Flag = True
 	cont = 0
 	while Flag:
 		try:
-			pos = R.index.get_loc(fecha_f)
+			lol = R.index.get_loc(fecha_f)
 			Flag = False
 		except:
+			print 'Aviso: no existe campo de lluvia para fecha_f en la serie entregada, se intenta buscar el de 5 min antes'
 			fecha_f = fecha_f - pd.Timedelta('5 minutes')
 		cont+=1
 		if cont>30:
 			Flag = False
-	#corrige fecha de inicio
-	fecha_i = pd.to_datetime(fechaI)
-	fecha_i = fecha_i - pd.Timedelta(str(fecha_f.second)+' seconds')
-	fecha_i = fecha_i - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+	####FechaI######
 	Flag = True
-	#Corrige la fecha para que este dentro del rango de fechas
 	while Flag:
 		try:
-			pos = R.index.get_loc(fecha_i)
+			lol = R.index.get_loc(fecha_i)
 			Flag = False
 		except:
+			print 'Aviso: no existe campo de lluvia para fecha_i en la serie entregada, se intenta buscar el de 5 min antes'
 			fecha_i = fecha_i - pd.Timedelta('5 minutes')
-	#Obtiene el periodo
+
+	#Escoge pos de campos con lluvia dentro del periodo solicitado.
 	pos = R[fecha_i:fecha_f].values
 	pos = pos[pos <>1 ]
 
 	#imprime el tamano de lo que esta haciendo 
 	if verbose:
 		print fecha_f - fecha_i
-	
+
 	#si hay barridos para graficar
 	if len(pos)>0:
 		#-------
@@ -289,9 +303,10 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 		if verbose:
 			print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
 			print fecha_f - fecha_i
-
-
-
+except:
+	pass
+########################################################################
+# FUNCIONES PARA SET DEL MODELO 
 
 def model_get_constStorage(RutesList, ncells):
 	Storage = np.zeros((5, ncells))

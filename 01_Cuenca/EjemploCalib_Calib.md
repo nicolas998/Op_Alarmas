@@ -28,25 +28,25 @@ de las celdas.
 
 ### Rutas
 
-- **ruta_almsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_almacenamiento/
+- **ruta_almsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/04_almacenamiento/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_almhist**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_almacenamiento/01_almacenamiento_hist/
+- **ruta_almhist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/04_almacenamiento/01_almacenamiento_hist/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_bkc_alm**: /home/nicolas/ProyectosGIT/Op_Alarmas/01_Cuenca/03_BackSto/
+- **ruta_bkc_alm**: /media/nicolas/Home/Op_Alarmas/01_Cuenca/03_BackSto/
 	> Ruta en donde se encuentran las copias de almacenamiento que pueden remplazar a las operacionales
-- **ruta_rainFile**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/01_Rain/Lluvia_actual.bin
+- **ruta_rainFile**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_Rain/Lluvia_actual.bin
 	> Ruta donde se encuentra alojado el archivo de lluvia binario actual.
-- **ruta_rainHistoryFile**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/01_Rain/Lluvia_historica.hdr
+- **ruta_rainHistoryFile**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_Rain/Lluvia_historica.hdr
 	> Archivo plano con historico de lluvia, se usa para evaluar reglas de actualizacion.
-- **ruta_qsim**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/
+- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_Caudal/
 	> Ruta en la cual se van a guardar los binarios con los caudales actuales simulados.
-- **ruta_qsim_hist**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/03_CaudalHistorico/
+- **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/03_CaudalHistorico/
 	> Ruta en donde se actualizan los archivos historicos de caudales simulados (**.csv**)
-- **ruta_slides**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/Slides_results.bin
+- **ruta_slides**: /media/nicolas/Home/Op_Alarmas/03_Resultados/05_Slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
-- **ruta_qsim2Json**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/Qsim_Rain_s_003.msg
+- **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_Caudal/Qsim_Rain_s_003.msg
 	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
-- **ruta_qhist2Json**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/03_CaudalHistorico/Qsim_Rain_s_003hist.csv
+- **ruta_qhist2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/03_CaudalHistorico/Qsim_Rain_s_003hist.csv
 	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
 ## Calibracion
@@ -138,19 +138,15 @@ indican cual de las parametrizaciones es la que se usa para graficar algunas
 de las variables tales como la animacion de caudales y la evolucion de la 
 humedad en la cuenca.
 
-- **ruta_map_qsim**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/StreamMaps
+- **ruta_map_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/Figuras/StreamMaps
 	> ruta donde se guardan los mapas de caudales simulados. 
-- **ruta_map_humedad**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/HumedadMaps
-- **ruta_map_humedad2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/04_humedad/HumedadMaps
+- **ruta_map_humedad**: /media/nicolas/Home/Op_Alarmas/03_Resultados/Figuras/HumedadMaps
 	> Ruta donde se guardan los mapas de humedad.
-- **ruta_map_slides**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/SlidesMaps
-- **ruta_map_slides2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/05_Slides/SlidesMaps
+- **ruta_map_slides**: /media/nicolas/Home/Op_Alarmas/03_Resultados/Figuras/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim2**: /home/nicolas/ProyectosGIT/Op_Alarmas/03_Resultados/02_Caudal/LevelsGraphs
+- **ruta_serie_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/Figuras/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
-- **ruta_serie_qsim**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/LevelsGraphs
-	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
-- **ruta_Json**: /var/www/html/aleja/PruebaAlarmas/Op_LaInmaculada/Qsim.json
+- **ruta_Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/Figuras/Qsim.json
 	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
 
 **Tabla**: Variables y parametrizaciones a plotear.

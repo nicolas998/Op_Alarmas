@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 import pandas as pd 
 import datetime as dt 
@@ -18,7 +19,7 @@ print '\n'
 print '###################################### Fecha de Ejecucion: '+dateText+' #############################\n'
 
 #Obtiene las rutas necesarias 
-ruta_de_rutas = '/home/nicolas/ProyectosGIT/Op_Alarmas/Rutas.md'
+ruta_de_rutas = '/media/nicolas/Home/Op_Alarmas/Rutas.md'
 RutasList = al.get_rutesList(ruta_de_rutas)
 
 # rutas de objetos de entrada
