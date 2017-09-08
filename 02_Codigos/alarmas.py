@@ -174,137 +174,146 @@ def Rain_Cumulated_Dates(rutaAcum, rutaNC):
 
 def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verbose=True):
 	''' Si hay lluvia en el periodo definido devuelve 1 si no 0.
-		Grafica si figure=True.
-		Siempre se debe poner la ruta de la figura.'
-		##Falta poner ventanas mas grandes de pronostico de lluvia ya que el calentamiento con las par y CI actuales se toma unos 25 pasos.'''
-#Se lee la informacion
-rutebin, rutehdr = wmf.__Add_hdr_bin_2route__(rutaRain)
-cu = wmf.SimuBasin(rute=cuenca)
-DictRain = wmf.read_rain_struct(rutehdr)
-R = DictRain[u' Record']
+	Grafica si figure=True.
+	Siempre se debe poner la ruta de la figura.
+	##Falta poner ventanas mas grandes de pronostico de lluvia ya que el calentamiento con las par y CI actuales se toma unos 25 pasos.'''
 
-#Se cuadran las fechas para que casen con las de los archivos de radar.
+	#Se lee la informacion
+	rutebin, rutehdr = wmf.__Add_hdr_bin_2route__(rutaRain)
+	cu = wmf.SimuBasin(rute=cuenca)
+	DictRain = wmf.read_rain_struct(rutehdr)
+	R = DictRain[u' Record']
 
-#Se obtienen las fechas con minutos en 00 o 05.
-####FechaF######
-#Obtiene las fechas por dias
-fecha_f = pd.to_datetime(fechaF)
-fecha_f = fecha_f - pd.Timedelta(str(fecha_f.second)+' seconds')
-fecha_f = fecha_f - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
-#corrige las fechas
-cont = 0
-while fecha_f.minute % 5 <>0 and cont<30:
-	fecha_f = fecha_f - pd.Timedelta('1 minutes')
-	cont+=1
+	#Se cuadran las fechas para que casen con las de los archivos de radar.
 
-####FechaI######
-#Obtiene las fechas por dias
-fecha_i = pd.to_datetime(fechaI)
-fecha_i = fecha_i - pd.Timedelta(str(fecha_f.second)+' seconds')
-fecha_i = fecha_i - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
-#corrige las fechas
-cont = 0
-while fecha_i.minute % 5 <>0 and cont<30:
-	fecha_i = fecha_i - pd.Timedelta('1 minutes')
-	cont+=1
-
-#Evalua que se mantenga el dt, existan campos cada 5 min. Si no para aqui y no se grafica nada.
-try:
-	lol=pd.infer_freq(R[fecha_i:fecha_f])
-
-	#Ensaya si las fechas solicitadas cuentan con campo de radar en el binario historico, si no escoge la fecha anterior a esa. Este debe existir también, lo ideal es que se mantenga el dt, existan campos cada 5 min.
+	#Se obtienen las fechas con minutos en 00 o 05.
 	####FechaF######
-	Flag = True
+	#Obtiene las fechas por dias
+	fecha_f = pd.to_datetime(fechaF)
+	fecha_f = fecha_f - pd.Timedelta(str(fecha_f.second)+' seconds')
+	fecha_f = fecha_f - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+	#corrige las fechas
 	cont = 0
-	while Flag:
-		try:
-			lol = R.index.get_loc(fecha_f)
-			Flag = False
-		except:
-			print 'Aviso: no existe campo de lluvia para fecha_f en la serie entregada, se intenta buscar el de 5 min antes'
-			fecha_f = fecha_f - pd.Timedelta('5 minutes')
+	while fecha_f.minute % 5 <>0 and cont<10:
+		fecha_f = fecha_f - pd.Timedelta('1 minutes')
 		cont+=1
-		if cont>30:
-			Flag = False
+
 	####FechaI######
-	Flag = True
-	while Flag:
-		try:
-			lol = R.index.get_loc(fecha_i)
-			Flag = False
-		except:
-			print 'Aviso: no existe campo de lluvia para fecha_i en la serie entregada, se intenta buscar el de 5 min antes'
-			fecha_i = fecha_i - pd.Timedelta('5 minutes')
+	#Obtiene las fechas por dias
+	fecha_i = pd.to_datetime(fechaI)
+	fecha_i = fecha_i - pd.Timedelta(str(fecha_f.second)+' seconds')
+	fecha_i = fecha_i - pd.Timedelta(str(fecha_f.microsecond)+' microsecond')
+	#corrige las fechas
+	cont = 0
+	while fecha_i.minute % 5 <>0 and cont<10:
+		fecha_i = fecha_i - pd.Timedelta('1 minutes')
+		cont+=1
 
-	#Escoge pos de campos con lluvia dentro del periodo solicitado.
-	pos = R[fecha_i:fecha_f].values
-	pos = pos[pos <>1 ]
+	#Evalua que las fechas solicitadas existan, si no para aqui y no se grafica nada - if solo sirve para ensayos.. operacionalmente no debe hacer nada.
+	try:
+		lol=R[fecha_i:fecha_f]
 
-	#imprime el tamano de lo que esta haciendo 
-	if verbose:
-		print fecha_f - fecha_i
+		#Ensaya si las fechas solicitadas cuentan con campo de radar en el binario historico, si no escoge la fecha anterior a esa. Este debe existir tambien, lo ideal es que se mantenga el dt, existan campos cada 5 min.
+		####FechaF######
+		Flag = True
+		cont = 0
+		while Flag:
+			try:
+				lol = R.index.get_loc(fecha_f)
+				Flag = False
+			except:
+				print 'Aviso: no existe campo de lluvia para fecha_f en la serie entregada, se intenta buscar el de 5 min antes'
+				fecha_f = fecha_f - pd.Timedelta('5 minutes')
+			cont+=1
+			if cont>1:
+				Flag = False
+		####FechaI######
+		Flag = True
+		cont = 0
+		while Flag:
+			try:
+				lol = R.index.get_loc(fecha_i)
+				Flag = False
+			except:
+				print 'Aviso: no existe campo de lluvia para fecha_i en la serie entregada, se intenta buscar el de 5 min antes'
+				fecha_i = fecha_i - pd.Timedelta('5 minutes')
+			cont+=1
+			if cont>1:
+				Flag = False
 
-	#si hay barridos para graficar
-	if len(pos)>0:
-		#-------
-		#Grafica
-		#-------
-		#Textos para la legenda
-		lab = np.linspace(vmin, vmax, 4)
-		texto = ['Bajo', 'Medio', 'Alto', 'Muy alto']
-		labText = ['%dmm\n%s'%(i,j) for i,j in zip(lab, texto)]
-		#Acumula la lluvia para el periodo
-		Vsum = np.zeros(cu.ncells)
-		for i in pos:
-			v,r = wmf.models.read_int_basin(rutebin,i, cu.ncells)
-			v = v.astype(float); v = v/1000.0
-			Vsum+=v	
-		#Genera la figura 
-		c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
-			show_cbar=True, vmin = vmin, vmax = vmax,
-			cbar_ticksize = 16,
-			cbar_ticks= lab,
-			cbar_ticklabels = labText,
-			cbar_aspect = 17,
-			ruta = rutaFigura,
-			show=False,figsize = (10,12))
-		c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
-		return 1
+		#Escoge pos de campos con lluvia dentro del periodo solicitado.
+		pos = R[fecha_i:fecha_f].values
+		pos = pos[pos <>1 ]
+
+		#imprime el tamano de lo que esta haciendo 
 		if verbose:
-			print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero para '+rutaFigura[49:-4]
 			print fecha_f - fecha_i
 
-			#~ fig = pl.figure(figsize=(10,12))
-			#~ Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
-										#~ cmap = pl.get_cmap('viridis',bins),								
-										#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-										#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
-										#~ show=False,figsize = (10,12))
-			#~ #ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
-			#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
-			#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
+		#si hay barridos para graficar
+		if len(pos)>0:
+			#-------
+			#Grafica
+			#-------
+			#Textos para la legenda
+			lab = np.linspace(vmin, vmax, 4)
+			texto = ['Bajo', 'Medio', 'Alto', 'Muy alto']
+			labText = ['%dmm\n%s'%(i,j) for i,j in zip(lab, texto)]
+			#Acumula la lluvia para el periodo
+			Vsum = np.zeros(cu.ncells)
+			for i in pos:
+				v,r = wmf.models.read_int_basin(rutebin,i, cu.ncells)
+				v = v.astype(float); v = v/1000.0
+				Vsum+=v	
+			#Genera la figura 
+			c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
+				show_cbar=True, vmin = vmin, vmax = vmax,
+				cbar_ticksize = 16,
+				cbar_ticks= lab,
+				cbar_ticklabels = labText,
+				cbar_aspect = 17,
+				ruta = rutaFigura,
+				show=False,figsize = (10,12))
+			c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
+			return 1
+			if verbose:
+				print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero para '+rutaFigura[49:-4]
+				print fecha_f - fecha_i
 
-	#si no hay barridos
-	else:
-		return 0
-		#-------
-		#Grafica
-		#-------
-		Vsum = np.zeros(cu.ncells)
-		c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
-			show_cbar=True, vmin = vmin, vmax = vmax,
-			cbar_ticksize = 16,
-			cbar_ticks= lab,
-			cbar_ticklabels = labText,
-			cbar_aspect = 17,
-			ruta = rutaFigura,
-			show=False,figsize = (10,12))
-		c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16 )
-		if verbose:
-			print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
-			print fecha_f - fecha_i
-except:
-	pass
+				#~ fig = pl.figure(figsize=(10,12))
+				#~ Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
+											#~ cmap = pl.get_cmap('viridis',bins),								
+											#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+											#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
+											#~ show=False,figsize = (10,12))
+				#~ #ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
+				#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
+				#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
+
+			#si no hay barridos
+			else:
+				return 0
+				#-------
+				#Grafica
+				#-------
+				Vsum = np.zeros(cu.ncells)
+				c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
+					show_cbar=True, vmin = vmin, vmax = vmax,
+					cbar_ticksize = 16,
+					cbar_ticks= lab,
+					cbar_ticklabels = labText,
+					cbar_aspect = 17,
+					ruta = rutaFigura,
+					show=False,figsize = (10,12))
+				c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
+				if verbose:
+					print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
+					print fecha_f - fecha_i
+		#~ else:
+	except:
+		#si no lo logra que no haga nada.
+		print 'Aviso: no se puede construir una serie porque las fechas solicitada no existen, no se genera png de acumulado.'
+		pass
+
 ########################################################################
 # FUNCIONES PARA SET DEL MODELO 
 

@@ -82,7 +82,7 @@ print lluvia_historica+'\n'
 #GENERA GRAFICAS DE CAMPOS
 #-------------------------------------------------------------------
 fecha2 = date.strftime('%Y-%m-%d-%H:%M')
-ListComandos = []
+#~ ListComandos = []
 
 print 'Aviso: Se generan graficas de radar para los intervalos:'
 
@@ -105,19 +105,20 @@ ruta_figura = ruta_out_rain_png + 'Acumulado_1hora.png'
 r1hr=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=1,vmax=20)
 
 #Grafica en los proximos 30min
-fecha1 = date + dt.timedelta(minutes = 30)
-fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
+fecha1 = fecha2
+fecha2= date + dt.timedelta(minutes = 30)
+fecha2 = fecha2.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain_png + 'Acumulado_30siguientes.png'
-r30minnext=al.Graph_AcumRain(fecha2,fecha1,ruta_cuenca,lluvia_actual,ruta_figura,vmin=1,vmax=5)
+r30minnext=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_actual,ruta_figura,vmin=1,vmax=5)
 
 
-##Lanza los procesos de lluvia en paralelo
-p = Pool(processes = 4)
-p.map(os.system, ListComandos)
-p.close()
-p.join()
-#time.sleep(20)
-print '\n'
+#~ ##Lanza los procesos de lluvia en paralelo
+#~ p = Pool(processes = 4)
+#~ p.map(os.system, ListComandos)
+#~ p.close()
+#~ p.join()
+#~ #time.sleep(20)
+#~ print '\n'
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

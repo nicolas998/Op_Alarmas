@@ -95,15 +95,15 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-07-24-12:10|
-| -t 002|Sto_wet_c01_s01.StObin|2017-07-24-14:30|
+| -t 001|Sto_wet_c01_s01.StObin|2017-09-08-10:48|
+| -t 002|Sto_wet_c01_s01.StObin|2017-09-08-10:48|
 | -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-07-24-14:30|
-| -t 005|Sto_wet_c02_s01.StObin|2017-07-24-04:35|
+| -t 004|Sto_wet_c02_s01.StObin|2017-09-08-10:48|
+| -t 005|Sto_wet_c02_s01.StObin|2017-09-08-10:48|
 | -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-07-24-14:30|
-| -t 008|Sto_wet_c03_s02.StObin|2017-07-24-14:45|
-| -t 009|Sto_wet_c03_s03.StObin|2017-07-24-04:35|
+| -t 007|Sto_wet_c03_s01.StObin|2017-09-08-10:48|
+| -t 008|Sto_wet_c03_s02.StObin|2017-09-08-10:48|
+| -t 009|Sto_wet_c03_s03.StObin|2017-09-08-10:48|
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
