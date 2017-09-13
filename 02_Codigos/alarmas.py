@@ -324,11 +324,16 @@ def model_get_constStorage(RutesList, ncells):
 		Storage[i] = Cs
 	return Storage.astype(float)
 
-def model_write_ruteQhist(listrutas_Qhist,FechaI,FechaF):
+#NOTA: Lista de entrada para crear rutas de Qhist.
+#~ Listlol=[]
+#~ for L in ListEjecs:
+     #~ Listlol.append(ruta_Qsim +'01_CaudalHistorico/'+ QsimName +'_'+L[0].replace(' ','_').replace('-','')+'_hist.msg')
+
+def model_write_ruteQhist(listrutas_Qhist,FechaI,FechaF,pcont):
 	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si esta quiere renovarse.
 	for i in listrutas_Qhist:
 		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
-		Qh = pd.DataFrame(np.zeros((DifIndex.size))*np.nan, 
+		Qh = pd.DataFrame(np.zeros(shape=(DifIndex.size,pcont.size))*np.nan, 
 			index=pd.date_range(FechaI, FechaF, freq='5min'))
 		#Pregunta si esta
 		try:
@@ -347,26 +352,54 @@ def model_write_ruteQhist(listrutas_Qhist,FechaI,FechaF):
 		else:
 			pass
 
-def model_write_qsim(ruta,Qsim, index, pcont):
-	#se fija si ya esta
-	L = glob.glob(ruta)
-	if len(L)>0:
-		Existe = True
-		Nuevo = False
+def model_write_qsim(rutaQsim,rutaQhist, pcont):
+	#~ #se fija si ya esta
+	#~ L = glob.glob(ruta)
+	#~ if len(L)>0:
+		#~ Existe = True
+		#~ Nuevo = False
+	#~ else:
+		#~ Existe = False
+		#~ Nuevo = True
+	#~ #Obtiene el caudale n un Data Frame
+	#~ D = {}
+	#~ for c,i in enumerate(pcont):
+		#~ D.update({i:Qsim[c]})
+	#~ date = index.to_pydatetime().strftime('%Y-%m-%d-%H:%M')
+	#~ Qsim = {date:D}
+	#~ Qsim = pd.DataFrame(Qsim).T
+	#~ #Escribe el Caudal
+	#~ with open(ruta, 'a') as f:
+		#~ Qsim.to_csv(f, header=Nuevo,float_format='%.3f')
+	#----------------------------------------------------------
+	###Se actualizan los historicos de Qsim de la parametrizacion asociada.
+	#Lee el almacenamiento actual
+	Qactual = pd.read_msgpack(rutaQsim)
+	Qt = pd.DataFrame(Qactual[Qactual.index == Qactual.index[0]].values, index=[Qactual.index[0],])
+	#Lee el historico
+	Qhist = pd.read_msgpack(rutaQhist)
+	# encuentra el pedazo que falta entre ambos
+	if Qhist.index[-1]!=Qactual.index[0]:
+		Gap = pd.date_range(Qhist.index[-1], Qactual.index[0], freq='5min')
+		#Genera el pedazo con faltantes
+		GapData = pd.DataFrame(np.zeros((Gap.size - 2, pcont.size))*np.nan, 
+				index= Gap[1:-1])        
+		#pega el gap con nans
+		Qhist = Qhist.append(GapData)
 	else:
-		Existe = False
-		Nuevo = True
-	#Obtiene el caudale n un Data Frame
-	D = {}
-	for c,i in enumerate(pcont):
-		D.update({i:Qsim[c]})
-	date = index.to_pydatetime().strftime('%Y-%m-%d-%H:%M')
-	Qsim = {date:D}
-	Qsim = pd.DataFrame(Qsim).T
-	#Escribe el Caudal
-	with open(ruta, 'a') as f:
-		Qsim.to_csv(f, header=Nuevo,float_format='%.3f')
+		pass		
 
+	#si no hay gap entre ellos, pega la info
+	Qhist = Qhist.append(Qt)
+	#Guarda el archivo historico 
+	Qhist.to_msgpack(rutaQhist)
+	#Aviso
+	print 'Aviso: Se ha actualizado el archivo de Qsim_historicos de: '+rutaQhist
+
+#lista de rutas a crear.
+#~ Listlol=[]
+#~ for listt in ListEjecs:
+    #~ Listlol.append(listt[7])
 def model_write_ruteShist(listrutas_Shist,FechaI,FechaF):
 	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si esta quiere renovarse.
 	for i in listrutas_Shist:
@@ -395,7 +428,6 @@ def model_write_Stosim(ruta_Ssim,ruta_Shist):
 	#Lee el almacenamiento actual
 	Sactual = pd.read_csv(ruta_Ssim[:-7]+'.StOhdr', header = 4, index_col = 5, parse_dates = True, usecols=(1,2,3,4,5,6))
 	St = pd.DataFrame(Sactual[Sactual.index == Sactual.index[0]].values, index=[Sactual.index[0],])
-	#~ columns = ['Tanque_'+str(i) for i in range(1,6)])
 	#Lee el historico
 	Shist = pd.read_msgpack(ruta_Shist)
 	# encuentra el pedazo que falta entre ambos
@@ -403,8 +435,7 @@ def model_write_Stosim(ruta_Ssim,ruta_Shist):
 		Gap = pd.date_range(Shist.index[-1], Sactual.index[0], freq='5min')
 		#Genera el pedazo con faltantes
 		GapData = pd.DataFrame(np.zeros((Gap.size - 2, 5))*np.nan, 
-				index= Gap[1:-1])
-				#~ columns = ['Tanque_'+str(i) for i in range(1,6)])        
+				index= Gap[1:-1])        
 		#pega el gap con nans
 		Shist = Shist.append(GapData)
 	else:
@@ -415,9 +446,7 @@ def model_write_Stosim(ruta_Ssim,ruta_Shist):
 	#Guarda el archivo historico 
 	Shist.to_msgpack(ruta_Shist)
 	#Aviso
-	print 'Aviso: Se ha actualizado el archivo de estados historicos de: '+ruta_Shist[-23:]
-	#~ except:
-		#~ print 'Aviso: No se encuentra el historico de estados: '+ruta_Shist[-23:]+' Por lo tanto no se actualiza'
+	print 'Aviso: Se ha actualizado el archivo de Ssim_historicos de: '+ruta_Shist
 
 
 def model_update_norain():
