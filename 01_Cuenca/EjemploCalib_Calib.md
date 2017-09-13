@@ -28,34 +28,38 @@ de las celdas.
 
 ### Rutas
 
-- **ruta_almsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/04_almacenamiento/
+- **ruta_almsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/03_almacenamiento/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_almhist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/04_almacenamiento/01_almacenamiento_hist/
+- **ruta_almhist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/03_almacenamiento/01_almacenamiento_hist/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_bkc_alm**: /media/nicolas/Home/Op_Alarmas/01_Cuenca/03_BackSto/
+- **ruta_bkc_alm**: /media/nicolas/Home/Op_Alarmas/01_Cuenca/02_BackSto/
 	> Ruta en donde se encuentran las copias de almacenamiento que pueden remplazar a las operacionales
-- **ruta_rainFile**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_Rain/Lluvia_actual.bin
+- **ruta_rainFile**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_rain/Lluvia_actual.bin
 	> Ruta donde se encuentra alojado el archivo de lluvia binario actual.
-- **ruta_rainHistoryFile**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_Rain/Lluvia_historica.hdr
+- **ruta_rainHistoryFile**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_rain/Lluvia_historica.hdr
 	> Archivo plano con historico de lluvia, se usa para evaluar reglas de actualizacion.
-- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_Caudal/
+- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_caudal/
 	> Ruta en la cual se van a guardar los binarios con los caudales actuales simulados.
-- **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/03_CaudalHistorico/
+- **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_caudal/01_CaudalHistorico/
 	> Ruta en donde se actualizan los archivos historicos de caudales simulados (**.csv**)
-- **ruta_slides**: /media/nicolas/Home/Op_Alarmas/03_Resultados/05_Slides/Slides_results.bin
+- **ruta_slides**: /media/nicolas/Home/Op_Alarmas/03_Resultados/04_slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
-- **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_Caudal/Qsim_Rain_s_003.msg
+- **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
 	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
-- **ruta_qhist2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/03_CaudalHistorico/Qsim_Rain_s_003hist.csv
+- **ruta_qhist2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_caudal/01_CaudalHistorico/Qsim_Rain_s_003hist.csv
 	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
-## Calibracion
+## Parametrizacion
 
 |Nombre | id| evp | ks_v | kp_v | Kpp_v | v_sup | v_sub | v_supt | v_cau | Hu | Hg |
 |--------:|----:|:---:|:----:|:----:|:-----:|:-----:|:-----:|:------:|:-----:|:--:|:--:|
-| -c poca evp | 001 | 0.0002| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
-| -c media evp | 002 | 0.0015| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
-| -c alta evp | 003 | 0.0048| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+| -c poca evp1 | 001 | 0.0002| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+| -c poca evp2 | 002 | 0.0002| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+| -c media evp | 003 | 0.0015| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+| -c media evp2 | 004 | 0.0048| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+| -c alta evp | 005 | 0.0003| 2.0|4.0|0.0|1.0|1.0|1.0|0.9|1.0|1.0|
+| -c base | 006 | 0.0048| 4.0|0.2|0.0|1.0|2.0|2.0|0.9|2.0|2.0|
+
 
 La calibración se compone de 10 parámetros escalares, los cuales son:
 
@@ -81,29 +85,24 @@ ___
 
 |id| Nombre                   | Update | Tiempo[h] | Condicion  | Calib Actualiza | Back Sto        | Slides |
 |:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
-| -s 001| Sto_wet_c01_s01.StObin | True    | 10     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
-| -s 002| Sto_wet_c01_s02.StObin | True    | 10    | No Rain 4h | 001          | None            | False  |
-| -s 003| Sto_wet_c01_s03.StObin | False   | 4     | NaN | 001          | None            | False  |
-| -s 004| Sto_wet_c02_s01.StObin | True    | 4     | No Rain Last 6h| 002          | Sto_wet-s02.StoBin | True|
-| -s 005| Sto_wet_c02_s02.StObin | True    | 15    | No Rain 4h | 002          | None            | False  |
-| -s 006| Sto_wet_c02_s03.StObin | False   | 4     | NaN | 002          | None            | False  |
-| -s 007| Sto_wet_c03_s01.StObin | True    | 2     | No Rain 4h| 003          | Sto_wet-s01.StoBin | True|
-| -s 008| Sto_wet_c03_s02.StObin | True   | 8     | No Rain 4h | 003          | Sto_wet-s02.StoBin | False  |
-| -s 009| Sto_wet_c03_s03.StObin | True   | 15     | No Rain 4h | 003          | Sto_wet-s03.StoBin | False  |
+| -s 001| Sto_wet_01.StObin | True    | 10     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
+| -s 002| Sto_wet_02.StObin | False   | 4     | NaN | 002          | None            | True  |
+| -s 003| Sto_wet_03.StObin | True    | 15    | No Rain 4h | 003          | None            | True  |
+| -s 004| Sto_wet_04.StObin | True   | 15     | No Rain 4h | 004          | Sto_wet-s03.StoBin | False  |
+| -s 005| Sto_wet_05.StObin | True    | 5     | No Rain 4h| 005          | Sto_wet-s01.StoBin | False|
+| -s 006| Sto_wet_06.StObin | True    | 5     | No Rain 4h| 006          | Sto_wet-s01.StoBin | False|
 
 **Tabla**: Fechas de actualizacion de almacenamientos.
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_c01_s01.StObin|2017-09-08-10:48|
-| -t 002|Sto_wet_c01_s01.StObin|2017-09-08-10:48|
-| -t 003|None|2017-06-09-10:10|
-| -t 004|Sto_wet_c02_s01.StObin|2017-09-08-10:48|
-| -t 005|Sto_wet_c02_s01.StObin|2017-09-08-10:48|
-| -t 006|None|2017-06-09-10:10|
-| -t 007|Sto_wet_c03_s01.StObin|2017-09-08-10:48|
-| -t 008|Sto_wet_c03_s02.StObin|2017-09-08-10:48|
-| -t 009|Sto_wet_c03_s03.StObin|2017-09-08-10:48|
+| -t 001|Sto_wet_01.StObin|2017-09-12-15:44|
+| -t 002|None|2017-09-08-10:48|
+| -t 003|Sto_wet_03.StObin|2017-09-12-15:44|
+| -t 004|Sto_wet_04.StObin|2017-09-12-15:44|
+| -t 005|Sto_wet_05.StObin|2017-09-12-15:44|
+| -t 006|Sto_wet_06.StObin|2017-09-12-15:44|
+
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
 siguiente tabla se presentan los nombres de los almacenamientos de entrada.  En la tabla se indica:
@@ -153,8 +152,8 @@ humedad en la cuenca.
 
 | Variable		  | Variable |
 |:---------------:|:--------:|
-| -p Qsim_map 		  | 001,003,002,004|
-| -p Humedad_map 	  | 001,004|
-| -p Slides 		  | 001,007,004 |
+| -p Qsim_map 		  | 001,002,003,004|
+| -p Humedad_map 	  | 001,002|
+| -p Slides 		  | 001,002,003|
 
 

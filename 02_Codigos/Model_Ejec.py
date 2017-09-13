@@ -127,10 +127,10 @@ for i in DictStore.keys():
 	FileName = glob.glob(ruta_sto + DictStore[i]['Nombre'])
 	if len(FileName):
 		S = wmf.models.read_float_basin_ncol(ruta_sto+DictStore[i]['Nombre'],1,cu.ncells,5)[0]
-		print 'CI corridas'
 	else:
-		S = al.model_get_constStorage(List, cu.ncells)
-		print 'CI constantes'
+		#no tiene sentido que las par que se pusieron corran sin sus C.I.
+		#~ S = al.model_get_constStorage(List, cu.ncells)
+		print 'Error: No se leyeron los binarios de almacenamiento operacionales.'
 	#Arma la ejecucion
 	Calib = DictCalib[DictStore[i]['Calib']]
 	ListEjecs.append([i, Calib, rain_bin, Npasos, 1, S, ruta_sto+DictStore[i]['Nombre'],ruta_stohist+DictStore[i]['Nombre'][:-7]+'hist.msg'])

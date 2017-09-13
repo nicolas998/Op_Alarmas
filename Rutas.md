@@ -17,8 +17,8 @@ Rutas necesarias para los datos de entrada en la operación del modelo:
 
 Rutas donde se alojan los resultados obtenidos por el modelo.
 
-- **ruta_rain**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_Rain/
+- **ruta_rain**: /media/nicolas/Home/Op_Alarmas/03_Resultados/01_rain/
 - **ruta_rain_png**: /media/nicolas/Home/Op_Alarmas/03_Resultados/Figuras/
-- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_Caudal
+- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_caudal
 - **ruta_storage**:
 - **ruta_slides**:

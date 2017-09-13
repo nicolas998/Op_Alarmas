@@ -324,6 +324,29 @@ def model_get_constStorage(RutesList, ncells):
 		Storage[i] = Cs
 	return Storage.astype(float)
 
+def model_write_ruteQhist(listrutas_Qhist,FechaI,FechaF):
+	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si esta quiere renovarse.
+	for i in listrutas_Qhist:
+		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
+		Qh = pd.DataFrame(np.zeros((DifIndex.size))*np.nan, 
+			index=pd.date_range(FechaI, FechaF, freq='5min'))
+		#Pregunta si esta
+		try:
+			Lold = os.listdir(i)
+			pos = Lold.index(i)
+			flag = raw_input('Aviso: El archivo historico : '+i+' ya existe, desea sobre-escribirlo, perdera la historia de este!! (S o N): ')
+			if flag == 'S':
+				flag = True
+			else:
+				flag = False
+		except:
+			flag = True
+		#Guardado
+		if flag:
+			Qh.to_msgpack(i)
+		else:
+			pass
+
 def model_write_qsim(ruta,Qsim, index, pcont):
 	#se fija si ya esta
 	L = glob.glob(ruta)
@@ -350,7 +373,6 @@ def model_write_ruteShist(listrutas_Shist,FechaI,FechaF):
 		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
 		Sh = pd.DataFrame(np.zeros((DifIndex.size, 5))*np.nan, 
 			index=pd.date_range(FechaI, FechaF, freq='5min'))
-			#~ columns = ['Tanque_'+str(i) for i in range(1,6)])
 		#Pregunta si esta
 		try:
 			Lold = os.listdir(i)
@@ -365,6 +387,8 @@ def model_write_ruteShist(listrutas_Shist,FechaI,FechaF):
 		#Guardado
 		if flag:
 			Sh.to_msgpack(i)
+		else:
+			pass
 
 def model_write_Stosim(ruta_Ssim,ruta_Shist):
 	###Se actualizan los historicos de humedad de la parametrizacion asociada.
