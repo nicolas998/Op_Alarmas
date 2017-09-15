@@ -297,21 +297,21 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 				#-------
 				Vsum = np.zeros(cu.ncells)
 				c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
-					show_cbar=True, vmin = vmin, vmax = vmax,
-					cbar_ticksize = 16,
-					cbar_ticks= lab,
-					cbar_ticklabels = labText,
-					cbar_aspect = 17,
+					vmin = vmin, vmax = vmax,#show_cbar=True,
+					#~ cbar_ticksize = 16,
+					#~ cbar_ticks= lab,
+					#~ cbar_ticklabels = labText,
+					#~ cbar_aspect = 17,
 					ruta = rutaFigura,
 					show=False,figsize = (10,12))
-				c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
+				#~ c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
 				if verbose:
 					print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
 					print fecha_f - fecha_i
 		#~ else:
 	except:
 		#si no lo logra que no haga nada.
-		print 'Aviso: no se puede construir una serie porque las fechas solicitada no existen, no se genera png de acumulado.'
+		print 'Aviso: no se puede construir una serie porque las fechas solicitada no existen, no se genera png de acumulado '+ str(fecha_f - fecha_i)
 		pass
 
 ########################################################################

@@ -150,6 +150,7 @@ if r1hr == 0 and r30minnext == 0:
 	print 'Aviso: No se generan graficas de resultados de simulacion ya que no hay lluvia en la ultima hora ni los prox. 30 min.'
 	pass
 else:
+	#~ print 'Aviso: Se ejectuan figuras.'
 	#Lectura del archivo de configuracion
 	ConfigFile = al.get_rutesList(ruta_configuracion_1)
 
@@ -226,32 +227,30 @@ else:
 	#elimina figuras viejas 
 	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
 	os.system(comando)
+#~ 
+	#Figura comparativa de niveles simulados vs. observado y los de alerta.
 
+	#Ruta donde se guardan los caudales en png
+	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
 
+	ListaEjec = []
+	fechaNueva = date
+	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+	comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
+	ListaEjec.append(comando)
+	#Ejecuta las figuras en paralelo 
+	p = Pool(processes = 3)
+	p.map(os.system, ListaEjec)
+	p.close()
+	p.join()
 
-	#~ #Figura comparativa de niveles simulados vs. observado y los de alerta.
-#~ 
-	#~ #Ruta donde se guardan los caudales en png
-	#~ ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
-#~ 
-	#~ ListaEjec = []
-	#~ fechaNueva = date
-	#~ fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	#~ comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_configuracion_1
-	#~ ListaEjec.append(comando)
-	#~ #Ejecuta las figuras en paralelo 
-	#~ p = Pool(processes = 3)
-	#~ p.map(os.system, ListaEjec)
-	#~ p.close()
-	#~ p.join()
-#~ 
-	#~ print '\n'
-	#~ print 'Se ejecutan figuras comparativas de niveles simulados'
-	#~ print '\n'
-#~ 
-	#~ #elimina figuras viejas 
-	#~ comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-	#~ os.system(comando)
+	print '\n'
+	print 'Se ejecutan figuras comparativas de niveles simulados'
+	print '\n'
+
+	#elimina figuras viejas 
+	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
+	os.system(comando)
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -14,13 +14,13 @@ def model_warper(L):
 	Res = cu.run_shia(L[1],L[2],L[3],L[4], 
 		StorageLoc = L[5], ruta_storage=L[6], kinematicN=12,QsimDataFrame=False)
 	#Escribe resultados 
-	rutaqsim = ruta_Qsim + QsimName +'_'+L[0].replace(' ','_').replace('-','')+'.msg'
+	rutaqsim = ruta_Qsim +'_caudal/'+ QsimName +'_'+L[0].replace(' ','_').replace('-','')+'.msg'
 	Qsim = pd.DataFrame(Res['Qsim'][1:].T, 
 		index=Rain.index, 
 		columns=posControl)
 	Qsim.to_msgpack(rutaqsim)
 	#Actualiza historico de caudales simulados
-	rutaqhist = ruta_Qsim +'01_CaudalHistorico/'+ QsimName +'_'+L[0].replace(' ','_').replace('-','')+'_hist.msg'
+	rutaqhist = ruta_Qsim +'CaudalHistorico/'+ QsimName +'_'+L[0].replace(' ','_').replace('-','')+'_hist.msg'
 	al.model_write_qsim(rutaqsim,rutaqhist,posControl)
 	#Se actualizan los historicos de humedad de la parametrizacion asociada.
 	al.model_write_Stosim(L[6],L[7])

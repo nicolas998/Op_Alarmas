@@ -19,7 +19,7 @@ parser=argparse.ArgumentParser(
 
 #Parametros obligatorios
 parser.add_argument("date",help="(Obligatorio) Fecha actual de ejecucion YYYY-MM-DD-HH:MM")
-parser.add_argument("cuenca",help="Archivo -nc de la cuenca con la cual se va a realizar el trabajo")
+parser.add_argument("cuenca",help="Obligatorio) Archivo -nc de la cuenca con la cual se va a realizar el trabajo")
 parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion de la cuenca")
 parser.add_argument("-c", "--coord",help="Escribe archivo con coordenadas", default = False, type = bool)
 parser.add_argument("-r", "--record",help="Record de lectura en el binario para graficar", 
@@ -84,8 +84,8 @@ def Plot_Qsim_Campo(Lista):
 		tranparent = True, 
 		ruta = Lista[1],
 		clean = True, 
-		colorbar = False,
-		#show_cbar = True, 
+		#~ colorbar = False,
+		#~ show_cbar = True, 
 		figsize = (10,12), 
 		umbral = cauce, 
 		escala = 1.5,

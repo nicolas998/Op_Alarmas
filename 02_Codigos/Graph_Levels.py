@@ -33,7 +33,7 @@ parser=argparse.ArgumentParser(
         '''))
 #Parametros obligatorios
 parser.add_argument("date",help="(Obligatorio) Decha actual de ejecucion YYYY-MM-DD-HH:MM")
-#parser.add_argument("cuenca",help="Cuenca con la estructura que hace todo")
+parser.add_argument("cuenca",help="Cuenca con la estructura que hace todo")
 parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion de la cuenca")
 parser.add_argument("-c", "--coord",help="Escribe archivo con coordenadas", default = False, type = bool)
 parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agregando", 
@@ -85,21 +85,18 @@ ListaEjec=[ruta_in1,ruta_in2,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out
 
 def Plot_Levels(Lista):
 	#Leer ultima hora de historico Qsim para cada par.
-	ruta=Lista[0]+'*'
-	readh=glob.glob(ruta)
+	ruta1=Lista[0]+'*'
+	readh=glob.glob(ruta1)
 	#Leer las simulacion actual+extrapolacion
-	ruta=Lista[1]+'*'
-	read1=glob.glob(ruta)
+	ruta2=Lista[1]+'_caudal/*'
+	reads=glob.glob(ruta2)
 	#Guarda series completas e hist para sacar Nash
 	Qact=[];Qhist=[]
-	for rqhist,rqsim in zip(np.sort(readh),np.sort(read1)):
+	for rqhist,rqsim in zip(np.sort(readh),np.sort(reads)):
 		#Q HIST
-		df=pd.read_csv(rqhist,sep=',',error_bad_lines=False)
+		df=pd.read_msgpack(rqhist)
 		#ultima hora, 12 pasos de 5 min.
-		qh=df[str(Lista[2])].values[-12:]
-		dates=pd.to_datetime(df['Unnamed: 0'].values[-12:])    
-		#serie
-		qhist=pd.Series(qh,index=dates)
+		qhist=df[Lista[2]][-12:]
 		Qhist.append(qhist)
 		#Q ACT
 		qsim=pd.read_msgpack(rqsim)

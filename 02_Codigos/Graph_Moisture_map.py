@@ -78,22 +78,23 @@ def Plot_Hsim(Lista):
 	#Plot
 	VarToPlot=((Lista[-2][0]+Lista[-2][2])/(wmf.models.max_gravita+wmf.models.max_capilar))*100
 	# si supera un umbral de saturacion se grafica, si no no.
-	if VarToPlot.max() >= 0.1:
+	if VarToPlot.max() >= 4:
 		fig = pl.figure(figsize=(10,12))
 		bins=4
 		ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)
 		Coord,ax=cu.Plot_basinClean(VarToPlot,
-						show_cbar=True,
-						cmap = pl.get_cmap('viridis',8),
-						#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-						cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=15,
+						ruta=Lista[1],
+						#~ show_cbar=True,
+						#~ cmap = pl.get_cmap('viridis',8),
+						#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+						#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=15,
 						show=False)
 		#ax.set_title('Moisture Map Par'+Lista[-1]+' '+args.date, fontsize=18 )
-		pl.suptitle('Saturacion del suelo [%] Par'+Lista[-1]+' '+args.date, fontsize=16, x=0.5, y=0.09)
-		ax.figure.savefig(Lista[1],bbox_inches='tight')
+		#~ pl.suptitle('Saturacion del suelo [%] Par'+Lista[-1]+' '+args.date, fontsize=16, x=0.5, y=0.09)
+		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
 		print 'Aviso: Plot de Humedad para '+Lista[-1]+' generado.'
 	else:
-		print 'Aviso: No saturacion suficiente para Plot de Humedad: max '+str(VarToPlot.max())
+		print 'Aviso: No hay celdas con almenos 4% para Plot de Humedad: max '+str(VarToPlot.max())
 
 #Ejecuta los plots
 if len(ListaEjec) > 15:

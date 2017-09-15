@@ -94,24 +94,26 @@ def Plot_SlidesSim(Lista):
 	if Lista[-1] != '999':
 		fig = pl.figure(figsize=(10,12))
 		Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
-									cmap = pl.get_cmap('viridis',bins),								
+									cmap = pl.get_cmap('viridis',bins),
+									ruta=Lista[1],								
 									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-									cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
+									#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
 									show=False,figsize = (10,12))
 		#ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
-		pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
-		ax.figure.savefig(Lista[1],bbox_inches='tight')
+		#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
+		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
 	#Plot de mapa acumulado de deslizamientos en todas las Parametrizaciones
 	else:
 		fig = pl.figure(figsize=(10,12))
 		Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,
-									cmap = pl.get_cmap('viridis',bins),									
-									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-									cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,																		
+									cmap = pl.get_cmap('viridis',bins),
+									ruta=Lista[1],								
+									#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+									#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,																		
 									show=False,figsize = (10,12))
 		#ax.set_title('Slides Map AcumPars '+args.date, fontsize=16 )
-		pl.suptitle('Slides Map AcumPars '+args.date, fontsize=18, x=0.5, y=0.09)				
-		ax.figure.savefig(Lista[1],bbox_inches='tight')
+		#~ pl.suptitle('Slides Map AcumPars '+args.date, fontsize=18, x=0.5, y=0.09)				
+		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
 	#dice lo que hace
 	if args.verbose:
 		print 'Aviso: Plot de Deslizamientos para '+Lista[-1]+' generado.'
