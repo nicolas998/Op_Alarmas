@@ -62,7 +62,7 @@ ruta_out = al.get_ruta(ListConfig,'ruta_serie_qsim')
 nodo=75
 codeest=106
 lcolors=['g','orange','orangered','indigo']
-cmap=pl.cm.nipy_spectral#nipy_spectral#winter#autumn#summer#PuBuGn
+cmap=pl.cm.Spectral#nipy_spectral#winter#autumn#summer#PuBuGn
 backcolor='dimgray'
 c_ylim=10
 
@@ -85,14 +85,14 @@ ListaEjec=[ruta_in1,ruta_in2,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out
 
 def Plot_Levels(Lista):
 	#Leer ultima hora de historico Qsim para cada par.
-	ruta1=Lista[0]+'*'
-	readh=glob.glob(ruta1)
+	ruta=Lista[0]+'*'
+	readh=glob.glob(ruta)
 	#Leer las simulacion actual+extrapolacion
-	ruta2=Lista[1]+'_caudal/*'
-	reads=glob.glob(ruta2)
+	ruta=Lista[1]+'_caudal/*'
+	read1=glob.glob(ruta)
 	#Guarda series completas e hist para sacar Nash
 	Qact=[];Qhist=[]
-	for rqhist,rqsim in zip(np.sort(readh),np.sort(reads)):
+	for rqhist,rqsim in zip(np.sort(readh),np.sort(read1)):
 		#Q HIST
 		df=pd.read_msgpack(rqhist)
 		#ultima hora, 12 pasos de 5 min.
@@ -129,10 +129,10 @@ def Plot_Levels(Lista):
 	result = np.array(db_cursor.fetchall())
 	#definicion de niveles de alerta y demas.
 	nombreest=result[0][1] 
-	n1=3.26*((float(result[0][4])/100)**2.35)
-	n2=3.26*((float(result[0][5])/100)**2.35)
-	n3=3.26*((float(result[0][6])/100)**2.35)
-	n4=3.26*((float(result[0][7])/100)**2.35)
+	n1=float(result[0][4])
+	n2=float(result[0][5])
+	n3=float(result[0][6])
+	n4=float(result[0][7])
 	#definicion de tipo N para consultar campo.
 	tipo=int(result[0][3])
 	if tipo == 1:#radar
@@ -160,7 +160,12 @@ def Plot_Levels(Lista):
 		pass
 	Nobs[Nobs>600.0]==np.nan
 	#Convertir a caudal con curva de calibracion de 3 aguas.
-	Qobs=3.26*((Nobs/100)**2.35)
+	Qobs=Nobs
+	#Poner Nsims en magnitud de observados.
+	Qact2=[]
+	for i in Qact:
+		Nsim=i-i.mean()+Qobs.mean()
+		Qact2.append(Nsim)
 
 	#-------------------------------------------------------------------------------------------------------
 	#Grafica comparativa de niveles, con escala de colores y backgroud de siata.
@@ -205,12 +210,12 @@ def Plot_Levels(Lista):
 	#Pars
 	for i,parameter in zip(np.arange(0,len(Qact)),parameters):
 		#NASH
-		nash=wmf.__eval_nash__(Qobs,Qhist[i])
-		ax.plot(Qact[i],lw=1.8,linestyle='--', label='P0'+str(i+1)+'- NS:%.2f'%(nash),color=s_m.to_rgba(parameter))
+		nash=wmf.__eval_nash__(Qobs,Qact2[i])
+		ax.plot(Qact2[i],lw=2.5,linestyle='--', label='P0'+str(i+1)+'- NS:%.2f'%(nash),color=s_m.to_rgba(parameter))
 	#Text ans ticks color.
 	backcolor=Lista[6]  
 	#Obs
-	ax.plot(Qobs,c='k',lw=3, label='Qobs')
+	ax.plot(Qobs,c='k',lw=3.5, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Caudal  $[{m}^3.{s}^{-1}]$', fontsize=17,color=backcolor)
 	#     ax.set_xticklabels(serieN.index.strftime('%H:%M'))
@@ -228,8 +233,9 @@ def Plot_Levels(Lista):
 	for text in leg.get_texts():
 		pl.setp(text, color = backcolor)
 	#ylim para la grafica
-	ylim=Qobs.mean()*10
-	ax.set_ylim(0,ylim)
+	ylim=Qobs.mean()*1.5
+	y_lim=Qobs.mean()*0.7
+	ax.set_ylim(y_lim,ylim)
 	#Se guarda la figura.
 	ax.figure.savefig(Lista[-1],bbox_inches='tight')
 

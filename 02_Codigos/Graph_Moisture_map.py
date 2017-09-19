@@ -84,8 +84,8 @@ def Plot_Hsim(Lista):
 		ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)
 		Coord,ax=cu.Plot_basinClean(VarToPlot,
 						ruta=Lista[1],
+						cmap = pl.get_cmap('viridis',8),
 						#~ show_cbar=True,
-						#~ cmap = pl.get_cmap('viridis',8),
 						#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
 						#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=15,
 						show=False)

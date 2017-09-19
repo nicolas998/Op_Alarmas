@@ -93,7 +93,7 @@ def Plot_SlidesSim(Lista):
 
 	if Lista[-1] != '999':
 		fig = pl.figure(figsize=(10,12))
-		Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
+		Coord,ax=cu.Plot_basinClean(VarToPlot,#show_cbar=True,									
 									cmap = pl.get_cmap('viridis',bins),
 									ruta=Lista[1],								
 									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
@@ -105,7 +105,7 @@ def Plot_SlidesSim(Lista):
 	#Plot de mapa acumulado de deslizamientos en todas las Parametrizaciones
 	else:
 		fig = pl.figure(figsize=(10,12))
-		Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,
+		Coord,ax=cu.Plot_basinClean(VarToPlot,#show_cbar=True,
 									cmap = pl.get_cmap('viridis',bins),
 									ruta=Lista[1],								
 									#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano

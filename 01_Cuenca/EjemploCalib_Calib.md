@@ -41,7 +41,7 @@ de las celdas.
 - **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02
 	> Ruta en la cual se van a guardar los binarios con los caudales actuales simulados.
 - **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02CaudalHistorico/
-	> Ruta en donde se actualizan los archivos historicos de caudales simulados (**.csv**)
+	> Ruta en donde se actualizan los archivos historicos de caudales simulados 
 - **ruta_slides**: /media/nicolas/Home/Op_Alarmas/03_Resultados/04_slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
 - **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
@@ -96,12 +96,12 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_01.StObin|2017-09-15-15:10|
-| -t 002|Sto_wet_02.StObin|2017-09-15-16:30|
-| -t 003|Sto_wet_03.StObin|2017-09-15-16:30|
-| -t 004|Sto_wet_04.StObin|2017-09-15-16:30|
-| -t 005|Sto_wet_05.StObin|2017-09-15-12:20|
-| -t 006|Sto_wet_06.StObin|2017-09-15-12:20|
+| -t 001|Sto_wet_01.StObin|2017-09-18-14:05|
+| -t 002|Sto_wet_02.StObin|2017-09-18-17:40|
+| -t 003|Sto_wet_03.StObin|2017-09-18-17:40|
+| -t 004|Sto_wet_04.StObin|2017-09-18-17:40|
+| -t 005|Sto_wet_05.StObin|2017-09-18-17:40|
+| -t 006|Sto_wet_06.StObin|2017-09-18-17:40|
 
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 

@@ -255,9 +255,9 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 			#Grafica
 			#-------
 			#Textos para la legenda
-			lab = np.linspace(vmin, vmax, 4)
-			texto = ['Bajo', 'Medio', 'Alto', 'Muy alto']
-			labText = ['%dmm\n%s'%(i,j) for i,j in zip(lab, texto)]
+			#~ lab = np.linspace(vmin, vmax, 4)
+			#~ texto = ['Bajo', 'Medio', 'Alto', 'Muy alto']
+			#~ labText = ['%dmm\n%s'%(i,j) for i,j in zip(lab, texto)]
 			#Acumula la lluvia para el periodo
 			Vsum = np.zeros(cu.ncells)
 			for i in pos:
@@ -266,13 +266,13 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 				Vsum+=v	
 			#Genera la figura 
 			c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
-				show_cbar=True, vmin = vmin, vmax = vmax,
-				cbar_ticksize = 16,
-				cbar_ticks= lab,
-				cbar_ticklabels = labText,
-				cbar_aspect = 17,
+				vmin = vmin, vmax = vmax,#~ show_cbar=True,
+				#~ cbar_ticksize = 16,
+				#~ cbar_ticks= lab,
+				#~ cbar_ticklabels = labText,
+				#~ cbar_aspect = 17,
 				ruta = rutaFigura,
-				show=False,figsize = (10,12))
+				figsize = (10,12),show=False)
 			c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
 			return 1
 			if verbose:
@@ -303,7 +303,7 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 					#~ cbar_ticklabels = labText,
 					#~ cbar_aspect = 17,
 					ruta = rutaFigura,
-					show=False,figsize = (10,12))
+					figsize = (10,12),show=False)
 				#~ c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
 				if verbose:
 					print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
@@ -353,29 +353,9 @@ def model_write_ruteQhist(listrutas_Qhist,FechaI,FechaF,pcont):
 			pass
 
 def model_write_qsim(rutaQsim,rutaQhist, pcont):
-	#~ #se fija si ya esta
-	#~ L = glob.glob(ruta)
-	#~ if len(L)>0:
-		#~ Existe = True
-		#~ Nuevo = False
-	#~ else:
-		#~ Existe = False
-		#~ Nuevo = True
-	#~ #Obtiene el caudale n un Data Frame
-	#~ D = {}
-	#~ for c,i in enumerate(pcont):
-		#~ D.update({i:Qsim[c]})
-	#~ date = index.to_pydatetime().strftime('%Y-%m-%d-%H:%M')
-	#~ Qsim = {date:D}
-	#~ Qsim = pd.DataFrame(Qsim).T
-	#~ #Escribe el Caudal
-	#~ with open(ruta, 'a') as f:
-		#~ Qsim.to_csv(f, header=Nuevo,float_format='%.3f')
-	#----------------------------------------------------------
 	###Se actualizan los historicos de Qsim de la parametrizacion asociada.
 	#Lee el almacenamiento actual
 	Qactual = pd.read_msgpack(rutaQsim)
-	Qt = pd.DataFrame(Qactual[Qactual.index == Qactual.index[0]].values, index=[Qactual.index[0],])
 	#Lee el historico
 	Qhist = pd.read_msgpack(rutaQhist)
 	# encuentra el pedazo que falta entre ambos
@@ -390,7 +370,7 @@ def model_write_qsim(rutaQsim,rutaQhist, pcont):
 		pass		
 
 	#si no hay gap entre ellos, pega la info
-	Qhist = Qhist.append(Qt)
+	Qhist=Qhist.append(Qactual.iloc[[0]].sort_index(axis=1))
 	#Guarda el archivo historico 
 	Qhist.to_msgpack(rutaQhist)
 	#Aviso
