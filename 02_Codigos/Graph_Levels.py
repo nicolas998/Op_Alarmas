@@ -35,6 +35,7 @@ parser=argparse.ArgumentParser(
 parser.add_argument("date",help="(Obligatorio) Decha actual de ejecucion YYYY-MM-DD-HH:MM")
 parser.add_argument("cuenca",help="Cuenca con la estructura que hace todo")
 parser.add_argument("rutaConfig",help="(Obligatorio) Ruta con la configuracion de la cuenca")
+parser.add_argument("rutaOutRain",help="(Obligatorio) Ruta donde se ubican los binarios de lluvia hist. y actuales")
 parser.add_argument("-c", "--coord",help="Escribe archivo con coordenadas", default = False, type = bool)
 parser.add_argument("-v","--verbose",help="Informa sobre la fecha que esta agregando", 
 	action = 'store_true')
@@ -65,7 +66,14 @@ lcolors=['g','orange','orangered','indigo']
 cmap=pl.cm.Spectral#nipy_spectral#winter#autumn#summer#PuBuGn
 backcolor='dimgray'
 c_ylim=10
+#~ cu= wmf.SimuBasin(rute=args.cuenca, SimSlides=True)
 
+#Lluvia
+ruta_out_rain=args.rutaOutRain
+ruta_hdrp1=ruta_out_rain + 'Lluvia_historica.hdr'
+ruta_hdrp2=ruta_out_rain + 'Lluvia_actual.hdr'
+Phist=wmf.read_mean_rain(ruta_hdrp1,100000000000,0)
+Pextrapol=wmf.read_mean_rain(ruta_hdrp2,100000000000,0)
 
 #Mira la ruta del folder y si no existe la crea
 ruta_folder = ruta_out+'/'
@@ -217,10 +225,27 @@ def Plot_Levels(Lista):
 	#Obs
 	ax.plot(Qobs,c='k',lw=3.5, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
-	ax.set_ylabel('Caudal  $[{m}^3.{s}^{-1}]$', fontsize=17,color=backcolor)
-	#     ax.set_xticklabels(serieN.index.strftime('%H:%M'))
-	#     myFmt = mdates.DateFormatter('%H:%m')
-	#     ax.xaxis.set_major_formatter(myFmt)
+	ax.set_ylabel('Nivel  $[cm]$', fontsize=17,color=backcolor)
+	
+	# Second axis
+
+	#Mean rainfall
+	# Busca en Qact la primera pos del obs.
+	p1=Phist[Phist.index.get_loc(Qact[0].index[0]):]
+	# Busca en Pextrapol la ultima  pos del Pobs
+	p2=Pextrapol[Pextrapol.index.get_loc(Phist.index[-1])+1:]
+	P=p1.append(p2)
+
+	#plot
+	axAX=pl.gca()
+	ax2=ax.twinx()
+	ax2AX=pl.gca()
+	ax2.fill_between(P.index,0,P,alpha=0.4,color='b',lw=0)
+	ax2.set_ylabel(u'Precipitacion media - cuenca [$mm$]',size=17,color=backcolor)
+	#limites
+	ax2AX.set_ylim((0,20)[::-1]) 
+
+	#Formato  resto de grafica.
 	ax.tick_params(labelsize=14)
 	ax.grid()
 	ax.autoscale(enable=True, axis='both', tight=True)
@@ -236,6 +261,13 @@ def Plot_Levels(Lista):
 	ylim=Qobs.mean()*1.5
 	y_lim=Qobs.mean()*0.7
 	ax.set_ylim(y_lim,ylim)
+	
+	# #Formato resto de grafica - Second axis
+	ax2.tick_params(labelsize=14)
+	ax2.tick_params(color=backcolor, labelcolor=backcolor)
+	for spine in ax2.spines.values():
+		spine.set_edgecolor('gray')
+	
 	#Se guarda la figura.
 	ax.figure.savefig(Lista[-1],bbox_inches='tight')
 

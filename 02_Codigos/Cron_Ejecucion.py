@@ -19,7 +19,7 @@ print '\n'
 print '###################################### Fecha de Ejecucion: '+dateText+' #############################\n'
 
 #Obtiene las rutas necesarias 
-ruta_de_rutas = '/media/nicolas/Home/Op_Alarmas/Rutas.md'
+ruta_de_rutas = '/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Rutas.md'
 RutasList = al.get_rutesList(ruta_de_rutas)
 
 # rutas de objetos de entrada
@@ -236,7 +236,7 @@ else:
 	ListaEjec = []
 	fechaNueva = date
 	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
+	comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' '+ruta_out_rain
 	ListaEjec.append(comando)
 	#Ejecuta las figuras en paralelo 
 	p = Pool(processes = 3)
