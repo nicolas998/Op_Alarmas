@@ -96,7 +96,7 @@ r3dias=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,
 fecha1 = date - dt.timedelta(hours = 24)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain_png + 'Acumulado_1dia.png'
-r1dia=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=5,vmax=70)
+r1dia=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=5,vmax=50)
 
 # Grafica en la ultima hora.
 fecha1 = date - dt.timedelta(hours = 1)

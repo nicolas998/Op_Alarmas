@@ -74,11 +74,13 @@ ruta_Qsim = al.get_ruta(ListConfig, 'ruta_qsim')
 ruta_qsim_h = al.get_ruta(ListConfig, 'ruta_qsim_hist')
 
 #Set por defecto de la modelacion
-wmf.models.show_storage = 1
-wmf.models.separate_fluxes = 1
-wmf.models.dt = 300
-wmf.models.sl_fs = 0.5
-wmf.models.sim_slides = 1
+#~ wmf.models.show_storage = 1
+#~ wmf.models.separate_fluxes = 1
+#~ wmf.models.dt = 300
+#~ wmf.models.sl_fs = 0.5
+#~ wmf.models.sim_slides = 1
+
+#Puntos de control
 posControl = wmf.models.control[wmf.models.control<>0]
 
 

@@ -226,6 +226,7 @@ def Plot_Levels(Lista):
 	ax.plot(Qobs,c='k',lw=3.5, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Nivel  $[cm]$', fontsize=17,color=backcolor)
+	ax.axvline(x=Qobs.index[-1],lw=1.5,color='gray',label='Now')
 	
 	# Second axis
 
@@ -240,7 +241,7 @@ def Plot_Levels(Lista):
 	axAX=pl.gca()
 	ax2=ax.twinx()
 	ax2AX=pl.gca()
-	ax2.fill_between(P.index,0,P,alpha=0.4,color='b',lw=0)
+	ax2.fill_between(P.index,0,P,alpha=0.25,color='dodgerblue',lw=0)
 	ax2.set_ylabel(u'Precipitacion media - cuenca [$mm$]',size=17,color=backcolor)
 	#limites
 	ax2AX.set_ylim((0,20)[::-1]) 
@@ -258,7 +259,7 @@ def Plot_Levels(Lista):
 	for text in leg.get_texts():
 		pl.setp(text, color = backcolor)
 	#ylim para la grafica
-	ylim=Qobs.mean()*1.5
+	ylim=Qobs.mean()*2
 	y_lim=Qobs.mean()*0.7
 	ax.set_ylim(y_lim,ylim)
 	
