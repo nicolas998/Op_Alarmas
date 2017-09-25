@@ -245,9 +245,9 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 		pos = R[fecha_i:fecha_f].values
 		pos = pos[pos <>1 ]
 
-		#imprime el tamano de lo que esta haciendo 
-		if verbose:
-			print fecha_f - fecha_i
+		#~ #imprime el tamano de lo que esta haciendo 
+		#~ if verbose:
+			#~ print fecha_f - fecha_i
 
 		#si hay barridos para graficar
 		if len(pos)>0:
@@ -274,41 +274,30 @@ def Graph_AcumRain(fechaI,fechaF,cuenca,rutaRain,rutaFigura,vmin=0,vmax=100,verb
 				ruta = rutaFigura,
 				figsize = (10,12),show=False)
 			c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
-			return 1
 			if verbose:
 				print 'Aviso: Se ha producido una grafica nueva con valores diferentes de cero para '+rutaFigura[49:-4]
 				print fecha_f - fecha_i
+			return 1
 
-				#~ fig = pl.figure(figsize=(10,12))
-				#~ Coord,ax=cu.Plot_basinClean(VarToPlot,show_cbar=True,									
-											#~ cmap = pl.get_cmap('viridis',bins),								
-											#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-											#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
-											#~ show=False,figsize = (10,12))
-				#~ #ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
-				#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
-				#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
-
-			#si no hay barridos
-			else:
-				return 0
-				#-------
-				#Grafica
-				#-------
-				Vsum = np.zeros(cu.ncells)
-				c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
-					vmin = vmin, vmax = vmax,#show_cbar=True,
-					#~ cbar_ticksize = 16,
-					#~ cbar_ticks= lab,
-					#~ cbar_ticklabels = labText,
-					#~ cbar_aspect = 17,
-					ruta = rutaFigura,
-					figsize = (10,12),show=False)
-				#~ c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
-				if verbose:
-					print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
-					print fecha_f - fecha_i
-		#~ else:
+		#si no hay barridos
+		else:
+			#-------
+			#Grafica
+			#-------
+			Vsum = np.zeros(cu.ncells)
+			c = cu.Plot_basinClean(Vsum, cmap = pl.get_cmap('viridis',10), 
+				vmin = vmin, vmax = vmax,#show_cbar=True,
+				#~ cbar_ticksize = 16,
+				#~ cbar_ticks= lab,
+				#~ cbar_ticklabels = labText,
+				#~ cbar_aspect = 17,
+				ruta = rutaFigura,
+				figsize = (10,12),show=False)
+			#~ c[1].set_title('Mapa Lluvia de Radar Acumulada', fontsize=16)
+			if verbose:
+				print 'Aviso: Se ha producido un campo sin lluvia  para '+rutaFigura[49:-4]
+				print fecha_f - fecha_i
+			return 0
 	except:
 		#si no lo logra que no haga nada.
 		print 'Aviso: no se puede construir una serie porque las fechas solicitada no existen, no se genera png de acumulado '+ str(fecha_f - fecha_i)

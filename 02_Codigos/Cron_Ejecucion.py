@@ -9,7 +9,8 @@ import numpy as np
 import pickle 
 import alarmas as al
 import glob 
-import time 
+import time
+import pylab as pl
 
 # Texto Fecha: el texto de fecha que se usa para guardar algunos archivos de figuras.
 date = dt.datetime.now()
