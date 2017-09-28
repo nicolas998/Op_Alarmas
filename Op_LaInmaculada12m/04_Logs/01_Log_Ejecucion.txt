@@ -1,0 +1,110 @@
+/media/nicolas/Home/nicolas/101_RadarClass/201709282133_010_120_extrapol.nc
+/media/nicolas/Home/nicolas/101_RadarClass/201709280003_010_120.nc
+nan
+Resumen Ejecucion modelo
+
+
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/02CaudalHistorico/Qsim_Rain_s_006_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_06hist.msg
+-s 006 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_03hist.msg
+-s 003 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/02CaudalHistorico/Qsim_Rain_s_002_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_02hist.msg
+-s 002 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_01hist.msg
+-s 001 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/02CaudalHistorico/Qsim_Rain_s_005_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_05hist.msg
+-s 005 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/02CaudalHistorico/Qsim_Rain_s_004_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_04hist.msg
+-s 004 ejecutado
+
+
+Resumen deslizamientos
+Param -s 003 tiene 0 celdas deslizadas.
+Param -s 001 tiene 0 celdas deslizadas.
+Aviso: No se han remplazado los estados de: -s 002
+Aviso: No se han remplazado los estados de: -s 003
+Aviso: No se han remplazado los estados de: -s 006
+Aviso: No se han remplazado los estados de: -s 004
+Aviso: No se han remplazado los estados de: -s 005
+
+
+###################################### Fecha de Ejecucion: 2017-09-28-16:40 #############################
+
+###################################### CONSULTA DE LA LLUVIA Y EXTRAPOLACION ############################
+
+Aviso: Lluvia actual + extrapolacion generados en: 
+/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/01_rain/Lluvia_actual
+
+Aviso: Lluvia historica actualizada en: 
+/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/01_rain/Lluvia_historica
+
+Aviso: Se generan graficas de radar para los intervalos:
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para _Resultados/Figuras/Acumulado_3dias
+3 days 00:00:00
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para _Resultados/Figuras/Acumulado_1dia
+1 days 00:00:00
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para _Resultados/Figuras/Acumulado_1hora
+0 days 01:00:00
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para _Resultados/Figuras/Acumulado_30siguientes
+0 days 00:30:00
+###################################### EJECUCION DEL MODELO ############################
+
+
+
+###################################### PRODUCCION DE FIGURAS ############################
+
+Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-001
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-001
+Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-003
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-003
+Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-004
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-004
+Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-002
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/StreamMaps-002
+
+
+Se ejecutan figuras con mapa de StreamFlow
+
+
+Aviso: Plot de Humedad para 001 generado.
+Aviso: Plot de Humedad para 002 generado.
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/HumedadMaps001
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/HumedadMaps001
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/HumedadMaps002
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/HumedadMaps002
+
+
+Se ejecutan figuras con mapa de Humedad
+
+
+ Error: Se ha tratado de leer un valor fuera del rango
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMaps003
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMaps003
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMaps001
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMaps001
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMaps002
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMaps002
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMapsParsAcum
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/SlidesMapsParsAcum
+
+
+Se ejecutan figuras con mapa de Deslizamientos
+
+
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/LevelsGraphs
+animacion generada en/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/03_Resultados/Figuras/LevelsGraphs
+
+
+Se ejecutan figuras comparativas de niveles simulados
+
+
+
+
+###################################### FIN DEL CRON: 2017-09-28-16:42 #############################
+
