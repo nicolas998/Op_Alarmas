@@ -30,25 +30,25 @@ de las celdas.
 
 ### Rutas
 
-- **ruta_almsim**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/03_almacenamiento/
+- **ruta_almsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_almhist**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/
+- **ruta_almhist**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_bkc_alm**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/01_Cuenca/02_BackSto/
+- **ruta_bkc_alm**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/01_Cuenca/02_BackSto/
 	> Ruta en donde se encuentran las copias de almacenamiento que pueden remplazar a las operacionales
-- **ruta_rainFile**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/01_rain/Lluvia_actual.bin
+- **ruta_rainFile**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/01_rain/Lluvia_actual.bin
 	> Ruta donde se encuentra alojado el archivo de lluvia binario actual.
-- **ruta_rainHistoryFile**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/01_rain/Lluvia_historica.hdr
+- **ruta_rainHistoryFile**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/01_rain/Lluvia_historica.hdr
 	> Archivo plano con historico de lluvia, se usa para evaluar reglas de actualizacion.
-- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/02
+- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02
 	> Ruta en la cual se van a guardar los binarios con los caudales actuales simulados.
-- **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/02CaudalHistorico/
+- **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/
 	> Ruta en donde se actualizan los archivos historicos de caudales simulados 
-- **ruta_slides**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/04_slides/Slides_results.bin
+- **ruta_slides**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/04_slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
-- **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
+- **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
 	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
-- **ruta_qhist2Json**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003hist.csv
+- **ruta_qhist2Json**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003hist.csv
 	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
 ## Parametrizacion
@@ -86,9 +86,9 @@ ___
 |id| Nombre                   | Update | Tiempo[h] | Condicion  | Calib Actualiza | Back Sto        | Slides |
 |:-:|:------------------------|:-------:|:------:|:----------:|:---------------:|:---------------:|:------:|
 | -s 001| CuBarbosa_001_001.StObin | False    | 7     | No Rain Next 2h| 001          | Sto_wet-s01.StoBin | True|
-| -s 002| CuBarbosa_001_002.StObin| False    | 5     | No Rain 4h| 002          | Sto_wet-s01.StoBin | False|
+| -s 002| CuBarbosa_001_002.StObin| False    | 5     | No Rain 4h| 002          | Sto_wet-s01.StoBin | True|
 | -s 003| CuBarbosa_001_003.StObin | False    | 5    | No Rain 4h | 003          | None            | True  |
-| -s 004| CuBarbosa_001_004.StObin | False   |  5     | No Rain 4h | 004          | Sto_wet-s03.StoBin | False  |
+| -s 004| CuBarbosa_001_004.StObin | False   |  5     | No Rain 4h | 004          | Sto_wet-s03.StoBin | True  |
 
 
 **Tabla**: Fechas de actualizacion de almacenamientos.
@@ -134,15 +134,15 @@ indican cual de las parametrizaciones es la que se usa para graficar algunas
 de las variables tales como la animacion de caudales y la evolucion de la 
 humedad en la cuenca.
 
-- **ruta_map_qsim**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/Figuras/StreamMaps
+- **ruta_map_qsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/StreamMaps
 	> ruta donde se guardan los mapas de caudales simulados. 
-- **ruta_map_humedad**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/Figuras/HumedadMaps
+- **ruta_map_humedad**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/HumedadMaps
 	> Ruta donde se guardan los mapas de humedad.
-- **ruta_map_slides**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/Figuras/SlidesMaps
+- **ruta_map_slides**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/Figuras/LevelsGraphs
+- **ruta_serie_qsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
-- **ruta_Json**: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Op_AMVA60m/03_Resultados/Figuras/Qsim.json
+- **ruta_Json**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/Qsim.json
 	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
 
 **Tabla**: Variables y parametrizaciones a plotear.

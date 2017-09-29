@@ -20,7 +20,7 @@ print '\n'
 print '###################################### Fecha de Ejecucion: '+dateText+' #############################\n'
 
 #Obtiene las rutas necesarias 
-ruta_de_rutas = '/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada/Rutas.md'
+ruta_de_rutas = '/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/Rutas.md'
 RutasList = al.get_rutesList(ruta_de_rutas)
 
 # rutas de objetos de entrada
