@@ -30,25 +30,25 @@ de las celdas.
 
 ### Rutas
 
-- **ruta_almsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/
+- **ruta_almsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_almhist**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/
+- **ruta_almhist**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
-- **ruta_bkc_alm**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/01_Cuenca/02_BackSto/
+- **ruta_bkc_alm**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/01_Cuenca/02_BackSto/
 	> Ruta en donde se encuentran las copias de almacenamiento que pueden remplazar a las operacionales
-- **ruta_rainFile**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/01_rain/Lluvia_actual.bin
+- **ruta_rainFile**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/01_rain/Lluvia_actual.bin
 	> Ruta donde se encuentra alojado el archivo de lluvia binario actual.
-- **ruta_rainHistoryFile**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/01_rain/Lluvia_historica.hdr
+- **ruta_rainHistoryFile**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/01_rain/Lluvia_historica.hdr
 	> Archivo plano con historico de lluvia, se usa para evaluar reglas de actualizacion.
-- **ruta_qsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02
+- **ruta_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02
 	> Ruta en la cual se van a guardar los binarios con los caudales actuales simulados.
-- **ruta_qsim_hist**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/
+- **ruta_qsim_hist**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/
 	> Ruta en donde se actualizan los archivos historicos de caudales simulados 
-- **ruta_slides**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/04_slides/Slides_results.bin
+- **ruta_slides**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/04_slides/Slides_results.bin
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
-- **ruta_qsim2Json**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
+- **ruta_qsim2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
 	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
-- **ruta_qhist2Json**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003hist.csv
+- **ruta_qhist2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003hist.csv
 	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
 ## Parametrizacion
@@ -134,15 +134,15 @@ indican cual de las parametrizaciones es la que se usa para graficar algunas
 de las variables tales como la animacion de caudales y la evolucion de la 
 humedad en la cuenca.
 
-- **ruta_map_qsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/StreamMaps
+- **ruta_map_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/StreamMaps
 	> ruta donde se guardan los mapas de caudales simulados. 
-- **ruta_map_humedad**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/HumedadMaps
+- **ruta_map_humedad**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/HumedadMaps
 	> Ruta donde se guardan los mapas de humedad.
-- **ruta_map_slides**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/SlidesMaps
+- **ruta_map_slides**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/LevelsGraphs
+- **ruta_serie_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
-- **ruta_Json**: /media/nicolas/Home/Op_Alarmas/Op_AMVA60m/03_Resultados/Figuras/Qsim.json
+- **ruta_Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/Qsim.json
 	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
 
 **Tabla**: Variables y parametrizaciones a plotear.
@@ -150,7 +150,7 @@ humedad en la cuenca.
 | Variable		  | Variable |
 |:---------------:|:--------:|
 | -p Qsim_map 		  | 001,002,003,004|
-| -p Humedad_map 	  | 001,002|
-| -p Slides 		  | 001,002,003|
+| -p Humedad_map 	  | 001,002,003,004|
+| -p Slides 		  | 001,002,003,004|
 
 

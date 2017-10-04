@@ -93,24 +93,25 @@ ListaEjec=[ruta_in1,ruta_in2,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out
 
 def Plot_Levels(Lista):
 	#Leer ultima hora de historico Qsim para cada par.
-	ruta=Lista[0]+'*'
-	readh=glob.glob(ruta)
+	rutah=Lista[0]+'*'
+	readh=glob.glob(rutah)
 	#Leer las simulacion actual+extrapolacion
-	ruta=Lista[1]+'_caudal/*'
-	read1=glob.glob(ruta)
+	ruta1=Lista[1]+'_caudal/*'
+	read1=glob.glob(ruta1)
 	#Guarda series completas e hist para sacar Nash
 	Qact=[];Qhist=[]
 	for rqhist,rqsim in zip(np.sort(readh),np.sort(read1)):
-		#Q HIST
-		df=pd.read_msgpack(rqhist)
-		#ultima hora, 12 pasos de 5 min.
-		qhist=df[Lista[2]][-12:]
-		Qhist.append(qhist)
-		#Q ACT
-		qsim=pd.read_msgpack(rqsim)
-		qEst=qsim[Lista[2]]
-		#ult hr+ extrapolacion
-		Qact.append(qhist.append(qEst))
+		if rqhist.endswith('.msg') and rqsim.endswith('.msg'):
+			#Q HIST
+			df=pd.read_msgpack(rqhist)
+			#ultima hora, 12 pasos de 5 min.
+			qhist=df[Lista[2]][-12:]
+			Qhist.append(qhist)
+			#Q ACT
+			qsim=pd.read_msgpack(rqsim)
+			qEst=qsim[Lista[2]]
+			#ult hr+ extrapolacion
+			Qact.append(qhist.append(qEst))
 
 	#-------------------------------------------------------------------------------------------------------
 	#Consulta a base de datos: Nobs y Ns de alerta'
@@ -229,22 +230,24 @@ def Plot_Levels(Lista):
 	ax.axvline(x=Qobs.index[-1],lw=1.5,color='gray',label='Now')
 	
 	# Second axis
-
-	#Mean rainfall
-	# Busca en Qact la primera pos del obs.
-	p1=Phist[Phist.index.get_loc(Qact[0].index[0]):]
-	# Busca en Pextrapol la ultima  pos del Pobs
-	p2=Pextrapol[Pextrapol.index.get_loc(Phist.index[-1])+1:]
-	P=p1.append(p2)
-
 	#plot
 	axAX=pl.gca()
 	ax2=ax.twinx()
 	ax2AX=pl.gca()
-	ax2.fill_between(P.index,0,P,alpha=0.25,color='dodgerblue',lw=0)
-	ax2.set_ylabel(u'Precipitacion media - cuenca [$mm$]',size=17,color=backcolor)
-	#limites
-	ax2AX.set_ylim((0,20)[::-1]) 
+	try:
+		#Mean rainfall
+		# Busca en Qact la primera pos del obs.
+		p1=Phist[Phist.index.get_loc(Qact[0].index[0]):]
+		# Busca en Pextrapol la ultima  pos del Pobs
+		p2=Pextrapol[Pextrapol.index.get_loc(Phist.index[-1])+1:]
+		P=p1.append(p2)
+
+		#resto del plot
+		ax2.fill_between(P.index,0,P,alpha=0.25,color='dodgerblue',lw=0)
+        #limites
+		ax2AX.set_ylim((0,20)[::-1]) 
+	except:
+		print 'Aviso: No se grafica Lluvia promedio, no se exitecampos para la fecha en el historico'
 
 	#Formato  resto de grafica.
 	ax.tick_params(labelsize=14)
@@ -263,7 +266,8 @@ def Plot_Levels(Lista):
 	y_lim=Qobs.mean()*0.7
 	ax.set_ylim(y_lim,ylim)
 	
-	# #Formato resto de grafica - Second axis
+	#Formato resto de grafica - Second axis
+	ax2.set_ylabel(u'Precipitacion media - cuenca [$mm$]',size=17,color=backcolor)    
 	ax2.tick_params(labelsize=14)
 	ax2.tick_params(color=backcolor, labelcolor=backcolor)
 	for spine in ax2.spines.values():

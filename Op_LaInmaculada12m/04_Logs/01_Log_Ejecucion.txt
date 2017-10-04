@@ -1,27 +1,27 @@
-/media/nicolas/Home/nicolas/101_RadarClass/201709291445_010_120.nc
-/media/nicolas/Home/nicolas/101_RadarClass/201709291451_010_120.nc
+/media/nicolas/Home/nicolas/101_RadarClass/201710040107_010_120.nc
+/media/nicolas/Home/nicolas/101_RadarClass/201710040005_010_120.nc
 nan
 Resumen Ejecucion modelo
 
 
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_006_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_06hist.msg
--s 006 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_004_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_04hist.msg
--s 004 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_03hist.msg
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_03hist.msg
 -s 003 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_01hist.msg
--s 001 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_002_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_02hist.msg
--s 002 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_005_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_05hist.msg
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_005_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_05hist.msg
 -s 005 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_006_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_06hist.msg
+-s 006 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_002_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_02hist.msg
+-s 002 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_004_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_04hist.msg
+-s 004 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_01hist.msg
+-s 001 ejecutado
 
 
 Resumen deslizamientos
@@ -29,33 +29,28 @@ Param -s 003 tiene 0 celdas deslizadas.
 Param -s 001 tiene 0 celdas deslizadas.
 
 
-###################################### Fecha de Ejecucion: 2017-09-29-09:55 #############################
+###################################### Fecha de Ejecucion: 2017-10-03-20:15 #############################
 
 ###################################### CONSULTA DE LA LLUVIA Y EXTRAPOLACION ############################
 
 Aviso: Lluvia actual + extrapolacion generados en: 
-/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/01_rain/Lluvia_actual
+/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/01_rain/Lluvia_actual
 
 Aviso: Lluvia historica actualizada en: 
-/media/nicolas/Home/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/01_rain/Lluvia_historica
+/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/01_rain/Lluvia_historica
 
 Aviso: Se generan graficas de radar para los intervalos:
-Aviso: Se ha producido una grafica nueva con valores diferentes de cero para /03_Resultados/Figuras/Acumulado_3dias
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para LaInmaculada12m/03_Resultados/Figuras/Acumulado_3dias
 3 days 00:00:00
-Aviso: Se ha producido una grafica nueva con valores diferentes de cero para /03_Resultados/Figuras/Acumulado_1dia
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para LaInmaculada12m/03_Resultados/Figuras/Acumulado_1dia
 1 days 00:00:00
-Aviso: Se ha producido un campo sin lluvia  para /03_Resultados/Figuras/Acumulado_1hora
+Aviso: Se ha producido un campo sin lluvia  para LaInmaculada12m/03_Resultados/Figuras/Acumulado_1hora
 0 days 01:00:00
-Aviso: Se ha producido un campo sin lluvia  para /03_Resultados/Figuras/Acumulado_30siguientes
+Aviso: Se ha producido una grafica nueva con valores diferentes de cero para LaInmaculada12m/03_Resultados/Figuras/Acumulado_30siguientes
 0 days 00:30:00
 ###################################### EJECUCION DEL MODELO ############################
 
 
 
 ###################################### PRODUCCION DE FIGURAS ############################
-
-Aviso: No se generan graficas de resultados de simulacion ya que no hay lluvia en la ultima hora ni los prox. 30 min.
-
-
-###################################### FIN DEL CRON: 2017-09-29-09:55 #############################
 
