@@ -34,6 +34,10 @@ args=parser.parse_args()
 #-------------------------------------------------------------------------------------------------------
 #Lectura de cuenca y variables
 cu = wmf.SimuBasin(rute=args.cuenca, SimSlides = True)
+wmf.models.slide_allocate(cu.ncells, 10)
+#Se marcan forever las celdas incondicionalmente inestables.
+R = np.copy(wmf.models.sl_riskvector)
+R[R == 2] = 1
 
 #Lee el archivo de configuracion
 ListConfig = al.get_rutesList(args.rutaConfig)
@@ -98,7 +102,7 @@ def Plot_SlidesSim(Lista):
 									ruta=Lista[1],								
 									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
 									#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
-									show=False,figsize = (10,12))
+									show=False,figsize = (30,15))
 		#ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
 		#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
 		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')

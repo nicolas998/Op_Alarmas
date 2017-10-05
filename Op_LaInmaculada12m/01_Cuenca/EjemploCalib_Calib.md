@@ -96,12 +96,12 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_01.StObin|2017-10-03-16:00|
-| -t 002|Sto_wet_02.StObin|2017-10-03-19:25|
-| -t 003|Sto_wet_03.StObin|2017-10-03-19:25|
-| -t 004|Sto_wet_04.StObin|2017-10-03-19:25|
-| -t 005|Sto_wet_05.StObin|2017-10-03-19:25|
-| -t 006|Sto_wet_06.StObin|2017-10-03-19:25|
+| -t 001|Sto_wet_01.StObin|2017-10-05-17:40|
+| -t 002|Sto_wet_02.StObin|2017-10-05-14:00|
+| -t 003|Sto_wet_03.StObin|2017-10-05-14:00|
+| -t 004|Sto_wet_04.StObin|2017-10-05-14:00|
+| -t 005|Sto_wet_05.StObin|2017-10-05-14:00|
+| -t 006|Sto_wet_06.StObin|2017-10-05-14:00|
 
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 

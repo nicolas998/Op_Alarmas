@@ -61,7 +61,7 @@ ruta_out = al.get_ruta(ListConfig,'ruta_serie_qsim')
 #-----------------
 
 nodo=75
-codeest=140
+codeest=106
 lcolors=['g','orange','orangered','indigo']
 cmap=pl.cm.Spectral#nipy_spectral#winter#autumn#summer#PuBuGn
 backcolor='dimgray'
@@ -93,11 +93,11 @@ ListaEjec=[ruta_in1,ruta_in2,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out
 
 def Plot_Levels(Lista):
 	#Leer ultima hora de historico Qsim para cada par.
-	ruta=Lista[0]+'*'
-	readh=glob.glob(ruta)
+	rutah=Lista[0]+'*'
+	readh=glob.glob(rutah)
 	#Leer las simulacion actual+extrapolacion
-	ruta=Lista[1]+'_caudal/*'
-	read1=glob.glob(ruta)
+	ruta1=Lista[1]+'_caudal/*'
+	read1=glob.glob(ruta1)
 	#Guarda series completas e hist para sacar Nash
 	Qact=[];Qhist=[]
 	for rqhist,rqsim in zip(np.sort(readh),np.sort(read1)):
@@ -227,6 +227,7 @@ def Plot_Levels(Lista):
 	ax.plot(Qobs,c='k',lw=3.5, label='Qobs')
 	ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
 	ax.set_ylabel('Nivel  $[cm]$', fontsize=17,color=backcolor)
+	ax.axvline(x=Qobs.index[-1],lw=1.5,color='gray',label='Now')
 	
 	# Second axis
 	#plot
@@ -261,7 +262,7 @@ def Plot_Levels(Lista):
 	for text in leg.get_texts():
 		pl.setp(text, color = backcolor)
 	#ylim para la grafica
-	ylim=Qobs.mean()*1.5
+	ylim=Qobs.mean()*2
 	y_lim=Qobs.mean()*0.7
 	ax.set_ylim(y_lim,ylim)
 	
