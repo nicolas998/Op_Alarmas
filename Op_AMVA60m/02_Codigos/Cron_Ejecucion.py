@@ -228,7 +228,7 @@ else:
 	#elimina figuras viejas 
 	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
 	os.system(comando)
-	#~ 
+#~ 
 	#Figura comparativa de niveles simulados vs. observado y los de alerta.
 
 	#Ruta donde se guardan los caudales en png
