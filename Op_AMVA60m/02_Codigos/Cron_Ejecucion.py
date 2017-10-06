@@ -101,14 +101,14 @@ r1dia=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,v
 fecha1 = date - dt.timedelta(hours = 1)
 fecha1 = fecha1.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain_png + 'Acumulado_1hora.png'
-r1hr=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=0,vmax=80)
+r1hr=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_historica,ruta_figura,vmin=0,vmax=10)
 
 #Grafica en los proximos 30min
 fecha1 = fecha2
 fecha2= date + dt.timedelta(minutes = 30)
 fecha2 = fecha2.strftime('%Y-%m-%d-%H:%M')
 ruta_figura = ruta_out_rain_png + 'Acumulado_30siguientes.png'
-r30minnext=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_actual,ruta_figura,vmin=0,vmax=80)
+r30minnext=al.Graph_AcumRain(fecha1,fecha2,ruta_cuenca,lluvia_actual,ruta_figura,vmin=0,vmax=20)
 
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

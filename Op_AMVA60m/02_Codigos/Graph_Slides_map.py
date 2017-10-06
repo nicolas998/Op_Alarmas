@@ -64,6 +64,8 @@ for l in range(0,len(ListPlotVar)):
 	ruta_out_txt = ruta_folder+'Slides'+ListPlotVar[l]+'_'+args.date+'.txt'
 	#Lee los binarios de deslizamientos para la cuenca, para cada parametrizacion
 	v,r = wmf.models.read_int_basin(ruta_in,l+1,cu.ncells)
+	#se suman las celdas siempre inestables.
+	# v = R + v
 	#Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
 	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v, ListPlotVar[l]])
 	#Se van acumulando las celdas deslizadas en cada parametrizacion
@@ -87,46 +89,40 @@ ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, Vsum, '999'])
 #-------------------------------------------------------------------------------------------------------
 
 def Plot_SlidesSim(Lista):
-	#Plots de Parametrizaciones
-	bins=4
+	# #Plots de Parametrizaciones
+	# bins=4
+	# try:
+	# 	ticks_vec=np.arange(0,VarToPlot.max()+1,int(VarToPlot.max())/bins)
+	# except:
+	# 	ticks_vec=np.arange(0,3.5,0.5)
+    
 	VarToPlot=Lista[-2]
-	try:
-		ticks_vec=np.arange(0,VarToPlot.max()+1,int(VarToPlot.max())/bins)
-	except:
-		ticks_vec=np.arange(0,3.5,0.5)
-
 	if Lista[-1] != '999':
-		fig = pl.figure(figsize=(10,12))
-		Coord,ax=cu.Plot_basinClean(VarToPlot,#show_cbar=True,									
-									cmap = pl.get_cmap('viridis',bins),
-									ruta=Lista[1],								
-									#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-									#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
-									show=False,figsize = (30,15))
+		Coord,ax=cu.Plot_basinClean(VarToPlot,#show_cbar=True,
+									ruta=Lista[1],
+									cmap = pl.get_cmap('viridis',3),
+									show=False,figsize = (30,15))                                    
+								#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+								# cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,									
 		#ax.set_title('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=16 )
 		#~ pl.suptitle('Slides Map Par'+Lista[-1]+' '+args.date, fontsize=18, x=0.5, y=0.09)		
 		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
 	#Plot de mapa acumulado de deslizamientos en todas las Parametrizaciones
 	else:
-		fig = pl.figure(figsize=(10,12))
 		Coord,ax=cu.Plot_basinClean(VarToPlot,#show_cbar=True,
-									cmap = pl.get_cmap('viridis',bins),
-									ruta=Lista[1],								
-									#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
-									#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,																		
-									show=False,figsize = (10,12))
+									cmap = pl.get_cmap('viridis',3),
+									ruta=Lista[1],
+									show=False,figsize = (30,15))                                    
+							#se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
+							#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=16,
 		#ax.set_title('Slides Map AcumPars '+args.date, fontsize=16 )
-		#~ pl.suptitle('Slides Map AcumPars '+args.date, fontsize=18, x=0.5, y=0.09)				
+		#~ pl.suptitle('Slides Map AcumPars '+args.date, fontsize=18, x=0.5, y=0.09)
 		#~ ax.figure.savefig(Lista[1],bbox_inches='tight')
+        
 	#dice lo que hace
 	if args.verbose:
 		print 'Aviso: Plot de Deslizamientos para '+Lista[-1]+' generado.'
 
-	#~ 
-	#~ #dice lo que hace
-	#~ if args.verbose:
-		#~ print 'Aviso: Plot de Humedad para '+Lista[-1]+' generado.'
-		
 #Ejecuta los plots
 if len(ListaEjec) > 15:
 	Nprocess = 15
