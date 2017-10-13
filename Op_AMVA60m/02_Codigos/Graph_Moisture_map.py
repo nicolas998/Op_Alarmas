@@ -79,12 +79,12 @@ def Plot_Hsim(Lista):
 	VarToPlot=((Lista[-2][0]+Lista[-2][2])/(wmf.models.max_gravita+wmf.models.max_capilar))*100
 	# si supera un umbral de saturacion se grafica, si no no.
 	if VarToPlot.max() >= 4:
-		fig = pl.figure(figsize=(10,12))
 		bins=4
 		ticks_vec=np.arange(0,VarToPlot.max(),int(VarToPlot.max())/bins)
 		Coord,ax=cu.Plot_basinClean(VarToPlot,
 						ruta=Lista[1],
 						cmap = pl.get_cmap('viridis',8),
+						figsize = (30,15),
 						#~ show_cbar=True,
 						#~ #se configura los ticks del colorbar para que aparezcan siempre la misma cantidad y del mismo tamano
 						#~ cbar_ticks=ticks_vec,cbar_ticklabels=ticks_vec,cbar_ticksize=15,

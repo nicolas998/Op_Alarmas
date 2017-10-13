@@ -11,6 +11,7 @@ import alarmas as al
 import glob 
 import time
 import pylab as pl
+import json
 
 # Texto Fecha: el texto de fecha que se usa para guardar algunos archivos de figuras.
 date = dt.datetime.now()
@@ -127,12 +128,15 @@ time.sleep(15)
 #Actualiza las condiciones del modelo 
 comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+ruta_configuracion_1+' -v'
 os.system(comando)
-print '\n'
+
+
+
+
  
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-print '###################################### PRODUCCION DE FIGURAS ############################\n'
+print '\n'
+print '###################################### PRODUCCION DE FIGURAS Y RESULTADOS ############################\n'
 
 # Para esta cuenca se ejecutan figuras siempre para mostrar los resultados en la pagina de SIATA
 
@@ -163,6 +167,17 @@ print '\n'
 #elimina figuras viejas 
 comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
 os.system(comando)
+
+#Actualiza json con los caudaes simulados de la parametrizacion escogida para mostrar en la pagina
+
+#Se define ruta sin extension del Qhist de la parametrizacion a incluir
+ruta_qhistJson = al.get_ruta(ConfigFile,'ruta_qhist2Json')
+#Se define ruta sin extension del Qsim de la parametrizacion a incluir
+ruta_qsimJson = al.get_ruta(ConfigFile,'ruta_qsim2Json')
+#Se define la ruta donde se escribe el Json.
+ruta_outJson = al.get_ruta(ConfigFile,'ruta_Json')
+#JSON
+al.Genera_json(ruta_qhistJson,ruta_qsimJson,ruta_outJson)
 
 
 #Figura de la humedad simulada en el tiempo actual

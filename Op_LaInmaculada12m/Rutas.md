@@ -18,7 +18,7 @@ Rutas necesarias para los datos de entrada en la operación del modelo:
 Rutas donde se alojan los resultados obtenidos por el modelo.
 
 - **ruta_rain**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/01_rain/
-- **ruta_rain_png**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/Figuras/
+- **ruta_rain_png**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/
 - **ruta_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02_caudal
 - **ruta_storage**:
 - **ruta_slides**:

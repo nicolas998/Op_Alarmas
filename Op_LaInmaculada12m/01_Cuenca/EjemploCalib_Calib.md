@@ -96,12 +96,12 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_01.StObin|2017-10-05-17:40|
-| -t 002|Sto_wet_02.StObin|2017-10-05-14:00|
-| -t 003|Sto_wet_03.StObin|2017-10-05-14:00|
-| -t 004|Sto_wet_04.StObin|2017-10-05-14:00|
-| -t 005|Sto_wet_05.StObin|2017-10-05-14:00|
-| -t 006|Sto_wet_06.StObin|2017-10-05-14:00|
+| -t 001|Sto_wet_01.StObin|2017-10-13-17:35|
+| -t 002|Sto_wet_02.StObin|2017-10-13-15:10|
+| -t 003|Sto_wet_03.StObin|2017-10-13-15:10|
+| -t 004|Sto_wet_04.StObin|2017-10-13-15:10|
+| -t 005|Sto_wet_05.StObin|2017-10-13-15:10|
+| -t 006|Sto_wet_06.StObin|2017-10-13-15:10|
 
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
@@ -137,15 +137,15 @@ indican cual de las parametrizaciones es la que se usa para graficar algunas
 de las variables tales como la animacion de caudales y la evolucion de la 
 humedad en la cuenca.
 
-- **ruta_map_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/Figuras/StreamMaps
+- **ruta_map_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps
 	> ruta donde se guardan los mapas de caudales simulados. 
-- **ruta_map_humedad**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/Figuras/HumedadMaps
+- **ruta_map_humedad**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps
 	> Ruta donde se guardan los mapas de humedad.
-- **ruta_map_slides**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/Figuras/SlidesMaps
+- **ruta_map_slides**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/Figuras/LevelsGraphs
+- **ruta_serie_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
-- **ruta_Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/Figuras/Qsim.json
+- **ruta_Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/Qsim.json
 	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
 
 **Tabla**: Variables y parametrizaciones a plotear.
