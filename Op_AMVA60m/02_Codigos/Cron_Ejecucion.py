@@ -11,7 +11,7 @@ import alarmas as al
 import glob 
 import time
 import pylab as pl
-import json
+# import json
 
 # Texto Fecha: el texto de fecha que se usa para guardar algunos archivos de figuras.
 date = dt.datetime.now()
@@ -187,7 +187,7 @@ ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
 ListaEjec = []
 fechaNueva = date 
 fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+comando = ruta_codigos+'Graph_Moisture_map.py '+dateText+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
 ListaEjec.append(comando)
 #Ejecuta las figuras en paralelo 
 p = Pool(processes = 3)
@@ -212,7 +212,7 @@ ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
 ListaEjec = []
 fechaNueva = date
 fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-comando = ruta_codigos+'Graph_Slides_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
+comando = ruta_codigos+'Graph_Slides_map.py '+dateText+' '+ruta_cuenca+' '+ruta_configuracion_1
 ListaEjec.append(comando)
 #Ejecuta las figuras en paralelo 
 p = Pool(processes = 3)
@@ -227,28 +227,25 @@ print '\n'
 #elimina figuras viejas 
 comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
 os.system(comando)
-#~ 
+
+
 #Figura comparativa de niveles simulados vs. observado y los de alerta.
+#Se define ruta de donde se leeran los resultados a plotear
+ruta_inQhist = al.get_ruta(ConfigFile,'ruta_qsim_hist')
+ruta_inQsim = al.get_ruta(ConfigFile,'ruta_qsim')
+#Lectura de rutas de salida de la imagen
+ruta_outQsim = al.get_ruta(ConfigFile,'ruta_serie_qsim')
+nodo = al.get_ruta(ConfigFile,'nodosim')
+codeest = al.get_ruta(ConfigFile,'codeestN')
 
-#Ruta donde se guardan los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
-
-ListaEjec = []
-fechaNueva = date
-fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' '+ruta_out_rain
-ListaEjec.append(comando)
-#Ejecuta las figuras en paralelo 
-p = Pool(processes = 3)
-p.map(os.system, ListaEjec)
-p.close()
-p.join()
+al.Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outQsim,ruta_out_rain,dateText,nodo,codeest)
 
 print '\n'
 print 'Se ejecutan figuras comparativas de niveles simulados'
 print '\n'
 
 #elimina figuras viejas 
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
 comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
 os.system(comando)
 

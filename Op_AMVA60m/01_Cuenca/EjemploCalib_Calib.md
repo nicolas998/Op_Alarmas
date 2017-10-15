@@ -28,6 +28,11 @@ Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
 puede modificar el factor de seguridad mediante el cual se determina la vulnerabilidad 
 de las celdas.
 
+> Algunas cosas necesarias de la cuenca
+- **nodosim**: 0
+- **codeestN**: 140
+- **mediaN**: 
+
 ### Rutas
 
 - **ruta_almsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/03_almacenamiento/

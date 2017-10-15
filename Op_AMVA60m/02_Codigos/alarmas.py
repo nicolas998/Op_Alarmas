@@ -7,6 +7,15 @@ import numpy as np
 import glob 
 import pylab as pl
 import json
+import MySQLdb
+import csv
+import matplotlib
+import matplotlib.font_manager
+from datetime import timedelta
+import datetime as dt
+import pickle
+import matplotlib.dates as mdates
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -186,33 +195,46 @@ def model_get_constStorage(RutesList, ncells):
 		Storage[i] = Cs
 	return Storage.astype(float)
 
-#NOTA: Lista de entrada para crear rutas de Qhist.
-# Listlol=[]
-# for L in ListEjecs:
-     # Listlol.append(ruta_Qsim +'01_CaudalHistorico/'+ QsimName +'_'+L[0].replace(' ','_').replace('-','')+'_hist.msg')
-
-def model_write_ruteQhist(listrutas_Qhist,FechaI,FechaF,pcont):
-	#Genera archivos vacios para cada parametrizacion cuando no existe historia o si esta quiere renovarse.
-	for i in listrutas_Qhist:
-		DifIndex = pd.date_range(FechaI, FechaF, freq='5min')
-		Qh = pd.DataFrame(np.zeros(shape=(DifIndex.size,pcont.size))*np.nan, 
-			index=pd.date_range(FechaI, FechaF, freq='5min'))
-		#Pregunta si esta
-		try:
-			Lold = os.listdir(i)
-			pos = Lold.index(i)
-			flag = raw_input('Aviso: El archivo historico : '+i+' ya existe, desea sobre-escribirlo, perdera la historia de este!! (S o N): ')
-			if flag == 'S':
-				flag = True
-			else:
-				flag = False
-		except:
-			flag = True
-		#Guardado
-		if flag:
-			Qh.to_msgpack(i)
-		else:
-			pass
+# Revisar historicos
+# ruta='/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/*'
+# lol=glob.glob(ruta)
+# ruta_qhist=lol[0]
+# pd.read_msgpack(ruta_qhist)
+def model_write_ruteQhist(rutaConfig):
+    '''Genera archivos vacios para cada parametrizacion cuando no existe historia o si esta quiere renovarse.
+    Genera un dataframe con la primera fila de un qsim cualquiera, resultado de sim. de la cuenca de interes'''
+    #Lee el archivo de configuracion
+    ListConfig = get_rutesList(ConfigFile)
+    #se leen rutas de entrada
+    ruta_qhist = get_ruta(ListConfig,'ruta_qsim_hist')
+    ruta_qsim = get_ruta(ListConfig,'ruta_qsim')
+    
+    #se definen rutas.
+    rutas_qhist=glob.glob(ruta_qhist+'*')
+    listrutas_qhist=lol[:-1]
+    
+    rutas_qsim=glob.glob(ruta_qsim+'*')
+    rutaqsim=lol1[0]
+    
+    for i in listrutas_qhist:
+        qsim=pd.read_msgpack(rutaqsim)
+        Qh=qsim.iloc[[0]]
+        #Pregunta si esta
+        try:
+            Lold = os.listdir(i)
+            pos = Lold.index(i)
+            flag = raw_input('Aviso: El archivo historico : '+i+' ya existe, desea sobre-escribirlo, perdera la historia de este!! (S o N): ')
+            if flag == 'S':
+                flag = True
+            else:
+                flag = False
+        except:
+            flag = True
+        #Guardado
+        if flag:
+            Qh.to_msgpack(i)
+        else:
+            pass
 
 def model_write_qsim(rutaQsim,rutaQhist, pcont):
 	###Se actualizan los historicos de Qsim de la parametrizacion asociada.
@@ -483,3 +505,218 @@ def Genera_riskvectorMap(rutaConfig,cuenca,figSZ):
     cu.Plot_basinClean(R,figsize=(figSZ[0],figSZ[1]),cmap = pl.get_cmap('viridis',3),ruta=ruta_out)
 
 
+def Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outQsim,ruta_out_rain,date,nodo,codeest,verbose=True):
+    nodo=int(nodo)
+    codeest=int(codeest)
+    lcolors=['g','orange','orangered','indigo']
+    cmap=pl.cm.Spectral#nipy_spectral#winter#autumn#summer#PuBuGn
+    backcolor='dimgray'
+    c_ylim=10
+
+    #Lluvia
+    ruta_hdrp1=ruta_out_rain + 'Lluvia_historica.hdr'
+    ruta_hdrp2=ruta_out_rain + 'Lluvia_actual.hdr'
+    Phist=wmf.read_mean_rain(ruta_hdrp1,100000000000,0)
+    Pextrapol=wmf.read_mean_rain(ruta_hdrp2,100000000000,0)
+
+    #Mira la ruta del folder y si no existe la crea
+    ruta_folder = ruta_outQsim+'/'
+    Esta = glob.glob(ruta_folder)
+    if len(Esta) == 0:
+        os.system('mkdir '+ruta_folder)
+    #Obtiene las ruta de archivo de salida
+    ruta_out_png = ruta_folder+'LevelsSim'+'_'+date+'.png'
+
+    #Se organiza la lista con parametros necesarios para plotear  con la funcion que sigue
+    Lista=[ruta_inQhist,ruta_inQsim,nodo,codeest,lcolors,cmap,backcolor,c_ylim,ruta_out_png]
+
+    #Grafica de niveles
+
+    #Leer ultima hora de historico Qsim para cada par.
+    rutah=Lista[0]+'*'
+    readh=glob.glob(rutah)
+    #Leer las simulacion actual+extrapolacion
+    ruta1=Lista[1]+'_caudal/*'
+    read1=glob.glob(ruta1)
+    #Guarda series completas e hist para sacar Nash
+    Qact=[];Qhist=[]
+    for rqhist,rqsim in zip(np.sort(readh),np.sort(read1)):
+        if rqhist.endswith('.msg') and rqsim.endswith('.msg'):
+            #Q HIST
+            df=pd.read_msgpack(rqhist)
+            #ultima hora, 12 pasos de 5 min.
+            qhist=df[Lista[2]+1][-12:]
+            Qhist.append(qhist)
+            #Q ACT
+            qsim=pd.read_msgpack(rqsim)
+            qEst=qsim[Lista[2]+1]
+            #ult hr+ extrapolacion
+            Qact.append(qhist.append(qEst))
+
+    #-------------------------------------------------------------------------------------------------------
+    #Consulta a base de datos: Nobs y Ns de alerta'
+    #-------------------------------------------------------------------------------------------------------
+    #Se usa las fechas de una serie sim para consultar en bd.
+    serieN=Qact[0]
+    FI=serieN.index.strftime('%Y-%m-%d')[0]
+    FF=serieN.index.strftime('%Y-%m-%d')[-1]
+    HI=serieN.index[0].strftime('%H:%M')
+    HF=serieN.index[-1].strftime('%H:%M')
+
+    # codigo de la estacion.
+    codeest=Lista[3]
+    # coneccion a bd con usuario operacional
+    host   = '192.168.1.74'
+    user   = 'siata_Oper'
+    passwd = 'si@t@64512_operacional'
+    bd     = 'siata'
+    #Consulta a tabla estaciones
+    Estaciones="SELECT Codigo,Nombreestacion, offsetN,N,action_level,minor_flooding,moderate_flooding,major_flooding  FROM estaciones WHERE codigo=("+str(codeest)+")"
+    dbconn = MySQLdb.connect(host, user,passwd,bd)
+    db_cursor = dbconn.cursor()
+    db_cursor.execute(Estaciones)
+    result = np.array(db_cursor.fetchall())
+    #definicion de niveles de alerta y demas.
+    nombreest=result[0][1] 
+    n1=float(result[0][4])
+    n2=float(result[0][5])
+    n3=float(result[0][6])
+    n4=float(result[0][7])
+    #definicion de tipo N para consultar campo.
+    tipo=int(result[0][3])
+    if tipo == 1:#radar
+        niv='ni'
+    elif tipo == 0:#ultrasonido
+        niv='pr'
+    #Consulta a tabla datos
+    sql_datos ="SELECT DATE_FORMAT(fecha,'%Y-%m-%d'), DATE_FORMAT(hora, '%H:%i:%s'), (" +str(result[0][2])+"-"+niv+"), calidad FROM datos WHERE cliente = ("+str(codeest)+") and fecha between '"+FI+"' and '"+FF+"' and hora between '"+HI+"' and '"+HF+"'"
+    dbconn = MySQLdb.connect(host, user,passwd,bd)
+    db_cursor = dbconn.cursor()
+    db_cursor.execute(sql_datos)
+    result_data = np.array(db_cursor.fetchall())
+    data = pd.DataFrame(result_data)
+
+    #Se organizan consulta en serie de tiempo.
+    fe=[data[0][i]+'-'+data[1][i] for i in range(len(data))]; fe=np.array(fe)
+    dates=[dt.datetime.strptime(i,'%Y-%m-%d-%H:%M:%S') for i in fe]
+    nobs=[float(data[2][i]) for i in range(len(data))];nobs=np.array(nobs)
+    calidad=[int(data[3][i]) for i in range(len(data))];calidad=np.array(calidad)
+    Nobs=pd.Series(nobs,index=dates)
+    #Corregir Nobs por calidad - falta incluir todos los codigos de calidad dudosa.
+    try:
+        Nobs[np.where((calidad!=1)&(calidad!=2))[0]]==np.nan
+    except:
+        pass
+    Nobs[Nobs>600.0]==np.nan
+    #Convertir a caudal con curva de calibracion de 3 aguas.
+    Qobs=Nobs
+    #Poner Nsims en magnitud de observados.
+    Qact2=[]
+    for i in Qact:
+        Nsim=i-i.mean()+Qobs.mean()
+        Qact2.append(Nsim)
+
+    #-------------------------------------------------------------------------------------------------------
+    #Grafica comparativa de niveles, con escala de colores y backgroud de siata.
+    #------------------------------------------------------------------------------------------------------
+    fig= pl.figure(figsize=(12,9))
+    ax= fig.add_subplot(111)
+
+    # Grafica niveles de riesgo.
+    ylim4=n4+(n4*0.2)
+    levels=[n1,n2,n3,n4,ylim4]
+    lnames=['Q1','Q2', 'Q3', 'Q4']
+    lcolors=Lista[4]
+    #plot
+    for i in range(0,len(levels)):
+        try:
+            ax.fill_between(x=[Qobs.index[0],serieN.index[-1]], 
+                            y1=[levels[i],levels[i]],
+                            y2=[levels[i+1],levels[i+1]], 
+                            color = lcolors[i], 
+                            alpha = 0.22,
+                            label=lnames[i])
+        except:
+            pass
+
+    #Grafica de niveles.
+    #Colormap
+    #-------------------------------------------------------------------------------------------------------
+    parameters = np.linspace(0,len(Qact),len(Qact))
+    # norm is a class which, when called, can normalize data into the [0.0, 1.0] interval.
+    norm = matplotlib.colors.Normalize(
+        vmin=np.min(parameters),
+        vmax=np.max(parameters))
+    #choose a colormap
+    c_m = Lista[5]
+    # create a ScalarMappable and initialize a data structure
+    s_m = pl.cm.ScalarMappable(cmap=c_m, norm=norm)
+    s_m.set_array([])
+    #-------------------------------------------------------------------------------------------------------
+
+    #PLOT
+
+    #Pars
+    for i,parameter in zip(np.arange(0,len(Qact)),parameters):
+        #NASH
+        nash=wmf.__eval_nash__(Qobs,Qact2[i])
+        ax.plot(Qact2[i],lw=2.5,linestyle='--', label='P0'+str(i+1)+'- NS:%.2f'%(nash),color=s_m.to_rgba(parameter))
+    #Text ans ticks color.
+    backcolor=Lista[6]  
+    #Obs
+    ax.plot(Qobs,c='k',lw=3.5, label='Qobs')
+    ax.set_title('Est. %s. %s ___ Fecha: %s'%(codeest,nombreest,serieN.index.strftime('%Y-%m-%d')[0]), fontsize=17,color=backcolor)
+    ax.set_ylabel('Nivel  $[cm]$', fontsize=17,color=backcolor)
+    ax.axvline(x=Qobs.index[-1],lw=1.5,color='gray',label='Now')
+
+    # Second axis
+    #plot
+    axAX=pl.gca()
+    ax2=ax.twinx()
+    ax2AX=pl.gca()
+    try:
+        #Mean rainfall
+        # Busca en Qact la primera pos del obs.
+        p1=Phist[Phist.index.get_loc(Qact[0].index[0]):]
+        # Busca en Pextrapol la ultima  pos del Pobs
+        p2=Pextrapol[Pextrapol.index.get_loc(Phist.index[-1])+1:]
+        P=p1.append(p2)
+        P=P*12.0
+
+        #resto del plot
+        ax2.fill_between(P.index,0,P,alpha=0.25,color='dodgerblue',lw=0)
+        #limites
+        ax2AX.set_ylim((0,20)[::-1]) 
+    except:
+        print 'Aviso: No se grafica Lluvia promedio, no exiteN campos para la fecha en el historico'
+
+    #Formato  resto de grafica.
+    ax.tick_params(labelsize=14)
+    ax.grid()
+    ax.autoscale(enable=True, axis='both', tight=True)
+    #setting default color of ticks and edges
+    ax.tick_params(color=backcolor, labelcolor=backcolor)
+    for spine in ax.spines.values():
+        spine.set_edgecolor('gray')
+    #color of legend text
+    leg = ax.legend(ncol=3,loc=(0.26,-0.255),fontsize=12)
+    for text in leg.get_texts():
+        pl.setp(text, color = backcolor)
+    #ylim para la grafica
+    ylim=Qobs.mean()*2
+    y_lim=Qobs.mean()*0.7
+    ax.set_ylim(y_lim,ylim)
+
+    #Formato resto de grafica - Second axis
+    ax2.set_ylabel(u'Precipitacion media - cuenca [$mm$]',size=17,color=backcolor)    
+    ax2.tick_params(labelsize=14)
+    ax2.tick_params(color=backcolor, labelcolor=backcolor)
+    for spine in ax2.spines.values():
+        spine.set_edgecolor('gray')
+
+    #Se guarda la figura.
+    ax.figure.savefig(Lista[-1],bbox_inches='tight')
+
+    #dice lo que hace
+    if verbose:
+        print 'Aviso: Plot de niveles generado en '+Lista[-1]

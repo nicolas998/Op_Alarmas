@@ -144,114 +144,136 @@ print '\n'
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-print '###################################### PRODUCCION DE FIGURAS ############################\n'
+print '###################################### PRODUCCION DE FIGURAS Y RESULTADOS ############################\n'
+
+#Lectura del archivo de configuracion
+ConfigFile = al.get_rutesList(ruta_configuracion_1)
+
+#Actualiza json con los caudaes simulados de la parametrizacion escogida para mostrar en la pagina
+#Se define ruta sin extension del Qhist de la parametrizacion a incluir
+ruta_qhistJson = al.get_ruta(ConfigFile,'ruta_qhist2Json')
+#Se define ruta sin extension del Qsim de la parametrizacion a incluir
+ruta_qsimJson = al.get_ruta(ConfigFile,'ruta_qsim2Json')
+#Se define la ruta donde se escribe el Json.
+ruta_outJson = al.get_ruta(ConfigFile,'ruta_Json')
+#JSON
+al.Genera_json(ruta_qhistJson,ruta_qsimJson,ruta_outJson)
+
 
 # si hay lluvia en la ultima hora y en los proximos 30 min se generan figuras
-if r1hr == 0 and r30minnext == 0:
-	print 'Aviso: No se generan graficas de resultados de simulacion ya que no hay lluvia en la ultima hora ni los prox. 30 min.'
-	pass
-else:
-	#~ print 'Aviso: Se ejectuan figuras.'
-	#Lectura del archivo de configuracion
-	ConfigFile = al.get_rutesList(ruta_configuracion_1)
-
-	#Figura de la evolucion de los caudales en el cauce
-
-	#Ruta donde se borraran graficas viejas los caudales en png
-	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
-
-	ListaEjec = []
-	for i in range(13):
-		fechaNueva = date + dt.timedelta(minutes = 5*i)
-		fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-		comando = ruta_codigos+'Graph_StreamFlow_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
-		ListaEjec.append(comando)
-	#Ejecuta lass figuras en paralelo 
-	p = Pool(processes = 10)
-	p.map(os.system, ListaEjec)
-	p.close()
-	p.join()
-
-	print '\n'
-	print 'Se ejecutan figuras con mapa de StreamFlow'
-	print '\n'
-
-	#elimina figuras viejas 
-	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
-	os.system(comando)
+# if r1hr == 0 and r30minnext == 0:
+#     print 'Aviso: No se generan graficas de resultados de simulacion ya que no hay lluvia en la ultima hora ni los prox. 30 min.'
+#     pass
+# else:
+    #~ print 'Aviso: Se ejectuan figuras.'
 
 
-	#Figura de la humedad simulada en el tiempo actual
-	#Ruta donde se guardan los caudales en png
-	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
-	#lista de ejecuciones
-	ListaEjec = []
-	fechaNueva = date 
-	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
-	ListaEjec.append(comando)
-	#Ejecuta las figuras en paralelo 
-	p = Pool(processes = 3)
-	p.map(os.system, ListaEjec)
-	p.close()
-	p.join()
+#Figura de la evolucion de los caudales en el cauce
 
-	print '\n'
-	print 'Se ejecutan figuras con mapa de Humedad'
-	print '\n'
+#Ruta donde se borraran graficas viejas los caudales en png
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
 
-	#elimina figuras viejas 
-	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-	os.system(comando)
+ListaEjec = []
+for i in range(13):
+    fechaNueva = date + dt.timedelta(minutes = 5*i)
+    fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+    comando = ruta_codigos+'Graph_StreamFlow_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+    ListaEjec.append(comando)
+#Ejecuta lass figuras en paralelo 
+p = Pool(processes = 10)
+p.map(os.system, ListaEjec)
+p.close()
+p.join()
 
+print '\n'
+print 'Se ejecutan figuras con mapa de StreamFlow'
+print '\n'
 
-	#Figura de los deslizamiento simuados en el tiempo acumulado - 5 min.
-
-	#Ruta donde se guardan los caudales en png
-	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
-
-	ListaEjec = []
-	fechaNueva = date
-	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	comando = ruta_codigos+'Graph_Slides_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
-	ListaEjec.append(comando)
-	#Ejecuta las figuras en paralelo 
-	p = Pool(processes = 3)
-	p.map(os.system, ListaEjec)
-	p.close()
-	p.join()
-	print '\n'
-	print 'Se ejecutan figuras con mapa de Deslizamientos'
-	print '\n'
+#elimina figuras viejas 
+comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
+os.system(comando)
 
 
-	#elimina figuras viejas 
-	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-	os.system(comando)
-#~ 
-	#Figura comparativa de niveles simulados vs. observado y los de alerta.
+#Figura de la humedad simulada en el tiempo actual
+#Ruta donde se guardan los caudales en png
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
+#lista de ejecuciones
+ListaEjec = []
+fechaNueva = date 
+fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+comando = ruta_codigos+'Graph_Moisture_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' -r '+str(i+1)
+ListaEjec.append(comando)
+#Ejecuta las figuras en paralelo 
+p = Pool(processes = 3)
+p.map(os.system, ListaEjec)
+p.close()
+p.join()
 
-	#Ruta donde se guardan los caudales en png
-	ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
+print '\n'
+print 'Se ejecutan figuras con mapa de Humedad'
+print '\n'
 
-	ListaEjec = []
-	fechaNueva = date
-	fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-	comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' '+ruta_out_rain
-	ListaEjec.append(comando)
-	#Ejecuta las figuras en paralelo 
-	p = Pool(processes = 3)
-	p.map(os.system, ListaEjec)
-	p.close()
-	p.join()
+#elimina figuras viejas 
+comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
+os.system(comando)
 
-	print '\n'
-	print 'Se ejecutan figuras comparativas de niveles simulados'
-	print '\n'
 
-	#elimina figuras viejas 
-	comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-	os.system(comando)
+#Figura de los deslizamiento simuados en el tiempo acumulado - 5 min.
+
+#Ruta donde se guardan los caudales en png
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
+
+ListaEjec = []
+fechaNueva = date
+fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+comando = ruta_codigos+'Graph_Slides_map.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1
+ListaEjec.append(comando)
+#Ejecuta las figuras en paralelo 
+p = Pool(processes = 3)
+p.map(os.system, ListaEjec)
+p.close()
+p.join()
+print '\n'
+print 'Se ejecutan figuras con mapa de Deslizamientos'
+print '\n'
+
+
+#elimina figuras viejas 
+comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
+os.system(comando)
+
+
+#Figura comparativa de niveles simulados vs. observado y los de alerta.
+#Se define ruta de donde se leeran los resultados a plotear
+ruta_inQhist = al.get_ruta(ConfigFile,'ruta_qsim_hist')
+ruta_inQsim = al.get_ruta(ConfigFile,'ruta_qsim')
+#Lectura de rutas de salida de la imagen
+ruta_outQsim = al.get_ruta(ConfigFile,'ruta_serie_qsim')
+nodo = al.get_ruta(ConfigFile,'nodosim')
+codeest = al.get_ruta(ConfigFile,'codeestN')
+
+al.Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outQsim,ruta_out_rain,dateText,nodo,codeest)
+
+# ListaEjec = []
+# fechaNueva = date
+# fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
+# comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' '+ruta_out_rain
+# ListaEjec.append(comando)
+# #Ejecuta las figuras en paralelo 
+# p = Pool(processes = 3)
+# p.map(os.system, ListaEjec)
+# p.close()
+# p.join()
+
+print '\n'
+print 'Se ejecutan figuras comparativas de niveles simulados'
+print '\n'
+
+#Ruta donde se guardan los caudales en png
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
+#elimina figuras viejas 
+comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
+os.system(comando)
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

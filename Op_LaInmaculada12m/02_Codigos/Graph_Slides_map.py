@@ -35,9 +35,11 @@ args=parser.parse_args()
 #Lectura de cuenca y variables
 cu = wmf.SimuBasin(rute=args.cuenca, SimSlides = True)
 wmf.models.slide_allocate(cu.ncells, 10)
-#Se marcan forever las celdas incondicionalmente inestables.
+#Se marcan con 1 las celdas incondicionalmente inestables.
 R = np.copy(wmf.models.sl_riskvector)
-R[R == 2] = 1
+R1 = np.zeros(cu.ncells)
+pos_ever=np.where(R==2)[1]
+R1[pos_ever] = 1
 
 #Lee el archivo de configuracion
 ListConfig = al.get_rutesList(args.rutaConfig)
@@ -64,20 +66,36 @@ for l in range(0,len(ListPlotVar)):
 	ruta_out_txt = ruta_folder+'Slides'+ListPlotVar[l]+'_'+args.date+'.txt'
 	#Lee los binarios de deslizamientos para la cuenca, para cada parametrizacion
 	v,r = wmf.models.read_int_basin(ruta_in,l+1,cu.ncells)
-	#se suman las celdas siempre inestables.
-	v = R + v
+    #Se marcan las celdas simuladas con 2.
+	#Si no hay celdas simuladas, deslizamos una para no alterar la escala de colores.
+	if v.max()==0:
+		v[0]=2
+	else:
+		v[v==1]=2
+	#se suman las celdas siempre inestables con las simuladas
+	map1 = R1 + v
+	# se  sesga el max a 2 para que se vean bien las celdas simuladas
+	map1[map1>2] = 2
 	#Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
-	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, v, ListPlotVar[l]])
-	#Se van acumulando las celdas deslizadas en cada parametrizacion
+	ListaEjec.append([ruta_in, ruta_out_png, ruta_out_txt, map1, ListPlotVar[l]])
+	#Se van acumulando las celdas simuladas en cada parametrizacion
 	Vsum += v
+#Si marcan las celdas siempre inestables y se sesga a 2 las celdas mayores que 2 para no alterar escala de color.
+Vsum[pos_ever]=1
+Vsum[Vsum>2]=2
+#si no hay celdas deslizadas, deslizamos una para no alterar la escala de colores.
+if Vsum.max()==1:
+	Vsum[0]=2
+else:
+	pass
 
 ###Se agrega el mapa de celdas acumuladas entre los que se van a plotear desde la info en ListaEjec
 #Obtiene las rutas de los archivos de salida
-	#Mira la ruta del folder y si no existe la crea
-	ruta_folder = ruta_out+'ParsAcum/'
-	Esta = glob.glob(ruta_folder)
-	if len(Esta) == 0:
-		os.system('mkdir '+ruta_folder)
+#Mira la ruta del folder y si no existe la crea
+ruta_folder = ruta_out+'ParsAcum/'
+Esta = glob.glob(ruta_folder)
+if len(Esta) == 0:
+    os.system('mkdir '+ruta_folder)
 ruta_out_png = ruta_folder+'SlidesParsAcum_'+args.date+'.png'
 ruta_out_txt = ruta_folder+'SlidesParsAcum_'+args.date+'.txt'
 #Se organiza la lista con parametros necesarios para plotear los mapas con la funcion que sigue
