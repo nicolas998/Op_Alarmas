@@ -1,5 +1,5 @@
-/media/nicolas/Home/nicolas/101_RadarClass/201710130004_010_120.nc
-/media/nicolas/Home/nicolas/101_RadarClass/201710130004_010_120.nc
+/media/nicolas/Home/nicolas/101_RadarClass/201710270000_010_120.nc
+/media/nicolas/Home/nicolas/101_RadarClass/201710270000_010_120.nc
 nan
 Resumen Ejecucion modelo
 
@@ -10,18 +10,18 @@ Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/J
 Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003_hist.msg
 Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_03hist.msg
 -s 003 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_006_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_06hist.msg
--s 006 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_005_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_05hist.msg
--s 005 ejecutado
-Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001_hist.msg
-Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_01hist.msg
--s 001 ejecutado
 Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_004_hist.msg
 Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_04hist.msg
 -s 004 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_006_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_06hist.msg
+-s 006 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_01hist.msg
+-s 001 ejecutado
+Aviso: Se ha actualizado el archivo de Qsim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_005_hist.msg
+Aviso: Se ha actualizado el archivo de Ssim_historicos de: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/Sto_wet_05hist.msg
+-s 005 ejecutado
 
 
 Resumen deslizamientos
@@ -29,7 +29,7 @@ Param -s 003 tiene 0 celdas deslizadas.
 Param -s 001 tiene 0 celdas deslizadas.
 
 
-###################################### Fecha de Ejecucion: 2017-10-13-18:25 #############################
+###################################### Fecha de Ejecucion: 2017-10-27-07:55 #############################
 
 ###################################### CONSULTA DE LA LLUVIA Y EXTRAPOLACION ############################
 
@@ -54,29 +54,28 @@ Aviso: Se ha producido un campo sin lluvia  para ult_to_web/Res_OpLaInmaculada12
 
 ###################################### PRODUCCION DE FIGURAS Y RESULTADOS ############################
 
-Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-001
-animacion generada en/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-001
-Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-003
-animacion generada en/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-003
-Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-004
-animacion generada en/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-004
-Aviso: Se han dejado solo 301 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-002
-animacion generada en/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-002
+Aviso: Se actualiza correctamente el .json
 
 
 Se ejecutan figuras con mapa de StreamFlow
 
 
-Aviso: Se actualiza correctamente el .json
-Aviso: No hay celdas con almenos 4% para Plot de Humedad: max 0.00574713
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-001
+Aviso: Animacion generada en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-001/animation/
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-003
+Aviso: Animacion generada en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-003/animation/
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-004
+Aviso: Animacion generada en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-004/animation/
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-002
+Aviso: Animacion generada en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/StreamMaps-002/animation/
 Aviso: Plot de Humedad para 001 generado.
-Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps001
-animacion generada en/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps001
-Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps002
-animacion generada en/media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps002
+Aviso: No hay celdas con almenos 4% para Plot de Humedad: max 0.00574713
 
 
 Se ejecutan figuras con mapa de Humedad
 
 
- Error: Se ha tratado de leer un valor fuera del rango
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps001
+Aviso: Animacion generada en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps001/animation/
+Aviso: Se han dejado solo 288 elementos en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps002
+Aviso: Animacion generada en /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/HumedadMaps002/animation/
