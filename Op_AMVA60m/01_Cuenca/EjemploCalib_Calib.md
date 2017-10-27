@@ -28,10 +28,11 @@ Se indican parametros propios de la simulación, tales como $dt$ y $dx$:
 puede modificar el factor de seguridad mediante el cual se determina la vulnerabilidad 
 de las celdas.
 
-> Algunas cosas necesarias de la cuenca
-- **nodosim**: 0
+> Algunas cosas necesarias de la cuenca  (los parametros a continuacion deben tener el mismo numero de elementos, siempre el primer elemento 
+deber ser el del nodo de salida con el que se calibra)
+- **nodosim**: 1
 - **codeestN**: 140
-- **mediaN**: 
+- **mediaN**: 229.959960938
 
 ### Rutas
 
@@ -53,7 +54,7 @@ de las celdas.
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
 - **ruta_qsim2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02_caudal/Qsim_Rain_s_001.msg
 	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
-- **ruta_qhist2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001hist.msg
+- **ruta_qhist2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_AMVA60m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_001_hist.msg
 	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
 ## Parametrizacion
@@ -146,8 +147,10 @@ humedad en la cuenca.
 - **ruta_map_riskvector**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/risk_vector.png
 - **ruta_map_slides**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/LevelsGraphs
+- **ruta_levelspng**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
+- **ruta_niveles**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Nsim/
+	> Ruta donde se escriben los niveles simulados corregidos para las graficas de los operacionales
 - **ruta_Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpAMVA60m/Qsim.json
 	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
 
@@ -160,3 +163,4 @@ humedad en la cuenca.
 | -p Slides 		  | 001,002,003,004|
 
 
+	

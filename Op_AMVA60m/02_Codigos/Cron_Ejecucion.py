@@ -129,10 +129,6 @@ time.sleep(15)
 comando = ruta_codigos+'Model_Update_Store.py '+dateText+' '+ruta_configuracion_1+' -v'
 os.system(comando)
 
-
-
-
- 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 print '\n'
@@ -143,10 +139,18 @@ print '###################################### PRODUCCION DE FIGURAS Y RESULTADOS
 #Lectura del archivo de configuracion
 ConfigFile = al.get_rutesList(ruta_configuracion_1)
 
-#Figura de la evolucion de los caudales en el cauce
+# #Actualiza json con los caudaes simulados de la parametrizacion escogida para mostrar en la pagina
 
-#Ruta donde se borraran graficas viejas los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
+#Se define ruta sin extension del Qhist de la parametrizacion a incluir
+ruta_qhistJson = al.get_ruta(ConfigFile,'ruta_qhist2Json')
+#Se define ruta sin extension del Qsim de la parametrizacion a incluir
+ruta_qsimJson = al.get_ruta(ConfigFile,'ruta_qsim2Json')
+#Se define la ruta donde se escribe el Json.
+ruta_outJson = al.get_ruta(ConfigFile,'ruta_Json')
+#JSON
+al.Genera_json(ruta_qhistJson,ruta_qsimJson,ruta_outJson)
+
+#Figura de la evolucion de los caudales en el cauce
 
 ListaEjec = []
 for i in range(13):
@@ -164,25 +168,13 @@ print '\n'
 print 'Se ejecutan figuras con mapa de StreamFlow'
 print '\n'
 
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
-os.system(comando)
-
-#Actualiza json con los caudaes simulados de la parametrizacion escogida para mostrar en la pagina
-
-#Se define ruta sin extension del Qhist de la parametrizacion a incluir
-ruta_qhistJson = al.get_ruta(ConfigFile,'ruta_qhist2Json')
-#Se define ruta sin extension del Qsim de la parametrizacion a incluir
-ruta_qsimJson = al.get_ruta(ConfigFile,'ruta_qsim2Json')
-#Se define la ruta donde se escribe el Json.
-ruta_outJson = al.get_ruta(ConfigFile,'ruta_Json')
-#JSON
-al.Genera_json(ruta_qhistJson,ruta_qsimJson,ruta_outJson)
-
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen 
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=True)
 
 #Figura de la humedad simulada en el tiempo actual
-#Ruta donde se guardan los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
+
 #lista de ejecuciones
 ListaEjec = []
 fechaNueva = date 
@@ -199,15 +191,13 @@ print '\n'
 print 'Se ejecutan figuras con mapa de Humedad'
 print '\n'
 
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-os.system(comando)
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=True)
 
 
 #Figura de los deslizamiento simuados en el tiempo acumulado - 5 min.
-
-#Ruta donde se guardan los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
 
 ListaEjec = []
 fechaNueva = date
@@ -223,31 +213,37 @@ print '\n'
 print 'Se ejecutan figuras con mapa de Deslizamientos'
 print '\n'
 
-
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-os.system(comando)
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=True)
 
 
 #Figura comparativa de niveles simulados vs. observado y los de alerta.
 #Se define ruta de donde se leeran los resultados a plotear
 ruta_inQhist = al.get_ruta(ConfigFile,'ruta_qsim_hist')
 ruta_inQsim = al.get_ruta(ConfigFile,'ruta_qsim')
-#Lectura de rutas de salida de la imagen
-ruta_outQsim = al.get_ruta(ConfigFile,'ruta_serie_qsim')
-nodo = al.get_ruta(ConfigFile,'nodosim')
+#se leen cosas necesarias para la funcion
+nodosim = al.get_ruta(ConfigFile,'nodosim')
 codeest = al.get_ruta(ConfigFile,'codeestN')
-
-al.Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outQsim,ruta_out_rain,dateText,nodo,codeest)
+mediah = al.get_ruta(ConfigFile,'mediaN')
+#Lectura de rutas de salida de la imagen
+ruta_outLevelspng = al.get_ruta(ConfigFile,'ruta_levelspng')
+#Lectura de rutas donde guardar Nsim.
+ruta_outNsim = al.get_ruta(ConfigFile,'ruta_niveles')
 
 print '\n'
 print 'Se ejecutan figuras comparativas de niveles simulados'
 print '\n'
 
-#elimina figuras viejas 
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-os.system(comando)
+al.Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outLevelspng,ruta_out_rain,dateText,nodosim,codeest,mediah,ruta_outNsim)
+
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_levelspng')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=False)
+
+
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

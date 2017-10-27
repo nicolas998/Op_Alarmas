@@ -30,13 +30,14 @@ de las celdas.
 puede modificar el factor de seguridad mediante el cual se determina la vulnerabilidad
 de las celdas.
 
-> Algunas cosas necesarias de la cuenca
+> Algunas cosas necesarias de la cuenca (los parametros a continuacion deben tener el mismo numero de elementos, siempre el primer elemento
+deber ser el del nodo de salida con el que se calibra)
 - **nodosim**: 75
 - **codeestN**: 106
-- **mediaN**:
+# Se toma la media de los ultimos 3 meses (desde 15-Oct) porque la serie es muy variable.
+- **mediaN**: 73.2399902344
 
-### Rutas
-
+##Rutas
 - **ruta_almsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/
 	> Ruta en la cual se van a estar actualizando los almacenamientos del modelo.
 - **ruta_almhist**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/03_almacenamiento/01_almacenamiento_hist/
@@ -55,7 +56,7 @@ de las celdas.
 	> Ruta donde se guarda el binario con los mapas de posible ocurrencia de deslizamientos.
 - **ruta_qsim2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02_caudal/Qsim_Rain_s_003.msg
 	> Ruta de donde se toma los resultados de caudal actual de la parametrizacion que se va a montar en el .json
-- **ruta_qhist2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003hist.csv
+- **ruta_qhist2Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Op_LaInmaculada12m/03_Resultados/02CaudalHistorico/Qsim_Rain_s_003_hist.msg
 	> Ruta de donde se toma los resultados de caudal historicos de la parametrizacion que se va a montar en el .json
 ___
 ## Parametrizacion
@@ -105,12 +106,12 @@ ___
 
 |id     | Nombre                 | Ultima Actualizacion |
 |:-----:|:-----------------------|:--------------------:|
-| -t 001|Sto_wet_01.StObin|2017-10-15-12:10|
-| -t 002|Sto_wet_02.StObin|2017-10-15-12:10|
-| -t 003|Sto_wet_03.StObin|2017-10-15-12:10|
-| -t 004|Sto_wet_04.StObin|2017-10-15-12:10|
-| -t 005|Sto_wet_05.StObin|2017-10-15-12:10|
-| -t 006|Sto_wet_06.StObin|2017-10-15-12:10|
+| -t 001|Sto_wet_01.StObin|2017-10-27-07:30|
+| -t 002|Sto_wet_02.StObin|2017-10-27-03:45|
+| -t 003|Sto_wet_03.StObin|2017-10-27-03:45|
+| -t 004|Sto_wet_04.StObin|2017-10-27-03:45|
+| -t 005|Sto_wet_05.StObin|2017-10-27-03:45|
+| -t 006|Sto_wet_06.StObin|2017-10-27-03:45|
 
 
 Indica las rutas en donde se hara lectura y guardado de almacenamiento por el modelo. En la 
@@ -152,10 +153,13 @@ humedad en la cuenca.
 	> Ruta donde se guardan los mapas de humedad.
 - **ruta_map_slides**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/SlidesMaps
 	> Ruta donde se guardan los mapas de deslizamientos producidos por la modelación.
-- **ruta_serie_qsim**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/LevelsGraphs
+- **ruta_levelspng**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/LevelsGraphs
 	> Ruta donde se sgeneran las figuras de simulacion de caudales y niveles.
+- **ruta_niveles**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Nsim/
+	> Ruta donde se sgeneran escriben las series de Nsim para las graficas operacionales en siata.gov.co
 - **ruta_Json**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/Qsim.json
 	> Ruta donde se guarda el json con la Qsim de la parametrizacion escogida.
+- **ruta_map_riskvector**: /media/nicolas/Home/Jupyter/Soraya/Op_Alarmas/Result_to_web/Res_OpLaInmaculada12m/risk_vector.png
 
 **Tabla**: Variables y parametrizaciones a plotear.
 

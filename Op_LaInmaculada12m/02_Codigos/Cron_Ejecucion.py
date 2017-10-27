@@ -170,9 +170,6 @@ al.Genera_json(ruta_qhistJson,ruta_qsimJson,ruta_outJson)
 
 #Figura de la evolucion de los caudales en el cauce
 
-#Ruta donde se borraran graficas viejas los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
-
 ListaEjec = []
 for i in range(13):
     fechaNueva = date + dt.timedelta(minutes = 5*i)
@@ -189,14 +186,13 @@ print '\n'
 print 'Se ejecutan figuras con mapa de StreamFlow'
 print '\n'
 
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 301 -v'
-os.system(comando)
-
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_qsim')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=False)
 
 #Figura de la humedad simulada en el tiempo actual
-#Ruta donde se guardan los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
+
 #lista de ejecuciones
 ListaEjec = []
 fechaNueva = date 
@@ -213,15 +209,15 @@ print '\n'
 print 'Se ejecutan figuras con mapa de Humedad'
 print '\n'
 
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-os.system(comando)
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_humedad')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=False)
+
 
 
 #Figura de los deslizamiento simuados en el tiempo acumulado - 5 min.
 
-#Ruta donde se guardan los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
 
 ListaEjec = []
 fechaNueva = date
@@ -238,42 +234,42 @@ print 'Se ejecutan figuras con mapa de Deslizamientos'
 print '\n'
 
 
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-os.system(comando)
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_map_slides')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=False)
 
 
-#Figura comparativa de niveles simulados vs. observado y los de alerta.
+#Figura comparativa de niveles simulados vs. observado y los de alerta
+
 #Se define ruta de donde se leeran los resultados a plotear
 ruta_inQhist = al.get_ruta(ConfigFile,'ruta_qsim_hist')
 ruta_inQsim = al.get_ruta(ConfigFile,'ruta_qsim')
-#Lectura de rutas de salida de la imagen
-ruta_outQsim = al.get_ruta(ConfigFile,'ruta_serie_qsim')
-nodo = al.get_ruta(ConfigFile,'nodosim')
+#se leen cosas necesarias para la funcion
+nodosim = al.get_ruta(ConfigFile,'nodosim')
 codeest = al.get_ruta(ConfigFile,'codeestN')
-
-al.Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outQsim,ruta_out_rain,dateText,nodo,codeest)
-
-# ListaEjec = []
-# fechaNueva = date
-# fechaNueva = fechaNueva.strftime('%Y-%m-%d-%H:%M')
-# comando = ruta_codigos+'Graph_Levels.py '+fechaNueva+' '+ruta_cuenca+' '+ruta_configuracion_1+' '+ruta_out_rain
-# ListaEjec.append(comando)
-# #Ejecuta las figuras en paralelo 
-# p = Pool(processes = 3)
-# p.map(os.system, ListaEjec)
-# p.close()
-# p.join()
+mediah = al.get_ruta(ConfigFile,'mediaN')
+#Lectura de rutas de salida de la imagen
+ruta_outLevelspng = al.get_ruta(ConfigFile,'ruta_levelspng')
+#Lectura de rutas donde guardar Nsim.
+ruta_outNsim = al.get_ruta(ConfigFile,'ruta_niveles')
 
 print '\n'
 print 'Se ejecutan figuras comparativas de niveles simulados'
 print '\n'
 
-#Ruta donde se guardan los caudales en png
-ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_serie_qsim')
-#elimina figuras viejas 
-comando = ruta_codigos+'Graph_Erase_Last.py '+ruta_configuracion_1+' '+ruta_erase_png+' -n 288 -v'
-os.system(comando)
+al.Graph_Levels(ruta_inQhist,ruta_inQsim,ruta_outLevelspng,ruta_out_rain,dateText,nodosim,codeest,mediah,ruta_outNsim)
+
+#Ruta donde se borraran graficas viejas
+ruta_erase_png = al.get_ruta(ConfigFile, 'ruta_levelspng')
+#Se borran graficas viejas, se crea animacion y si se asigna se crea o sobreescribe imagen pagina
+al.GraphAnimationsAndDelLast(ruta_erase_png,imagenpagina=False)
+
+# #Ejecuta las figuras en paralelo 
+# p = Pool(processes = 3)
+# p.map(os.system, ListaEjec)
+# p.close()
+# p.join()
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

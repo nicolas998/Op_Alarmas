@@ -86,7 +86,7 @@ def Plot_Qsim_Campo(Lista):
 		clean = True, 
 		#~ colorbar = False,
 		show_cbar = False, 
-		figsize = (30,15), 
+		figsize = (10,12), 
 		umbral = cauce, 
 		escala = 1.5,
 		cmap = wmf.pl.get_cmap('viridis',5),
